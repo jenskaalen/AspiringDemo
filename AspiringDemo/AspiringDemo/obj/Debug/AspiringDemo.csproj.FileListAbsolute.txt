@@ -1,7 +1,0 @@
-C:\Users\jenkal\AppData\Local\Temporary Projects\AspiringDemo\bin\Debug\AspiringDemo.exe.config
-D:\Projects\AspiringDemo\AspiringDemo\bin\Debug\AspiringDemo.exe.config
-D:\Projects\AspiringDemo\AspiringDemo\obj\Debug\AspiringDemo.csprojResolveAssemblyReference.cache
-D:\Projects\AspiringDemo\AspiringDemo\bin\Debug\AspiringDemo.exe
-D:\Projects\AspiringDemo\AspiringDemo\bin\Debug\AspiringDemo.pdb
-D:\Projects\AspiringDemo\AspiringDemo\obj\Debug\AspiringDemo.exe
-D:\Projects\AspiringDemo\AspiringDemo\obj\Debug\AspiringDemo.pdb
