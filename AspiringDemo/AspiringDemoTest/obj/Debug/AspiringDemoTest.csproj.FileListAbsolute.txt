@@ -1,0 +1,7 @@
+D:\Projects\AspiringDemo\AspiringDemoTest\bin\Debug\AspiringDemoTest.dll
+D:\Projects\AspiringDemo\AspiringDemoTest\bin\Debug\AspiringDemoTest.pdb
+D:\Projects\AspiringDemo\AspiringDemoTest\bin\Debug\AspiringDemo.exe
+D:\Projects\AspiringDemo\AspiringDemoTest\bin\Debug\AspiringDemo.pdb
+D:\Projects\AspiringDemo\AspiringDemoTest\obj\Debug\AspiringDemoTest.csprojResolveAssemblyReference.cache
+D:\Projects\AspiringDemo\AspiringDemoTest\obj\Debug\AspiringDemoTest.dll
+D:\Projects\AspiringDemo\AspiringDemoTest\obj\Debug\AspiringDemoTest.pdb
