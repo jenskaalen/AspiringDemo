@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AspiringDemo
 {
-    public class SquadMember : Character
+    public class Unit : Character
     {
         private SquadRank _rank;
 
@@ -21,7 +21,6 @@ namespace AspiringDemo
             }
         }
         
-        public Guid ID { get; set; }
         public Squad Squad { get;  set; }
         public string Name { get; set; }
 
@@ -30,10 +29,9 @@ namespace AspiringDemo
         public int Toughness { get; set; }
         public int Kills { get; private set; }
 
-        public SquadMember()
+        public Unit()
         {
             Rank = SquadRank.Private;
-            ID = Guid.NewGuid();
             Name = "";
             State = CharacterState.Idle;
             Speed = 20;
@@ -41,7 +39,7 @@ namespace AspiringDemo
             HP = 25;
         }
 
-        public void Attack(SquadMember target)
+        public void Attack(Unit target)
         { 
             Action action = new Action();
             action.HPModifier = -20;

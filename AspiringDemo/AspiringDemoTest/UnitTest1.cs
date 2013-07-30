@@ -2,6 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AspiringDemo;
 using System.Linq;
+using System.Data;
+using System.Data.Common;
+using System.IO;
 
 namespace AspiringDemoTest
 {
@@ -22,31 +25,27 @@ namespace AspiringDemoTest
             Game.AddFaction(faction2);
 
             Squad muldvarpSquad = faction2.CreateSquad();
-            SquadMember muldvarp1 = new SquadMember();
-            SquadMember muldvarp2 = new SquadMember();
-            SquadMember muldvarpen = new SquadMember();
+            Unit muldvarp1 = new Unit();
+            Unit muldvarp2 = new Unit();
+            Unit muldvarpen = new Unit();
             muldvarpen.Damage = 50;
             muldvarpen.Name = "Muldvarpen";
             muldvarpSquad.AddMember(muldvarp1);
             muldvarpSquad.AddMember(muldvarp2);
             muldvarpSquad.AddMember(muldvarpen);
 
-            SquadMember lillebjorn = new SquadMember();
-            SquadMember storebjorn = new SquadMember();
+            Unit lillebjorn = new Unit();
+            Unit storebjorn = new Unit();
             Squad bjornesquad = faction1.CreateSquad();
             bjornesquad.AddMember(lillebjorn);
             bjornesquad.AddMember(storebjorn);
-
-            faction1.Squads.Add(bjornesquad);
-            faction2.Squads.Add(muldvarpSquad);
-
         }
 
         [TestMethod]
         public void ChangeRank()
         {
             Squad muldvarpsquad = Game.Factions.Where(x => x.ID.Contains("Muldvarp")).FirstOrDefault().Squads.FirstOrDefault();
-            SquadMember muldvarpen = muldvarpsquad.Members.Where(x => x.Name == "Muldvarpen").FirstOrDefault();
+            Unit muldvarpen = muldvarpsquad.Members.Where(x => x.Name == "Muldvarpen").FirstOrDefault();
             muldvarpen.Rank = SquadRank.Commander;
             Assert.AreEqual(muldvarpen, muldvarpsquad.Leader);
         }
@@ -97,9 +96,9 @@ namespace AspiringDemoTest
 
             Zone testzone = squad1.Zone;
 
-            Assert.IsTrue(Game.IsZoneContested(Game.Pathfinding.Zones[2]));
+            Assert.IsTrue(Game.IsZoneContested(testzone));
 
-            var squads = Game.IsZoneContestedSquads(Game.Pathfinding.Zones[2]);
+            var squads = Game.IsZoneContestedSquads(testzone);
 
             Assert.AreEqual(2, squads.Count);
 
@@ -125,6 +124,40 @@ namespace AspiringDemoTest
         [TestMethod]
         public void Looting()
         {
+
+        }
+
+        [TestMethod]
+        public void CreateSaveLoadDatabaseGame()
+        {
+            Weapon w1 = new Weapon();
+            w1.WeaponName = "lala";
+            w1.BaseDamage = 5;
+            //Weapon w2 = new Weapon();
+            //w2.WeaponName = "fuufu";
+
+            Game.Weapons = new System.Collections.Generic.List<Weapon>();
+            Game.Weapons.Add(w1);
+
+            Assert.AreEqual(5, Game.Weapons[0].BaseDamage);
+
+            if (File.Exists("butterflies.sdf"))
+                File.Delete("butterflies.sdf");
+            
+            SaveGame savegame = new SaveGame("butterflies");
+            Game.SaveGame = savegame;
+
+            Assert.AreEqual(5, Game.Weapons[0].BaseDamage);
+
+
+            savegame.Save();
+            savegame.Load();
+            Assert.AreEqual(5, Game.Weapons[0].BaseDamage);
+
+            w1.BaseDamage = 10;
+            savegame.Save();
+            savegame.Load();
+            Assert.AreEqual(10, Game.Weapons[0].BaseDamage);
 
         }
     }

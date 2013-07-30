@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -15,9 +16,12 @@ namespace AspiringDemo
         public bool FightActive { get; set; }
         public int RoundsOfFighting { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+
         private List<Squad> _attackReadySquads;
         //TODO: Implement`?=
-        private List<SquadMember> allMembers;
+        private List<Unit> allMembers;
         private Random _random;
 
         public Fight()
@@ -33,10 +37,10 @@ namespace AspiringDemo
 
             //Squad attackingSquad = GetAttackingSquad();
             //_attackReadySquads.Remove(attackingSquad);
-            List<SquadMember> attackersByOrder = GetAttackersByOrder();
+            List<Unit> attackersByOrder = GetAttackersByOrder();
             allMembers = attackersByOrder;
 
-            foreach (SquadMember member in attackersByOrder)
+            foreach (Unit member in attackersByOrder)
             {
                 if (member.State != CharacterState.Dead)
                     PerformAttack(member, attackersByOrder);
@@ -62,9 +66,9 @@ namespace AspiringDemo
             allMembers.Where(x => x.State != CharacterState.Dead).ToList().ForEach(ch => ch.State = CharacterState.Idle);
         }
 
-        private void PerformAttack(SquadMember member, List<SquadMember> attackersByOrder)
+        private void PerformAttack(Unit member, List<Unit> attackersByOrder)
         {
-            SquadMember target = GetTarget(member, attackersByOrder);
+            Unit target = GetTarget(member, attackersByOrder);
 
             if (target == null)
                 return;
@@ -77,11 +81,11 @@ namespace AspiringDemo
             target.ApplyAction(action);
         }
 
-        private SquadMember GetTarget(SquadMember member, List<SquadMember> attackersByOrder)
+        private Unit GetTarget(Unit member, List<Unit> attackersByOrder)
         {
-            SquadMember target;
+            Unit target;
 
-            List<SquadMember> viableTargets = attackersByOrder.Where(x => x.State != CharacterState.Dead && x.Squad.Faction != member.Squad.Faction).ToList();
+            List<Unit> viableTargets = attackersByOrder.Where(x => x.State != CharacterState.Dead && x.Squad.Faction != member.Squad.Faction).ToList();
 
             if (viableTargets.Count > 0)
             {
@@ -94,9 +98,9 @@ namespace AspiringDemo
             return target;
         }
 
-        private List<SquadMember> GetAttackersByOrder()
+        private List<Unit> GetAttackersByOrder()
         {
-            List<SquadMember> attackersByOrder = new List<SquadMember>();
+            List<Unit> attackersByOrder = new List<Unit>();
 
             foreach (Squad squad in Squads)
             {

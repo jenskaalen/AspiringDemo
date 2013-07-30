@@ -8,11 +8,13 @@ namespace AspiringDemo
     public static class Game
     {
         public static List<Faction> Factions { get; set; }
+        public static List<Weapon> Weapons { get; set; }
         public static int FactionCount { get; set; }
         public static bool IncludeMonsters { get; set; }
         public static int ZonesWidth { get; set; }
         public static int ZonesHeight { get; set; }
         public static Pathfinding Pathfinding { get; set; }
+        public static ISavegame SaveGame { get; set; }
 
         const int zoneWidth = 500;
         const int zoneHeight = 500;
@@ -20,7 +22,6 @@ namespace AspiringDemo
         public static void Initialize()
         {
             Factions = new List<Faction>();
-            
             Pathfinding = new Pathfinding();
             Pathfinding.Zones = CreateZones();
         }
@@ -141,6 +142,7 @@ namespace AspiringDemo
                 }
             }
         }
+
 
     }
 }

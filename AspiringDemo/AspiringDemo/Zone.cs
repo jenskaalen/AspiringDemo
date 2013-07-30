@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -18,7 +19,8 @@ namespace AspiringDemo
         public int PositionYStart { get; set; }
         public int PositionYEnd { get; set; }
         public bool IsPlayerNearby { get; set; }
-        public string ID { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
         public ZoneType Type { get; set; }
         public Fight Fight { get; set; }
 

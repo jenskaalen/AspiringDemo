@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -15,14 +16,19 @@ namespace AspiringDemo
 
     public class Squad
     {
-        public List<SquadMember> Members { get; private set; }
+        public List<Unit> Members { get; set; }
         public Faction Faction { get; set; }
-        public Guid ID { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
         public SquadState State { get; set; }
-        public SquadMember Leader { get; private set; }
-        public int KillCounter { get; private set; }
+        [ForeignKey("LeaderId")]
+        public Unit Leader { get; set; }
+        public int KillCounter { get; set; }
         public Zone Zone { get; set; }
         public bool IsVisible { get; set; }
+
+        public int LeaderId { get; set; }
 
         public void CheckZone()
         { 
@@ -32,10 +38,10 @@ namespace AspiringDemo
         { 
         }
 
-        public void AddMember(SquadMember member)
+        public void AddMember(Unit member)
         {
             if (Members == null)
-                Members = new List<SquadMember>();
+                Members = new List<Unit>();
 
             member.Squad = this;
             Members.Add(member);
@@ -55,7 +61,7 @@ namespace AspiringDemo
             }
         }
 
-        internal void ChangeRank(SquadMember member)
+        internal void ChangeRank(Unit member)
         {
             if (Leader == null || member.Rank > Leader.Rank)
                 Leader = member;

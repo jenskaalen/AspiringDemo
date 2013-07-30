@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +19,9 @@ namespace AspiringDemo
     {
         public delegate ActionResult ActionApplied(Action action);
         public delegate void StateChanged(CharacterState state);
-
-
+        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
         public int HP { get; set; }
         public int Damage { get; set; }
         public CharacterState State 

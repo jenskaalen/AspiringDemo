@@ -7,16 +7,20 @@ namespace AspiringDemo
 {
     public class Faction
     {
-        public string ID { get; private set; }
-        public HashSet<Squad> Squads { get; private set; }
-        public bool IsComputer { get; private set; }
+        public string ID { get; set; }
+        public List<Squad> Squads { get; set; }
+        public bool IsComputer { get; set; }
+
+        public Faction()
+        { 
+        }
 
         public Faction(bool isComputer, string id)
         {
             IsComputer = IsComputer;
             ID = id;
 
-            Squads = new HashSet<Squad>();
+            Squads = new List<Squad>();
         }
 
         public Squad CreateSquad()
