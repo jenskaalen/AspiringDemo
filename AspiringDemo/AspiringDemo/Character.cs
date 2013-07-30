@@ -40,7 +40,7 @@ namespace AspiringDemo
 
         private CharacterState _state;
 
-        public Character()
+        internal Character()
         {
             ApplyAction += ApplyActionOnSelf;
             ChangeState += ChangeStateSelf;

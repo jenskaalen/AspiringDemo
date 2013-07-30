@@ -57,6 +57,7 @@
     <Compile Include="FactionController.cs" />
     <Compile Include="Fight.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="IObjectFactory.cs" />
     <Compile Include="ISavegame.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="SaveGame.cs" />

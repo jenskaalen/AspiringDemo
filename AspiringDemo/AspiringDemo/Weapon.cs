@@ -16,6 +16,7 @@ namespace AspiringDemo
     public class Weapon
     {
         [Key]
+        public int ID { get; set; }
         public string WeaponName { get; set; }
         public int BaseDamage { get; set; }
         public int WeaponSpeed { get; set; }

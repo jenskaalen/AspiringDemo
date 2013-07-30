@@ -22,13 +22,13 @@ namespace AspiringDemo
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         public SquadState State { get; set; }
-        [ForeignKey("LeaderId")]
+        //[ForeignKey("LeaderId")]
         public Unit Leader { get; set; }
         public int KillCounter { get; set; }
         public Zone Zone { get; set; }
         public bool IsVisible { get; set; }
 
-        public int LeaderId { get; set; }
+        //public int? LeaderId { get; set; }
 
         public void CheckZone()
         { 
@@ -65,6 +65,11 @@ namespace AspiringDemo
         {
             if (Leader == null || member.Rank > Leader.Rank)
                 Leader = member;
+        }
+
+        internal Squad()
+        { 
+        
         }
     }
 }

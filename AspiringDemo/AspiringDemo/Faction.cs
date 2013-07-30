@@ -11,7 +11,7 @@ namespace AspiringDemo
         public List<Squad> Squads { get; set; }
         public bool IsComputer { get; set; }
 
-        public Faction()
+        internal Faction()
         { 
         }
 
@@ -25,7 +25,7 @@ namespace AspiringDemo
 
         public Squad CreateSquad()
         {
-            Squad newSquad = new Squad();
+            Squad newSquad = Game.ObjectFactory.GetObject<Squad>();
             newSquad.Faction = this;
             Squads.Add(newSquad);
 

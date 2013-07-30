@@ -15,6 +15,8 @@ namespace AspiringDemo
         public static int ZonesHeight { get; set; }
         public static Pathfinding Pathfinding { get; set; }
         public static ISavegame SaveGame { get; set; }
+        public static IObjectFactory ObjectFactory { get; set; }
+        //public static IObjectGenerator ObjectGenerator { get; set; }
 
         const int zoneWidth = 500;
         const int zoneHeight = 500;

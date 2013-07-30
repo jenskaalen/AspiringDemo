@@ -12,10 +12,15 @@ namespace AspiringDemoTest
     public class UnitTest1
     {
 
-
-        [TestInitialize]
-        public void Initialize()
+        public UnitTest1()
         {
+            if (File.Exists("butterflies.sdf"))
+                File.Delete("butterflies.sdf");
+
+            SaveGame savegame = new SaveGame("butterflies");
+            Game.SaveGame = savegame;
+            Game.ObjectFactory = (IObjectFactory)Game.SaveGame;
+
             Game.ZonesHeight = 3;
             Game.ZonesWidth = 3;
             Game.Initialize();
@@ -25,17 +30,17 @@ namespace AspiringDemoTest
             Game.AddFaction(faction2);
 
             Squad muldvarpSquad = faction2.CreateSquad();
-            Unit muldvarp1 = new Unit();
-            Unit muldvarp2 = new Unit();
-            Unit muldvarpen = new Unit();
+            Unit muldvarp1 = Game.ObjectFactory.GetObject<Unit>();
+            Unit muldvarp2 = Game.ObjectFactory.GetObject<Unit>();
+            Unit muldvarpen = Game.ObjectFactory.GetObject<Unit>();
             muldvarpen.Damage = 50;
             muldvarpen.Name = "Muldvarpen";
             muldvarpSquad.AddMember(muldvarp1);
             muldvarpSquad.AddMember(muldvarp2);
             muldvarpSquad.AddMember(muldvarpen);
 
-            Unit lillebjorn = new Unit();
-            Unit storebjorn = new Unit();
+            Unit lillebjorn = Game.ObjectFactory.GetObject<Unit>();
+            Unit storebjorn = Game.ObjectFactory.GetObject<Unit>();
             Squad bjornesquad = faction1.CreateSquad();
             bjornesquad.AddMember(lillebjorn);
             bjornesquad.AddMember(storebjorn);
@@ -53,13 +58,13 @@ namespace AspiringDemoTest
         [TestMethod]
         public void TestZoneFinding()
         {
-            Zone zone1 = new Zone();
+            Zone zone1 = Game.ObjectFactory.GetObject<Zone>();
             zone1.PositionXStart = 0;
             zone1.PositionXEnd = 500;
             zone1.PositionYStart = 0;
             zone1.PositionYEnd = 500;
 
-            Zone zone2 = new Zone();
+            Zone zone2 = Game.ObjectFactory.GetObject<Zone>();
             zone2.PositionXStart = 501;
             zone2.PositionXEnd = 1000;
             zone2.PositionYStart = 501;
@@ -130,33 +135,22 @@ namespace AspiringDemoTest
         [TestMethod]
         public void CreateSaveLoadDatabaseGame()
         {
-            Weapon w1 = new Weapon();
+            Weapon w1 = Game.ObjectFactory.GetObject<Weapon>();
             w1.WeaponName = "lala";
             w1.BaseDamage = 5;
-            //Weapon w2 = new Weapon();
-            //w2.WeaponName = "fuufu";
 
             Game.Weapons = new System.Collections.Generic.List<Weapon>();
             Game.Weapons.Add(w1);
 
             Assert.AreEqual(5, Game.Weapons[0].BaseDamage);
 
-            if (File.Exists("butterflies.sdf"))
-                File.Delete("butterflies.sdf");
-            
-            SaveGame savegame = new SaveGame("butterflies");
-            Game.SaveGame = savegame;
-
-            Assert.AreEqual(5, Game.Weapons[0].BaseDamage);
-
-
-            savegame.Save();
-            savegame.Load();
+            Game.SaveGame.Save();
+            Game.SaveGame.Load();
             Assert.AreEqual(5, Game.Weapons[0].BaseDamage);
 
             w1.BaseDamage = 10;
-            savegame.Save();
-            savegame.Load();
+            Game.SaveGame.Save();
+            Game.SaveGame.Load();
             Assert.AreEqual(10, Game.Weapons[0].BaseDamage);
 
         }
