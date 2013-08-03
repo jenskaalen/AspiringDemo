@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AspiringDemo.Pathfinding;
+using System.Threading;
+using System.Diagnostics;
 
 namespace AspiringDemo
 {
@@ -13,10 +16,17 @@ namespace AspiringDemo
         public static bool IncludeMonsters { get; set; }
         public static int ZonesWidth { get; set; }
         public static int ZonesHeight { get; set; }
-        public static Pathfinding Pathfinding { get; set; }
+        public static Pathing Pathfinding { get; set; }
         public static ISavegame SaveGame { get; set; }
         public static IObjectFactory ObjectFactory { get; set; }
+        public static long GameTime { get; set; }
+        public static bool GamePaused { get; set; }
+
+
+        public static Pathfinder<Zone> ZonePathfinder { get; set; }
         //public static IObjectGenerator ObjectGenerator { get; set; }
+        //TODO: Rework
+        public const int TimeToTravelThroughZone = 15;
 
         const int zoneWidth = 500;
         const int zoneHeight = 500;
@@ -24,8 +34,14 @@ namespace AspiringDemo
         public static void Initialize()
         {
             Factions = new List<Faction>();
-            Pathfinding = new Pathfinding();
+            Pathfinding = new Pathing();
             Pathfinding.Zones = CreateZones();
+            ZonePathfinder = new Pathfinder<Zone>();
+            ZonePathfinder.Nodes = CreateZones();
+            Thread timerThread = new Thread(CountGametime);
+            timerThread.Start();
+            Thread orderThread = new Thread(WorkOrders);
+            orderThread.Start();
         }
 
         private static List<Zone> CreateZones()
@@ -145,6 +161,53 @@ namespace AspiringDemo
             }
         }
 
+        public static void CountGametime()
+        {
+            while (true)
+            {
+                if (!GamePaused)
+                    GameTime++;
 
+                System.Threading.Thread.Sleep(1000);
+            }
+        }
+
+        public static void WorkOrders()
+        {
+            while (true)
+            {
+                Debug.WriteLine("working orders");
+
+                foreach (Faction faction in Factions)
+                {
+                    foreach (Squad squad in faction.Squads)
+                    {
+                        foreach (Character character in squad.Members)
+                        {
+                            if (character.Order != null)
+                            {
+                                if (character.Order.IsExecuting)
+                                {
+                                    character.Order.Work();
+                                }
+                                else
+                                {
+                                    if (character.Order.IsDone)
+                                    {
+                                        character.Order = null;
+                                    }
+                                    else
+                                    {
+                                        character.Order.Execute();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Thread.Sleep(1000);
+            }
+        }
     }
 }

@@ -22,13 +22,11 @@ namespace AspiringDemo
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         public SquadState State { get; set; }
-        //[ForeignKey("LeaderId")]
         public Unit Leader { get; set; }
         public int KillCounter { get; set; }
+        //TODO: Rework this? A squad can potentially be in several zones...
         public Zone Zone { get; set; }
         public bool IsVisible { get; set; }
-
-        //public int? LeaderId { get; set; }
 
         public void CheckZone()
         { 

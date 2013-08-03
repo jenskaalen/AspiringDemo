@@ -24,11 +24,6 @@ namespace AspiringDemo
         public Squad Squad { get;  set; }
         public string Name { get; set; }
 
-        // attributes
-        public int Speed { get; set; }
-        public int Toughness { get; set; }
-        public int Kills { get; private set; }
-
         public Unit()
         {
             Rank = SquadRank.Private;
