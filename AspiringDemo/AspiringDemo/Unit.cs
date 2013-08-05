@@ -23,6 +23,7 @@ namespace AspiringDemo
         
         public Squad Squad { get;  set; }
         public string Name { get; set; }
+        public Faction Faction { get; set; }
 
         public Unit()
         {

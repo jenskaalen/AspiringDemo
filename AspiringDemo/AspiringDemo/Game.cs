@@ -21,12 +21,12 @@ namespace AspiringDemo
         public static IObjectFactory ObjectFactory { get; set; }
         public static long GameTime { get; set; }
         public static bool GamePaused { get; set; }
-
+        
 
         public static Pathfinder<Zone> ZonePathfinder { get; set; }
         //public static IObjectGenerator ObjectGenerator { get; set; }
         //TODO: Rework
-        public const int TimeToTravelThroughZone = 15;
+        public const int TimeToTravelThroughZone = 5;
 
         const int zoneWidth = 500;
         const int zoneHeight = 500;
@@ -72,47 +72,49 @@ namespace AspiringDemo
             Factions.Add(faction);
         }
 
-        public static bool IsZoneContested(Zone zone)
-        {
-            //TODO: Doesnt take account for relations
-            int factionsInZone = 0;
 
-            foreach (Faction faction in Game.Factions)
-            {
-                if (faction.Squads.Where(x => x.State != SquadState.Destroyed && x.Zone == zone).Any())
-                    factionsInZone++;
-            }
+        //TODO: Remove
+        //public static bool IsZoneContested(Zone zone)
+        //{
+        //    //TODO: Doesnt take account for relations
+        //    int factionsInZone = 0;
 
-            if (factionsInZone > 1)
-                return true;
-            else
-                return false;
-        }
+        //    foreach (Faction faction in Game.Factions)
+        //    {
+        //        if (faction.Squads.Where(x => x.State != SquadState.Destroyed && x.Zone == zone).Any())
+        //            factionsInZone++;
+        //    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="zone"></param>
-        /// <returns>Returns null if no zone is found</returns>
-        public static List<Squad> IsZoneContestedSquads(Zone zone)
-        {
-            List<Squad> squads = new List<Squad>();
-            int factionsInZone = 0;
+        //    if (factionsInZone > 1)
+        //        return true;
+        //    else
+        //        return false;
+        //}
 
-            foreach (Faction faction in Game.Factions)
-            {
-                if (faction.Squads.Where(x => x.State != SquadState.Destroyed && x.Zone == zone).Any())
-                {
-                    factionsInZone++;
-                    squads.AddRange(faction.Squads.Where(x => x.Zone == zone));
-                }
-            }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="zone"></param>
+        ///// <returns>Returns null if no zone is found</returns>
+        //public static List<Squad> IsZoneContestedSquads(Zone zone)
+        //{
+        //    List<Squad> squads = new List<Squad>();
+        //    int factionsInZone = 0;
 
-            if (factionsInZone > 1)
-                return squads;
-            else
-                return null;
-        }
+        //    foreach (Faction faction in Game.Factions)
+        //    {
+        //        if (faction.Squads.Where(x => x.State != SquadState.Destroyed && x.Zone == zone).Any())
+        //        {
+        //            factionsInZone++;
+        //            squads.AddRange(faction.Squads.Where(x => x.Zone == zone));
+        //        }
+        //    }
+
+        //    if (factionsInZone > 1)
+        //        return squads;
+        //    else
+        //        return null;
+        //}
 
         /// <summary>
         /// Processes a zone and creates the necessary events - fights
@@ -121,45 +123,47 @@ namespace AspiringDemo
         {
             foreach (Zone zone in Pathfinding.Zones)
             {
-                ProcessZone(zone);
+                zone.Fight.PerformFightRound();
             }
         }
 
-        public static void ProcessZone(Zone zone)
-        {
-            if (zone.Fight != null)
-            {
-                if (zone.Fight.FightActive)
-                {
-                    zone.Fight.PerformFightRound();
-                }
-                else
-                {
-                    //fight has ended so we clean up
-                    zone.Fight = null;
-                }
-            }
-            else
-            {
-                List<Squad> contestedZoneSquads = IsZoneContestedSquads(zone);
+        //public static void ProcessZone(Zone zone)
+        //{
+        //    if (zone.Fight != null)
+        //    {
+        //        if (zone.Fight.FightActive)
+        //        {
+        //            zone.Fight.PerformFightRound();
+        //        }
+        //        else
+        //        {
+        //            //fight has ended so we clean up
+        //            zone.Fight = null;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        List<Squad> contestedZoneSquads = IsZoneContestedSquads(zone);
 
-                if (contestedZoneSquads != null)
-                {
-                    foreach (var squad in contestedZoneSquads)
-                    {
-                        squad.State = SquadState.Fighting;
-                    }
+        //        if (contestedZoneSquads != null)
+        //        {
+        //            foreach (var squad in contestedZoneSquads)
+        //            {
+        //                squad.State = SquadState.Fighting;
+        //            }
 
-                    if (zone.Fight == null)
-                    {
-                        Fight zoneFight = new Fight();
-                        //TODO: rework this to use custom adding method?
-                        zoneFight.Squads.AddRange(contestedZoneSquads);
-                        zone.Fight = zoneFight;
-                    }
-                }
-            }
-        }
+        //            if (zone.Fight == null)
+        //            {
+        //                Fight zoneFight = new Fight();
+        //                //TODO: rework this to use custom adding method?
+        //                //zoneFight.Squads.AddRange(contestedZoneSquads);
+
+        //                contestedZoneSquads.ForEach(contestedZoneSquad => zoneFight.AddSquad(contestedZoneSquad));
+        //                zone.Fight = zoneFight;
+        //            }
+        //        }
+        //    }
+        //}
 
         public static void CountGametime()
         {

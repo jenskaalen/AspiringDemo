@@ -60,31 +60,8 @@ namespace AspiringDemo
             _state = state;
         }
 
-
-        //TODO: I N
-        //protected void HandleOrder()
-        //{
-        //    while (State != CharacterState.Dead)
-        //    {
-        //        if (State == CharacterState.ExecutingOrder  )
-        //        {
-        //            if (Order.IsExecuting)
-        //            { }
-        //            else
-        //            {
-        //                // Order is done - null it out
-        //                Order = null;
-        //                State = CharacterState.Idle;
-        //            }
-        //        }
-        //        else
-        //        {
-        //        }
-        //    }
-        //}
-
         private ActionResult ApplyActionOnSelf(Action action)
-        {
+         {
             HP += action.HPModifier;
             bool killed = false;
 

@@ -11,34 +11,39 @@ namespace AspiringDemo
     /// </summary>
     public class Fight
     {
-        public List<Squad> Squads { get; set; }
+        public delegate void FightCleanUpListener();
+        //public List<Squad> Squads { get; private set; }
         public int KilledCount { get; set; }
         public bool FightActive { get; set; }
         public int RoundsOfFighting { get; set; }
+        public int FightersCount
+        {
+            get { return _allUnits.Count; }
+        }
+        public FightCleanUpListener fightCleanup;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
-        private List<Squad> _attackReadySquads;
+        //private List<Squad> _attackReadySquads;
         //TODO: Implement`?=
-        private List<Unit> allMembers;
+        private List<Unit> _allUnits;
+        private List<Squad> _allSquads;
         private Random _random;
 
         public Fight()
         {
-            Squads = new List<Squad>();
+            _allUnits = new List<Unit>();
+            _allSquads = new List<Squad>();
             FightActive = true;
         }
 
         public void PerformFightRound()
         {
             _random = new Random(DateTime.Now.Millisecond);
-            _attackReadySquads = Squads;
 
-            //Squad attackingSquad = GetAttackingSquad();
-            //_attackReadySquads.Remove(attackingSquad);
             List<Unit> attackersByOrder = GetAttackersByOrder();
-            allMembers = attackersByOrder;
+            //_allUnits = attackersByOrder;
 
             foreach (Unit member in attackersByOrder)
             {
@@ -46,9 +51,11 @@ namespace AspiringDemo
                     PerformAttack(member, attackersByOrder);
             }
 
-            int fitForFightFactions = _attackReadySquads
-                .Where(x => x.Members.Where(member => member.State != CharacterState.Dead).Any())
-                .Count();
+            //int fitForFightFactions = _allUnits
+            //    .Where(x => x.Members.Where(member => member.State != CharacterState.Dead).Any())
+            //    .Count();
+
+            int fitForFightFactions = _allUnits.Where(x => x.State != CharacterState.Dead).Select(x => x.Faction).Distinct().Count();
 
             // if there are 1 or less fighting factions - end fight
             if (fitForFightFactions < 2)
@@ -61,9 +68,9 @@ namespace AspiringDemo
         }
 
         // cleans up after the fight
-        private void CleanFight()
+        public void CleanFight()
         {
-            allMembers.Where(x => x.State != CharacterState.Dead).ToList().ForEach(ch => ch.State = CharacterState.Idle);
+            _allUnits.Where(x => x.State != CharacterState.Dead).ToList().ForEach(ch => ch.State = CharacterState.Idle);
         }
 
         private void PerformAttack(Unit member, List<Unit> attackersByOrder)
@@ -81,11 +88,19 @@ namespace AspiringDemo
             target.ApplyAction(action);
         }
 
+        private List<Unit> GetViableTargets(Unit unit)
+        {
+            List<Unit> viableTargets = new List<Unit>();
+            viableTargets = _allUnits.Where(x => x.State != CharacterState.Dead && x.Faction != unit.Faction).ToList();
+            
+            return viableTargets;
+        }
+
         private Unit GetTarget(Unit member, List<Unit> attackersByOrder)
         {
             Unit target;
 
-            List<Unit> viableTargets = attackersByOrder.Where(x => x.State != CharacterState.Dead && x.Squad.Faction != member.Squad.Faction).ToList();
+            List<Unit> viableTargets = GetViableTargets(member);
 
             if (viableTargets.Count > 0)
             {
@@ -100,21 +115,26 @@ namespace AspiringDemo
 
         private List<Unit> GetAttackersByOrder()
         {
-            List<Unit> attackersByOrder = new List<Unit>();
-
-            foreach (Squad squad in Squads)
-            {
-                squad.Members.Where(x => x.State != CharacterState.Dead).ToList().ForEach(member => attackersByOrder.Add(member));
-            }
-
-            attackersByOrder = attackersByOrder.OrderByDescending(x => x.Speed).ToList();
-
-            return attackersByOrder;
+            return _allUnits.OrderBy(x => x.Speed).ToList();
         }
+
+        //private List<Unit> GetAttackersByOrder()
+        //{
+        //    List<Unit> attackersByOrder = new List<Unit>();
+
+        //    foreach (Squad squad in _allSquads)
+        //    {
+        //        squad.Members.Where(x => x.State != CharacterState.Dead).ToList().ForEach(member => attackersByOrder.Add(member));
+        //    }
+
+        //    attackersByOrder = attackersByOrder.OrderByDescending(x => x.Speed).ToList();
+
+        //    return attackersByOrder;
+        //}
 
         public void GetSquadToAttack(Squad attackingSquad)
         {
-            List<Squad> enemySquads = Squads.Where(x => x.State == SquadState.Fighting && x.Faction != attackingSquad.Faction).ToList();
+            List<Squad> enemySquads = _allSquads.Where(x => x.State == SquadState.Fighting && x.Faction != attackingSquad.Faction).ToList();
 
             if (enemySquads.Count == 0)
                 throw new Exception("No enemy squads found in zone");
@@ -122,9 +142,25 @@ namespace AspiringDemo
             Squad squadToAttack = enemySquads[_random.Next(0, enemySquads.Count - 1)];
         }
 
+        public void AddUnit(Unit unit)
+        {
+            if (!_allUnits.Contains(unit))
+            {
+                _allUnits.Add(unit);
+                unit.State = CharacterState.Fighting;
+            }
+        }
+
         public void AddSquad(Squad squad)
         {
-            throw new NotImplementedException();
+            if (!_allSquads.Contains(squad))
+                _allSquads.Add(squad);
+
+            foreach (Unit member in squad.Members)
+            {
+                if (!_allUnits.Contains(member))
+                    _allUnits.Add(member);
+            }
         }
 
         public void RemoveSquad(Squad squad)
@@ -132,11 +168,14 @@ namespace AspiringDemo
             throw new NotImplementedException();
         }
 
-        public Squad GetAttackingSquad()
-        {
-            Squad attackingSquad = _attackReadySquads.OrderByDescending(x => x.Members.Average(sq => sq.Speed)).FirstOrDefault();
-            return attackingSquad;
-        }
+        //TODO: Remove
+        //public Squad GetAttackingSquad()
+        //{
+        //    Squad attackingSquad = _attackReadySquads.OrderByDescending(x => x.Members.Average(sq => sq.Speed)).FirstOrDefault();
+            
+
+        //    return attackingSquad;
+        //}
 
     }
 }

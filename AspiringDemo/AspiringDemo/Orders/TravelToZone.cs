@@ -28,6 +28,7 @@ namespace AspiringDemo.Orders
                 throw new Exception("TargetZone cannot be null");
 
             Character.State = CharacterState.ExecutingOrder;
+            _startZone = Character.Zone;
             IsExecuting = true;
             IsDone = false;
             TravelPath = Game.ZonePathfinder.GetPath(_startZone, TargetZone);
@@ -36,16 +37,30 @@ namespace AspiringDemo.Orders
 
         public void Work()
         {
+            if (Character.Zone == TargetZone)
+            {
+                OrderAccomplished();
+                return;
+            }
+
             if (Character.State == CharacterState.ExecutingOrder)
             {
 
                 if (_nextWorkTime > Game.GameTime)
                 {
                     Character.Zone = TravelPath.First();
-
+                    TravelPath.Remove(Character.Zone);
                     _nextWorkTime += Game.TimeToTravelThroughZone;
                 }
             }
+        }
+
+        public void OrderAccomplished()
+        {
+            Character.Order = null;
+
+            if (Character.State == CharacterState.ExecutingOrder)
+                Character.State = CharacterState.Idle;
         }
     }
 }
