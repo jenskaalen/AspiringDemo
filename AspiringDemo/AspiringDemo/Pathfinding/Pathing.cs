@@ -29,36 +29,34 @@ namespace AspiringDemo
             return zone;
         }
 
-        public List<IZone> GetComputedZonePath(Vector2 startPosition, Vector2 endPosition)
-        {
-            throw new NotImplementedException();
+        //public List<IZone> GetComputedZonePath(Vector2 startPosition, Vector2 endPosition)
+        //{
+        //    Pathfinder<IZone> finder = new Pathfinder<IZone>();
+        //    finder.Nodes = Zones;
 
-            Pathfinder<IZone> finder = new Pathfinder<IZone>();
-            finder.Nodes = Zones;
+        //    //List<Zone> allZones = new List<Zone>();
+        //    //Zones.ForEach(x => allZones.Add(x));
 
-            //List<Zone> allZones = new List<Zone>();
-            //Zones.ForEach(x => allZones.Add(x));
+        //    //Zone startZone = GetZone(startPosition);
+        //    //Zone endZone = GetZone(endPosition);
 
-            //Zone startZone = GetZone(startPosition);
-            //Zone endZone = GetZone(endPosition);
+        //    List<IZone> computedList = new List<IZone>();
 
-            List<IZone> computedList = new List<IZone>();
+        //    //Zone currentZone = startZone;
 
-            //Zone currentZone = startZone;
+        //    //while (currentZone != endZone)
+        //    //{ 
+        //    //    //currentZone.Neighbours.Min(zone => 
+        //    //        //Math.Sqrt(zone.PositionXStart * zone.PositionXStart + endZone.PositionXStart * endZone.PositionXStart))
+        //    //    //if (currentZone.Neighbours == null
+        //    //    //currentZone = allZones.Aggregate((z1, z2) => z1.PositionXStart > z2.PositionXStart ? z2 : z1);
+        //    //    currentZone = currentZone.Neighbours.Aggregate((z1, z2) => z1.PositionXStart > z2.PositionXStart ? z1 : z2);
+        //    //    allZones.Remove(currentZone);
+        //    //    computedList.Add(currentZone);
+        //    //}
 
-            //while (currentZone != endZone)
-            //{ 
-            //    //currentZone.Neighbours.Min(zone => 
-            //        //Math.Sqrt(zone.PositionXStart * zone.PositionXStart + endZone.PositionXStart * endZone.PositionXStart))
-            //    //if (currentZone.Neighbours == null
-            //    //currentZone = allZones.Aggregate((z1, z2) => z1.PositionXStart > z2.PositionXStart ? z2 : z1);
-            //    currentZone = currentZone.Neighbours.Aggregate((z1, z2) => z1.PositionXStart > z2.PositionXStart ? z1 : z2);
-            //    allZones.Remove(currentZone);
-            //    computedList.Add(currentZone);
-            //}
-
-            return computedList;
-        }
+        //    return computedList;
+        //}
         
 
     }

@@ -24,9 +24,7 @@ namespace AspiringDemo.Saving
 
         private List<Unit> _unitsCache = new List<Unit>();
         private List<Squad> _squadsCache = new List<Squad>();
-
-        private Game _game;
-        private string dbname = "thishsouldnthappen";
+        private string _dbname = "";
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -45,38 +43,13 @@ namespace AspiringDemo.Saving
             modelBuilder.Entity<Unit>()
                 .HasOptional(x => x.Squad)
                 .WithMany(x => x.Members.ConvertAll(o => (Unit)o) );
-
-
-            //modelBuilder.Entity<Unit>()
-            //    .HasOptional(x => x.Squad)
-            //    .WithOptionalDependent()
-            //    .Map(mc => mc.MapKey("UnitMolesterKey"));
-
-
-
-            //modelBuilder.Entity<Unit>()
-            //    .HasRequired(x => x.Squad)
-            //    .WithOptional();
-
-            //modelBuilder.Entity<Unit>()
-            //    .HasOptional(x => x.Squad)
-            //    .WithMany(x => x.Members);
-
-            //modelBuilder.Entity<Squad>()
-            //    .HasMany(x => x.Members)
-            //    .WithRequired()
-            //    .HasForeignKey(x => x.ID);
-
-
-            //modelBuilder.Entity<Squad>()
-            //    .HasOptional(x => x.Leader);
         }
 
         public SaveGame(string name)
         {
-            dbname = name;
-            base.Database.Connection.ConnectionString = "Data Source=" + dbname + ".sdf;Persist Security Info=False;";
-            //base.Database.Connection.ConnectionString = "Server=localhost;Database=" + dbname + ";Trusted_Connection=true;Persist Security Info=true";//Persist Security Info=true";
+            _dbname = name;
+            base.Database.Connection.ConnectionString = "Data Source=" + _dbname + ".sdf;Persist Security Info=False;";
+            //base.Database.Connection.ConnectionString = "Server=localhost;Database=" + _dbname + ";Trusted_Connection=true;Persist Security Info=true";//Persist Security Info=true";
 
             Database.CreateIfNotExists();
         }
@@ -127,7 +100,7 @@ namespace AspiringDemo.Saving
 
         public void Load()
         {
-            _game.Factions = (List<IFaction>) Factions.ToList().Cast<List<IFaction>>();
+            GameFrame.Game.Factions = (List<IFaction>) Factions.ToList().Cast<List<IFaction>>();
             //_game.Weapons = Weapons.ToList();
         }
 

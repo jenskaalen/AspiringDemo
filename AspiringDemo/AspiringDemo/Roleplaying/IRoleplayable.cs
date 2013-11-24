@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AspiringDemo.Units;
 
 namespace AspiringDemo.Roleplaying
 {
@@ -13,5 +14,6 @@ namespace AspiringDemo.Roleplaying
         IWeaponStats WeaponStats { get; set; }
         ICharacterSkills Skills { get; set; }
         ICharacterLevel CharacterLevel { get; set; }
+        void Loot(IUnit unit);
     }
 }

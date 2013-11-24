@@ -28,8 +28,8 @@ namespace AspiringVisual
     /// </summary>
     public partial class MainWindow : Window
     {
-        Game _game;
         ISquad _squad;
+        private IGame _game;
 
         public MainWindow()
         {
@@ -40,7 +40,8 @@ namespace AspiringVisual
             rig.FactionCount = 2;
             rig.RigGame();
             RigStuff();
-            Thread thread = new Thread(_game.StartTimer);
+            _game = GameFrame.Game;
+            Thread thread = new Thread(GameFrame.Game.StartTimer);
             thread.Start();
 
             Task.Factory.StartNew((ContiniousUpdate));

@@ -25,7 +25,7 @@ namespace AspiringDemo.Saving
         private List<Squad> _squadsCache = new List<Squad>();
         //private List<Unit> _squadsCache = new List<Unit>();
 
-        private Game _game;
+        //private Game _game;
         private string dbname = "thishsouldnthappen";
 
         public TestSave(string name)
@@ -83,7 +83,8 @@ namespace AspiringDemo.Saving
 
         public void Load()
         {
-            _game.Factions = Factions.ToList();
+            throw new NotImplementedException();
+            //_game.Factions = Factions.ToList();
             //_game.Weapons = Weapons.ToList();
         }
 

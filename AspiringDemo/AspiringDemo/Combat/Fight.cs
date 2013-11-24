@@ -16,7 +16,7 @@ namespace AspiringDemo.Combat
     public class Fight : IFight
     {
         public List<IUnit> FightingUnits {
-            get { return _allUnits; }
+            get { return _allUnits.Where(unit => unit.State != UnitState.Dead).ToList(); }
         }
 
         public delegate void FightCleanUpListener();
@@ -116,8 +116,6 @@ namespace AspiringDemo.Combat
 
             return target;
         }
-
-
 
         public void LeaveFight(IUnit unit)
         {

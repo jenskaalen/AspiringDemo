@@ -125,6 +125,7 @@
     <Compile Include="Units\Actions\IUnitAction.cs" />
     <Compile Include="Units\Actions\UnitActionIntent.cs" />
     <Compile Include="Units\Actions\UnitAttack.cs" />
+    <Compile Include="Units\BaseUnit.cs" />
     <Compile Include="Units\ISquad.cs" />
     <Compile Include="Units\IUnit.cs" />
     <Compile Include="IZone.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Sites\PopulatedArea.cs" />
     <Compile Include="Units\IUnitRoleplayable.cs" />
     <Compile Include="Units\Squads\ISquadBehaviour.cs" />
+    <Compile Include="Units\UnitState.cs" />
     <Compile Include="Units\Zombie.cs" />
     <Compile Include="Weapons\IWeapon.cs" />
     <Compile Include="Orders\IUnitOrder.cs" />

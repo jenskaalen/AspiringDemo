@@ -43,7 +43,6 @@ namespace AspiringDemo.ANN
             if (UnitManager == null)
                 return;
 
-            double prio = 0.0;
             IUnitAction action = UnitManager.GetMostWeightedAction();
 
             if (action is GuardAction)

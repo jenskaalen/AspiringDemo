@@ -68,7 +68,6 @@ namespace AspiringDemoTest.Combat
             fight.AddUnit(unit4);
 
             double fleeChance = Fleeing.FleeChance(unit.Faction, fight);
-
             Assert.IsTrue(fleeChance > 95 && fleeChance < 100);
         }
     }

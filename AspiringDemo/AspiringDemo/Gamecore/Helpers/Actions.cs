@@ -24,6 +24,12 @@ namespace AspiringDemo.Gamecore.Helpers
             foreach (var unit in fight.FightingUnits.Where(un => un.Faction == faction))
             {
                 TravelOrder.GiveTravelOrder(unit, retreatZone, false);
+
+                if (unit.Order == null)
+                {
+                    GameFrame.Debug.Log(String.Format("Unit can't retreat because order is null: {0} , {1}, {2}", unit.Faction, unit.State, unit.GetHashCode()));
+                    return;
+                }
                 unit.Order.Execute();
                 unit.Order.Work(GameFrame.Game.GameTime.Time);
             }

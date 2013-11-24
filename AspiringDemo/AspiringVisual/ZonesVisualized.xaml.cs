@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using AspiringDemo;
 using AspiringDemo.Factions;
+using AspiringDemo.Units;
 using AspiringImplementation;
 using System.Threading;
 
@@ -115,13 +116,17 @@ namespace AspiringVisual
                        int row = i / _worldSize;
                        int col = i - (row * _worldSize);
 
-                       if (!zone.Units.Any())
+                       if (zone.Units.All(unit => unit.State == UnitState.Dead))
                            brush.Color = Color.FromArgb(255, 128, 128, 128);
-                       else if (zone.Units.Select(unit => unit.Faction).Distinct().Count() == 1)
+                       else if (zone.Units.Where(unit => unit.State != UnitState.Dead).Select(unit => unit.Faction).Distinct().Count() == 1)
                        {
-                           var faction = zone.Units.FirstOrDefault().Faction;
+                           var firstOrDefault = zone.Units.FirstOrDefault(unit => unit.State != UnitState.Dead);
+                           if (firstOrDefault != null)
+                           {
+                               var faction = firstOrDefault.Faction;
 
-                           brush.Color = _colorTable[faction];
+                               brush.Color = _colorTable[faction];
+                           }
                        }
                        else
                            brush.Color = _fightColor;

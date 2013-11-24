@@ -14,7 +14,6 @@ namespace AspiringDemo.Orders
         private readonly List<IZone> _travelPath;
         private long _nextWorkTime;
         private IZone _startZone;
-        private object TargetZone;
         public IPopulatedArea TargetArea { get; set; }
         public IUnit Unit { get; set; }
         public bool IsExecuting { get; set; }

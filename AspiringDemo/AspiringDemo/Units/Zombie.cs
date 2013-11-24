@@ -99,7 +99,6 @@ namespace AspiringDemo.Units
 
         public ISquad Squad { get; set; }
 
-        private SquadRank _rank;
         private UnitState _state;
 
         public void AssignOrder(IUnitOrder order)

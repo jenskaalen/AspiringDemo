@@ -28,7 +28,6 @@ namespace AspiringVisual
         static IGame _game;
         private IFaction _selectedFaction;
         private List<IUnit> _unitList;
-        private ISquad _squad;
         //lock object for synchronization;
         private static object _syncLock = new object();
         private ObservableCollection<IUnit> _unitObs;
@@ -82,7 +81,7 @@ namespace AspiringVisual
                             lw_units.Items.Refresh()
                             ));
                 }
-                catch (Exception ex)
+                catch
                 {
                 }
 
@@ -104,7 +103,7 @@ namespace AspiringVisual
                 // created a squad and appoint a leader
                 var leFaction = _game.Factions[1];
             }
-            catch (Exception e)
+            catch
             {
             }
         }
