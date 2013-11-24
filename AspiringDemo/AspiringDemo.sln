@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspiringDemoTests", "Aspiri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspiringDemoIntegrations", "AspiringDemoIntegrations\AspiringDemoIntegrations.csproj", "{27824CFA-4CA0-4981-874B-7B0544E37A8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspiringWeb", "AspiringWeb\AspiringWeb.csproj", "{B1A52527-F6D5-43A4-89F3-978AA33C6AC7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspiringImplementation", "AspiringImplementation\AspiringImplementation.csproj", "{D8678E8A-54A0-4DAA-93FA-B17EB4C1E8B8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspiringVisual", "AspiringVisual\AspiringVisual.csproj", "{BC50150E-5B3F-4455-A8B1-885545EBF1E0}"
@@ -36,10 +34,6 @@ Global
 		{27824CFA-4CA0-4981-874B-7B0544E37A8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27824CFA-4CA0-4981-874B-7B0544E37A8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27824CFA-4CA0-4981-874B-7B0544E37A8A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1A52527-F6D5-43A4-89F3-978AA33C6AC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1A52527-F6D5-43A4-89F3-978AA33C6AC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1A52527-F6D5-43A4-89F3-978AA33C6AC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1A52527-F6D5-43A4-89F3-978AA33C6AC7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D8678E8A-54A0-4DAA-93FA-B17EB4C1E8B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D8678E8A-54A0-4DAA-93FA-B17EB4C1E8B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8678E8A-54A0-4DAA-93FA-B17EB4C1E8B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,8 +45,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
