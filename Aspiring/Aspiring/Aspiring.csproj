@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D103051B-F41B-414E-A8CB-48345C034503}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AspiringDemo</RootNamespace>
+    <AssemblyName>AspiringDemo</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.0-rc1-20807\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.0-rc1-20807\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServerCompact">
+      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.0.0-rc1-20807\lib\net40\EntityFramework.SqlServerCompact.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.0.2-unstable-9037\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ability.cs" />
+    <Compile Include="ANN\ActionManager.cs" />
+    <Compile Include="ANN\Actions\BuildOutpost.cs" />
+    <Compile Include="ANN\Actions\IBuildAction.cs" />
+    <Compile Include="ANN\Actions\Unit\AttackAction.cs" />
+    <Compile Include="ANN\Actions\Unit\GuardAction.cs" />
+    <Compile Include="ANN\IUnitManager.cs" />
+    <Compile Include="ANN\Actions\Unit\IUnitAction.cs" />
+    <Compile Include="ANN\Actions\RecruitUnit.cs" />
+    <Compile Include="ANN\Actions\Unit\SquadFormAction.cs" />
+    <Compile Include="ANN\BuildingManager.cs" />
+    <Compile Include="ANN\FactionManager.cs" />
+    <Compile Include="ANN\FactionPlacementDecider.cs" />
+    <Compile Include="ANN\Actions\IManagementAction.cs" />
+    <Compile Include="ANN\IBuildingManager.cs" />
+    <Compile Include="ANN\IFactionAI.cs" />
+    <Compile Include="ANN\IFactionManager.cs" />
+    <Compile Include="ANN\IManager.cs" />
+    <Compile Include="ANN\IPlacementDecider.cs" />
+    <Compile Include="ANN\IRecruitmentManager.cs" />
+    <Compile Include="ANN\RecruitmentManager.cs" />
+    <Compile Include="ANN\UnitAI\IArmyManagement.cs" />
+    <Compile Include="ANN\UnitManager.cs" />
+    <Compile Include="ANN\War\IWarmodule.cs" />
+    <Compile Include="ANN\War\Warmodule.cs" />
+    <Compile Include="AttackResult.cs" />
+    <Compile Include="Combat\IActionHandler.cs" />
+    <Compile Include="Combat\Fleeing.cs" />
+    <Compile Include="Combat\ICombatBehaviour.cs" />
+    <Compile Include="Combat\IFight.cs" />
+    <Compile Include="Factions\Army.cs" />
+    <Compile Include="Factions\Custom\INeutralFaction.cs" />
+    <Compile Include="Factions\Custom\NeutralFaction.cs" />
+    <Compile Include="Factions\Diplomacy\FactionRelations.cs" />
+    <Compile Include="Factions\Diplomacy\IFactionRelations.cs" />
+    <Compile Include="Factions\Diplomacy\IFactionRelation.cs" />
+    <Compile Include="Factions\Diplomacy\FactionRelation.cs" />
+    <Compile Include="Factions\Diplomacy\RelationType.cs" />
+    <Compile Include="Factions\Faction.cs" />
+    <Compile Include="Factions\FactionStrength.cs" />
+    <Compile Include="Factions\IArmy.cs" />
+    <Compile Include="Factions\IArmyUnit.cs" />
+    <Compile Include="Factions\ITaxes.cs" />
+    <Compile Include="Factions\StrengthMap.cs" />
+    <Compile Include="Factions\Taxes.cs" />
+    <Compile Include="Combat\Fight.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="Gamecore\GameplaySettings.cs" />
+    <Compile Include="Gamecore\GameTime.cs" />
+    <Compile Include="Gamecore\Helpers\Actions.cs" />
+    <Compile Include="Gamecore\Helpers\Zones.cs" />
+    <Compile Include="Gamecore\IGameTime.cs" />
+    <Compile Include="Factions\IFaction.cs" />
+    <Compile Include="Gamecore\Log\DebugLog.cs" />
+    <Compile Include="Gamecore\Log\ILogger.cs" />
+    <Compile Include="Gamecore\IObjectFactory.cs" />
+    <Compile Include="Gamecore\Utility.cs" />
+    <Compile Include="GameFrame.cs" />
+    <Compile Include="IGame.cs" />
+    <Compile Include="Units\Actions\IUnitAction.cs" />
+    <Compile Include="Units\Actions\UnitActionIntent.cs" />
+    <Compile Include="Units\Actions\UnitAttack.cs" />
+    <Compile Include="Units\BaseUnit.cs" />
+    <Compile Include="Units\ISquad.cs" />
+    <Compile Include="Units\IUnit.cs" />
+    <Compile Include="IZone.cs" />
+    <Compile Include="Orders\BuildOrder.cs" />
+    <Compile Include="Orders\FollowOrder.cs" />
+    <Compile Include="Orders\GuardAreaOrder.cs" />
+    <Compile Include="Orders\UnitOrderBase.cs" />
+    <Compile Include="ProductionFactory.cs" />
+    <Compile Include="Saving\FactionPreference.cs" />
+    <Compile Include="Saving\ICustomSerializable.cs" />
+    <Compile Include="Saving\ISerialized.cs" />
+    <Compile Include="Saving\ISavegame.cs" />
+    <Compile Include="Orders\AttackArea.cs" />
+    <Compile Include="Saving\TestSave.cs" />
+    <Compile Include="Sites\ICapital.cs" />
+    <Compile Include="Sites\IPopulatedArea.cs" />
+    <Compile Include="Sites\Outpost.cs" />
+    <Compile Include="Sites\PopulatedArea.cs" />
+    <Compile Include="Units\IUnitRoleplayable.cs" />
+    <Compile Include="Units\Squads\ISquadBehaviour.cs" />
+    <Compile Include="Units\UnitState.cs" />
+    <Compile Include="Units\Zombie.cs" />
+    <Compile Include="Weapons\IWeapon.cs" />
+    <Compile Include="Orders\IUnitOrder.cs" />
+    <Compile Include="Orders\TravelOrder.cs" />
+    <Compile Include="Pathfinding\IPathfinder.cs" />
+    <Compile Include="Pathfinding\IPathfindingNode.cs" />
+    <Compile Include="Pathfinding\Pathfinder.cs" />
+    <Compile Include="Pathfinding\PriorityQueue.cs" />
+    <Compile Include="Roleplaying\CharacterLevel.cs" />
+    <Compile Include="Roleplaying\ICharacterLevel.cs" />
+    <Compile Include="Roleplaying\ICharacterModifier.cs" />
+    <Compile Include="Roleplaying\IRoleplayable.cs" />
+    <Compile Include="Roleplaying\Stats\CharacterStats.cs" />
+    <Compile Include="Roleplaying\Stats\ICharacterSkills.cs" />
+    <Compile Include="Roleplaying\Stats\ICharacterStats.cs" />
+    <Compile Include="Roleplaying\Stats\IWeaponStats.cs" />
+    <Compile Include="Roleplaying\LevelProgressModifier.cs" />
+    <Compile Include="Roleplaying\Stats\WeaponStats.cs" />
+    <Compile Include="Saving\SaveGame.cs" />
+    <Compile Include="Vector2.cs" />
+    <Compile Include="Vector3.cs" />
+    <Compile Include="Weapons\Bow.cs" />
+    <Compile Include="Weapons\Muldsword.cs" />
+    <Compile Include="Weapons\Smackhammer.cs" />
+    <Compile Include="Weapons\Sword.cs" />
+    <Compile Include="Weapons\Unarmed.cs" />
+    <Compile Include="Zone.cs" />
+    <Compile Include="Pathfinding\Pathing.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Units\Squad.cs" />
+    <Compile Include="Units\Unit.cs" />
+    <Compile Include="Units\SquadRank.cs" />
+    <Compile Include="Weapons\Weapon.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
