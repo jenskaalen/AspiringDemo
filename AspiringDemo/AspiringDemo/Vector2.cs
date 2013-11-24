@@ -16,5 +16,12 @@ namespace AspiringDemo
             X = x;
             Y = y;
         }
+
+        public static int operator - (Vector2 toSubtract, Vector2 subtracer)
+        {
+
+
+            return 0;
+        }
     }
 }

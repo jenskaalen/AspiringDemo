@@ -19,6 +19,9 @@ namespace AspiringDemo.Pathfinding
 
         public List<T> GetPath(T startNode, T endNode)
         {
+            if (startNode == null || endNode == null)
+                throw new Exception("Startnode or endnode cant be null");
+
             List<T> path = new List<T>();
             OpenList = new PriorityQueue<T>();
             ClosedList = new List<T>();
@@ -40,9 +43,13 @@ namespace AspiringDemo.Pathfinding
 
                 AssessNode(currentNode, endNode);
             }
-            return path;
         }
 
+        /// <summary>
+        /// Finds nodes and adds them to OpenList if viable for the path. If node already is in OpenList - f,g,h values of node are re-computed
+        /// </summary>
+        /// <param name="currentNode"></param>
+        /// <param name="endNode"></param>
         private void AssessNode(T currentNode, T endNode)
         {
             T bestNode = null;

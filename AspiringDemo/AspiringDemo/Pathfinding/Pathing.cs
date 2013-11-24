@@ -8,30 +8,32 @@ namespace AspiringDemo
 {
     public class Pathing
     {
-        public List<Zone> Zones { get; set; }
+        public List<IZone> Zones { get; set; }
 
 
-        public Zone GetZone(int xPos, int yPos)
+        public IZone GetZone(int xPos, int yPos)
         {
-            Zone zone = null;
+            IZone zone = null;
 
-            zone = Zones.Where(xZone => xZone.PositionXStart < xPos && xZone.PositionXEnd > xPos && xZone.PositionYStart < yPos && xZone.PositionYEnd > yPos).FirstOrDefault();
+            zone = Zones.FirstOrDefault(xZone => xZone.PositionXStart < xPos && xZone.PositionXEnd > xPos && xZone.PositionYStart < yPos && xZone.PositionYEnd > yPos);
 
             return zone;
         }
 
-        public Zone GetZone(Vector2 pos)
+        public IZone GetZone(Vector2 pos)
         {
-            Zone zone = null;
+            IZone zone = null;
 
-            zone = Zones.Where(xZone => xZone.PositionXStart < pos.X && xZone.PositionXEnd > pos.X && xZone.PositionYStart < pos.Y && xZone.PositionYEnd > pos.Y).FirstOrDefault();
+            zone = Zones.FirstOrDefault(xZone => xZone.PositionXStart < pos.X && xZone.PositionXEnd > pos.X && xZone.PositionYStart < pos.Y && xZone.PositionYEnd > pos.Y);
 
             return zone;
         }
 
-        public List<Zone> GetComputedZonePath(Vector2 startPosition, Vector2 endPosition)
+        public List<IZone> GetComputedZonePath(Vector2 startPosition, Vector2 endPosition)
         {
-            Pathfinder<Zone> finder = new Pathfinder<Zone>();
+            throw new NotImplementedException();
+
+            Pathfinder<IZone> finder = new Pathfinder<IZone>();
             finder.Nodes = Zones;
 
             //List<Zone> allZones = new List<Zone>();
@@ -40,7 +42,7 @@ namespace AspiringDemo
             //Zone startZone = GetZone(startPosition);
             //Zone endZone = GetZone(endPosition);
 
-            List<Zone> computedList = new List<Zone>();
+            List<IZone> computedList = new List<IZone>();
 
             //Zone currentZone = startZone;
 

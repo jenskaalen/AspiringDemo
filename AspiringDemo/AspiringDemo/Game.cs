@@ -5,58 +5,122 @@ using System.Text;
 using AspiringDemo.Pathfinding;
 using System.Threading;
 using System.Diagnostics;
+using AspiringDemo.Gamecore;
+using AspiringDemo.Saving;
+using AspiringDemo.Factions;
+using AspiringDemo.GameCore;
+using Ninject;
+using Ninject.Parameters;
 
 namespace AspiringDemo
 {
-    public static class Game
+    //TODO: Extract interface and replace concretions
+    // or?
+    public class Game : IGame
     {
-        public static List<Faction> Factions { get; set; }
-        public static List<Weapon> Weapons { get; set; }
-        public static int FactionCount { get; set; }
-        public static bool IncludeMonsters { get; set; }
-        public static int ZonesWidth { get; set; }
-        public static int ZonesHeight { get; set; }
-        public static Pathing Pathfinding { get; set; }
-        public static ISavegame SaveGame { get; set; }
-        public static IObjectFactory ObjectFactory { get; set; }
-        public static long GameTime { get; set; }
-        public static bool GamePaused { get; set; }
-        
+        public List<IFaction> Factions { get; set; }
+        public List<IWeapon> Weapons { get; set; }
+        public int FactionCount { get; set; }
+        public bool IncludeMonsters { get; set; }
+        public int ZonesWidth { get; set; }
+        public int ZonesHeight { get; set; }
+        public Pathing Pathfinding { get; set; }
+        public ISavegame Savegame { get; set; }
+        public IObjectFactory ObjectFactory { get; set; }
+        public IGameTime GameTime { get; set; }
+        public Pathfinder<IZone> ZonePathfinder { get; set; }
+        //public const int TimeToTravelThroughZone = 1;
+        public int TimeToTravelThroughZone { get; set; }
 
-        public static Pathfinder<Zone> ZonePathfinder { get; set; }
-        //public static IObjectGenerator ObjectGenerator { get; set; }
-        //TODO: Rework
-        public const int TimeToTravelThroughZone = 5;
+        //const int ZoneWidth = 500;
+        //const int ZoneHeight = 500;
 
-        const int zoneWidth = 500;
-        const int zoneHeight = 500;
+        //private int _milisecondsPerTimeTick = 1000;
+        private int MilisecondsPerTimeTick { get; set; }
 
-        public static void Initialize()
+        private bool _timerStarted = false;
+        private StrengthMap _strengthMap;
+        public StandardKernel Factory 
         {
-            Factions = new List<Faction>();
-            Pathfinding = new Pathing();
-            Pathfinding.Zones = CreateZones();
-            ZonePathfinder = new Pathfinder<Zone>();
-            ZonePathfinder.Nodes = CreateZones();
-            Thread timerThread = new Thread(CountGametime);
-            timerThread.Start();
-            Thread orderThread = new Thread(WorkOrders);
-            orderThread.Start();
+            get { return _kernel; }
+            set { _kernel = value;  }
         }
 
-        private static List<Zone> CreateZones()
+        private StandardKernel _kernel = new StandardKernel(new ProductionFactory());
+
+        public Game()
         {
-            List<Zone> zones = new List<Zone>();
+            GameTime = new GameTime();
+        }
+
+        public Game(ISavegame savegame, IObjectFactory factory)
+        {
+            Savegame = savegame;
+            ObjectFactory = factory;
+        }
+
+        public void Initialize()
+        {
+            GameTime = new GameTime();
+            GameTime.MilisecondsPerTick = MilisecondsPerTimeTick;
+            Factions = new List<IFaction>();
+            PopulateZonesAndNodes();
+
+            if (GameTime.MilisecondsPerTick == 0)
+            {
+                GameTime.MilisecondsPerTick = 1000;
+            }
+        }
+
+        [Obsolete]
+        public void Initialize(bool populateZones)
+        {
+            GameTime.MilisecondsPerTick = MilisecondsPerTimeTick;
+            Factions = new List<IFaction>();
+
+            if (GameTime.MilisecondsPerTick == 0)
+            {
+                GameTime.MilisecondsPerTick = 1000;
+            }
+
+            if (populateZones)
+                PopulateZonesAndNodes();
+        }
+
+        public void PopulateZonesAndNodes()
+        {
+            //TODO: Dont use magic numbers for zones
+            Pathfinding = new Pathing();
+            Pathfinding.Zones = CreateZones(500, 500);
+            ZonePathfinder = new Pathfinder<IZone>();
+            ZonePathfinder.Nodes = CreateZones(500, 500);
+        }
+
+        /// <summary>
+        /// Starts the game clock which will automatically call the GameTimeTick at set intervalls
+        /// </summary>
+        public void StartTimer()
+        {
+            if (!_timerStarted)
+            {
+                Thread timerThread = new Thread(GameTickTimeLoop);
+                timerThread.Start();
+            }
+        }
+
+        private List<IZone> CreateZones(int width, int height)
+        {
+            List<IZone> zones = new List<IZone>();
 
             for (int i = 0; i < ZonesWidth; i++)
             {
                 for (int j = 0; j < ZonesHeight; j++)
                 {
-                    Zone newZone = new Zone();
-                    newZone.PositionXStart = zoneWidth * i + 1;
-                    newZone.PositionXEnd = zoneWidth * i + zoneWidth;
-                    newZone.PositionYStart = zoneHeight * j + 1;
-                    newZone.PositionYEnd = zoneHeight * j + zoneHeight;
+                    IZone newZone = new Zone();
+                    newZone.PositionXStart = width * i + 1;
+                    newZone.PositionXEnd = width * i + width;
+                    newZone.PositionYStart = height * j + 1;
+                    newZone.PositionYEnd = height * j + height;
                     zones.Add(newZone);
                 }
             }
@@ -64,62 +128,25 @@ namespace AspiringDemo
             return zones;
         }
 
-        public static void AddFaction(Faction faction)
+        public Faction CreateFaction()
         {
             if (Factions == null)
-                Factions = new List<Faction>();
+                Factions = new List<IFaction>();
 
-            Factions.Add(faction);
+            Faction newFaction = _kernel.Get<Faction>(new ConstructorArgument("factory", this.ObjectFactory));
+            newFaction.Initialize();
+            Factions.Add(newFaction);
+
+            if (GameTime != null)
+                _strengthMap = new StrengthMap(GameTime.Time);
+
+            return newFaction;
         }
-
-
-        //TODO: Remove
-        //public static bool IsZoneContested(Zone zone)
-        //{
-        //    //TODO: Doesnt take account for relations
-        //    int factionsInZone = 0;
-
-        //    foreach (Faction faction in Game.Factions)
-        //    {
-        //        if (faction.Squads.Where(x => x.State != SquadState.Destroyed && x.Zone == zone).Any())
-        //            factionsInZone++;
-        //    }
-
-        //    if (factionsInZone > 1)
-        //        return true;
-        //    else
-        //        return false;
-        //}
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="zone"></param>
-        ///// <returns>Returns null if no zone is found</returns>
-        //public static List<Squad> IsZoneContestedSquads(Zone zone)
-        //{
-        //    List<Squad> squads = new List<Squad>();
-        //    int factionsInZone = 0;
-
-        //    foreach (Faction faction in Game.Factions)
-        //    {
-        //        if (faction.Squads.Where(x => x.State != SquadState.Destroyed && x.Zone == zone).Any())
-        //        {
-        //            factionsInZone++;
-        //            squads.AddRange(faction.Squads.Where(x => x.Zone == zone));
-        //        }
-        //    }
-
-        //    if (factionsInZone > 1)
-        //        return squads;
-        //    else
-        //        return null;
-        //}
 
         /// <summary>
         /// Processes a zone and creates the necessary events - fights
         /// </summary>
-        public static void ProcessZones()
+        public void ProcessZones()
         {
             foreach (Zone zone in Pathfinding.Zones)
             {
@@ -127,91 +154,37 @@ namespace AspiringDemo
             }
         }
 
-        //public static void ProcessZone(Zone zone)
-        //{
-        //    if (zone.Fight != null)
-        //    {
-        //        if (zone.Fight.FightActive)
-        //        {
-        //            zone.Fight.PerformFightRound();
-        //        }
-        //        else
-        //        {
-        //            //fight has ended so we clean up
-        //            zone.Fight = null;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        List<Squad> contestedZoneSquads = IsZoneContestedSquads(zone);
-
-        //        if (contestedZoneSquads != null)
-        //        {
-        //            foreach (var squad in contestedZoneSquads)
-        //            {
-        //                squad.State = SquadState.Fighting;
-        //            }
-
-        //            if (zone.Fight == null)
-        //            {
-        //                Fight zoneFight = new Fight();
-        //                //TODO: rework this to use custom adding method?
-        //                //zoneFight.Squads.AddRange(contestedZoneSquads);
-
-        //                contestedZoneSquads.ForEach(contestedZoneSquad => zoneFight.AddSquad(contestedZoneSquad));
-        //                zone.Fight = zoneFight;
-        //            }
-        //        }
-        //    }
-        //}
-
-        public static void CountGametime()
+        /// <summary>
+        /// Keeps ticking time in a loop
+        /// </summary>
+        private void GameTickTimeLoop()
         {
             while (true)
             {
-                if (!GamePaused)
-                    GameTime++;
-
-                System.Threading.Thread.Sleep(1000);
+                GametimeTick();
+                System.Threading.Thread.Sleep(GameTime.MilisecondsPerTick);
             }
         }
 
-        public static void WorkOrders()
+        /// <summary>
+        /// One tick of gametime
+        /// </summary>
+        public void GametimeTick()
         {
-            while (true)
+            if (!GameTime.GamePaused)
             {
-                Debug.WriteLine("working orders");
+                GameTime.Time++;
 
-                foreach (Faction faction in Factions)
+                if (GameTime.TimeTicker != null)
                 {
-                    foreach (Squad squad in faction.Squads)
-                    {
-                        foreach (Character character in squad.Members)
-                        {
-                            if (character.Order != null)
-                            {
-                                if (character.Order.IsExecuting)
-                                {
-                                    character.Order.Work();
-                                }
-                                else
-                                {
-                                    if (character.Order.IsDone)
-                                    {
-                                        character.Order = null;
-                                    }
-                                    else
-                                    {
-                                        character.Order.Execute();
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    GameTime.TimeTicker(GameTime.Time);
                 }
 
-                Thread.Sleep(1000);
+                foreach (var zone in ZonePathfinder.Nodes.Where(x => x.Fight != null))
+                    zone.Fight.PerformFightRound();
             }
         }
+
+
     }
 }
