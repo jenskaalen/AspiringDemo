@@ -51,17 +51,18 @@ namespace AspiringDemo
         public Game()
         {
             GameTime = new GameTime();
+            GameTime = new GameTime();
         }
 
         public Game(ISavegame savegame, IObjectFactory factory)
         {
+            GameTime = new GameTime();
             Savegame = savegame;
             ObjectFactory = factory;
         }
 
         public void Initialize()
         {
-            GameTime = new GameTime();
             GameTime.MilisecondsPerTick = MilisecondsPerTimeTick;
             Factions = new List<IFaction>();
             PopulateZonesAndNodes();

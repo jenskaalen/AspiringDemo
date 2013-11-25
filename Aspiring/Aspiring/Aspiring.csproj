@@ -120,6 +120,7 @@
     <Compile Include="Gamecore\Log\ILogger.cs" />
     <Compile Include="Gamecore\IObjectFactory.cs" />
     <Compile Include="Gamecore\Utility.cs" />
+    <Compile Include="Gamecore\XmlCreator.cs" />
     <Compile Include="GameFrame.cs" />
     <Compile Include="IGame.cs" />
     <Compile Include="Units\Actions\IUnitAction.cs" />

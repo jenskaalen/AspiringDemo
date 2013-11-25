@@ -14,7 +14,7 @@ namespace AspiringDemo.Roleplaying
 
         public double XpMultiplier { get; set; }
 
-        public int GetRequiredXpNextLevel(int currentLevelXp)
+        public int GetRequiredXpNextLevel(long currentLevelXp)
         {
             if (currentLevelXp == 0)
                 throw new Exception("currentLevelXp cant be 0!");

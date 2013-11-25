@@ -1,4 +1,5 @@
 ﻿using System;
+using AspiringDemo.Gamecore;
 using AspiringDemo.Units;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AspiringDemo;
@@ -20,8 +21,6 @@ namespace AspiringDemoTest
         Faction muldvarpFaction, bjorneFaction;
         ISquad bjorneSquad, muldvarpSquad;
 
-        //TODO: Rewrite this so it isnt as much an integration test as an unit test
-
         public OrdersIntegration()
         {
         }
@@ -29,6 +28,7 @@ namespace AspiringDemoTest
         [TestInitialize]
         public void Initialize()
         {
+            GameFrame.SetGame(new Game());
             TestSave save = new TestSave("Testo");
             GameFrame.Game.Savegame = save;
             GameFrame.Game.ObjectFactory = save;
@@ -73,29 +73,24 @@ namespace AspiringDemoTest
         }
 
         [TestMethod]
-        public void TravelOrder()
+        public void Perform_Travel_Order()
         {
             GameFrame.Game.GameTime.TimeTicker -= bjorneFaction.GameTimeTick;
 
             IUnit muldvarpen = muldvarpSquad.Leader;
-            GameFrame.Game.ZonePathfinder.Nodes.First().EnterZone(muldvarpen);
 
+            GameFrame.Game.ZonePathfinder.Nodes.First().EnterZone(muldvarpen);
             
             var targetZone = GameFrame.Game.ZonePathfinder.Nodes[2];
-            var travelPath = GameFrame.Game.ZonePathfinder.GetPath(muldvarpen.Zone, targetZone);
 
             TravelOrder order = new TravelOrder(muldvarpen, targetZone);
-            Assert.AreEqual(targetZone, travelPath.Last());
-
-            order = new TravelOrder(muldvarpen, targetZone);
-
-            muldvarpen.AssignOrder(order);
+            TravelOrder.GiveTravelOrder(muldvarpen, targetZone, false);
+            Assert.IsTrue(muldvarpen.Order != null);
             muldvarpen.Order.Execute();
 
             GameFrame.Game.GametimeTick();
             Assert.AreEqual(UnitState.ExecutingOrder, muldvarpen.State);
 
-            //Assert.IsNotNull(GameFrame.Game.GameTime.TimeTicker);
 
             for (int i = 0; i < 30; i++)
             {
@@ -111,53 +106,6 @@ namespace AspiringDemoTest
             Assert.IsTrue(muldvarpen.Order == null);
             Assert.AreEqual(targetZone, muldvarpen.Zone);
         }
-
-        //[TestMethod]
-        //public void Attack_And_Raze_OutPost()
-        //{
-        //    throw new NotImplementedException("Need to rewrite or remove attack..");
-
-        //    GameFrame.Game.Factions.ForEach(faction =>  faction.FactionManager.UnitManager = null);
-
-        //    //TODO: Need to change followorder into travelorder 
-        //    GameFrame.Game.GameTime.TimeTicker -= bjorneFaction.GameTimeTick;
-        //    IUnit muldvarpen = muldvarpSquad.Leader;
-        //    var startZone = GameFrame.Game.ZonePathfinder.Nodes.First();
-        //    var targetZone = GameFrame.Game.ZonePathfinder.Nodes[16];
-
-
-        //    startZone.EnterZone(muldvarpSquad);
-        //    var bjorneFort = new Outpost(bjorneFaction, null);
-        //    targetZone.EnterZone(bjorneSquad);
-        //    targetZone.PopulatedAreas = new List<IPopulatedArea>();
-        //    targetZone.PopulatedAreas.Add(bjorneFort);
-            
-        //    var order = new AttackArea(muldvarpen, bjorneFort);
-        //    order.TargetZone = targetZone;
-        //    order.TravelPath = GameFrame.Game.ZonePathfinder.GetPath(muldvarpen.Zone, order.TargetZone);
-
-        //    muldvarpen.AssignOrder(order);
-            
-
-        //    order.Execute();
-
-        //    Assert.AreEqual(UnitState.ExecutingOrder, muldvarpen.State);
-        //    Assert.AreEqual(2, muldvarpSquad.Members.Where(x => x != muldvarpen && x.Order != null).Count());
-        //    Assert.AreEqual(muldvarpen, ((FollowOrder)(muldvarpSquad.Members.FirstOrDefault(x => x != muldvarpen && x.Order != null).Order)).FollowTarget);
-
-        //    for (int i = 0; i < 18; i++)
-        //    {
-        //        GameFrame.Game.GametimeTick();
-
-        //        if (targetZone.Fight != null)
-        //            targetZone.Fight.PerformFightRound();
-        //    }
-
-
-        //    Assert.AreEqual(order.TargetZone, muldvarpen.Zone);
-        //    Assert.AreEqual(UnitState.Idle, muldvarpen.State);
-        //    Assert.AreEqual(true, bjorneFort.Razed);
-        //}
 
         public List<IZone> GetTestZones()
         {

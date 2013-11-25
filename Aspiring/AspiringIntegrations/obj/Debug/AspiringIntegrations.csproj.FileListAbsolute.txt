@@ -16,3 +16,4 @@ G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\Ninject.xml
 G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\obj\Debug\AspiringIntegrations.csprojResolveAssemblyReference.cache
 G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\obj\Debug\AspiringDemoIntegrations.dll
 G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\obj\Debug\AspiringDemoIntegrations.pdb
+G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\Creator\Units.xml

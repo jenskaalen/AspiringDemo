@@ -17,3 +17,4 @@ G:\Prosjekter\Aspiring\Aspiring\AspiringTest\bin\Debug\Ninject.xml
 G:\Prosjekter\Aspiring\Aspiring\AspiringTest\obj\Debug\AspiringTests.csprojResolveAssemblyReference.cache
 G:\Prosjekter\Aspiring\Aspiring\AspiringTest\obj\Debug\AspiringDemoTest.dll
 G:\Prosjekter\Aspiring\Aspiring\AspiringTest\obj\Debug\AspiringDemoTest.pdb
+G:\Prosjekter\Aspiring\Aspiring\AspiringTest\bin\Debug\Creator\Units.xml

@@ -85,6 +85,14 @@ namespace AspiringDemo.Units
         {
             Kills++;
 
+            int bestweapon = Weapons.Max(x => x.BaseDamage);
+
+            foreach (var weapon in target.Weapons.Where(wpn => wpn.BaseDamage > bestweapon))
+            {
+                Weapons.Add(weapon);
+            }
+
+            target.Weapons.RemoveAll(wpn => wpn.BaseDamage > bestweapon);
             CharacterLevel.GainXP(target.XPWorth);
         }
 

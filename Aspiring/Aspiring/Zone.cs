@@ -50,6 +50,7 @@ namespace AspiringDemo
         {
             PopulatedAreas = new List<IPopulatedArea>();
             Units = new List<IUnit>();
+            Neighbours = new List<IPathfindingNode>();
         }
 
         private void AddUnit(IUnit unit)

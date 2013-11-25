@@ -97,26 +97,11 @@ namespace AspiringDemo.Combat
             else
             {
                 //any port in a storm - we pick any neighbor 
-                return (IZone) unit.Zone.Neighbours.FirstOrDefault();
+                if (unit.Zone.Neighbours.Any())
+                    return (IZone) unit.Zone.Neighbours.FirstOrDefault();
+                else return null;
             }
         }
-
-        //public static IZone DetermineRetreatZone(IFaction faction, IFight fight)
-        //{
-        //    // try to find the area
-        //    if (faction.Areas.Any())
-        //    {
-        //        IZone retreatZone = Zones.GetClosestZone(fight.Zone.Position,
-        //            unit.Faction.Areas.Select(area => area.Zone).ToList());
-
-        //        return retreatZone;
-        //    }
-        //    else
-        //    {
-        //        //any port in a storm - we pick any neighbor 
-        //        return (IZone)unit.Zone.Neighbours.FirstOrDefault();
-        //    }
-        //}
 
         public static void CheckAndPerformFleeing(IFaction faction, IFight fight)
         {
@@ -131,11 +116,8 @@ namespace AspiringDemo.Combat
                     var anyUnit = fight.FightingUnits.FirstOrDefault(unit => unit.Faction == faction);
                     var retreatZone = DetermineRetreatZone(anyUnit);
 
-                    //TODO: Remove
-                    int count = fight.FightingUnits.Count(unit => unit.Faction == faction);
-
-                    Actions.GiveRetreatOrder(faction, fight, retreatZone);
-                    GameFrame.Debug.Log(String.Format("{0} units from faction {1} retreated from a fight.", count, faction.Name));
+                    if (retreatZone != null)
+                        Actions.GiveRetreatOrder(faction, fight, retreatZone);
                 }
             }
         }

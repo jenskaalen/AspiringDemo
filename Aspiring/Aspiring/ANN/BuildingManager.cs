@@ -26,7 +26,6 @@ namespace AspiringDemo.ANN
         {
             Faction = faction;
             AllowedActions = new List<IBuildAction>();
-            //TODO: Create the outpost from settings
             var newbuild = new BuildOutpost(this.Faction);
             AllowedActions.Add(newbuild);
         }

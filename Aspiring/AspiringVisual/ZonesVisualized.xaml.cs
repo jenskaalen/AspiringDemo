@@ -27,7 +27,7 @@ namespace AspiringVisual
     /// </summary>
     public partial class ZonesVisualized : Page
     {
-        private int _worldSize = 12;
+        private int _worldSize = 50;
         private Dictionary<IFaction, Color> _colorTable;
         private Color _fightColor;
         private System.Action m_thread;
@@ -73,7 +73,7 @@ namespace AspiringVisual
                 m_thread = StartThread;
                 m_thread.BeginInvoke(EndThread, null);
 
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(300);
             }
         }
 
