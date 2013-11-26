@@ -21,14 +21,6 @@ namespace AspiringDemo.ANN
         public int ActionsPerTurn { get; set; }
         public List<IManagementAction> QueuedActions { get; set; }
 
-        //public FactionManager()
-        //{
-        //    QueuedActions = new List<IManagementAction>();
-        //    //TODO: Move to constructor
-        //    UnitManager = new UnitManager();
-        //    UnitManager.Faction = Faction;
-        //}
-
         public FactionManager(IFaction faction)
         {
             Faction = faction;

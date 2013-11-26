@@ -11,14 +11,14 @@ namespace AspiringDemo.Roleplaying
 
     public class CharacterLevel : AspiringDemo.Roleplaying.ICharacterLevel
     {
-        public int Level { get; set; }
-        public int CurrentXP { get; private set; }
-        public int NextLevelXP { get; set; }
-        public int StartLevelXP { get; set; }
+        public long Level { get; set; }
+        public long CurrentXP { get; private set; }
+        public long NextLevelXP { get; set; }
+        public long StartLevelXP { get; set; }
         public LevelProgressModifier ProgressModifier { get; set; }
         public LevelGain GainLevel { get; set; }
 
-        public int XpWorth
+        public long XpWorth
         {
             get
             {
@@ -35,7 +35,7 @@ namespace AspiringDemo.Roleplaying
             NextLevelXP = 50;
         }
 
-        public void GainXP(int xp)
+        public void GainXP(long xp)
         {
             CurrentXP += xp;
 

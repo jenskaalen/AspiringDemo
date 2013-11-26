@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ability.cs" />
+    <Compile Include="GameActions\CompositeAction.cs" />
+    <Compile Include="GameActions\GameAction.cs" />
     <Compile Include="ANN\ActionManager.cs" />
     <Compile Include="ANN\Actions\BuildOutpost.cs" />
     <Compile Include="ANN\Actions\IBuildAction.cs" />
@@ -110,6 +112,10 @@
     <Compile Include="Factions\Taxes.cs" />
     <Compile Include="Combat\Fight.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameActions\Parallel.cs" />
+    <Compile Include="GameActions\Patrol.cs" />
+    <Compile Include="GameActions\Sequence.cs" />
+    <Compile Include="GameActions\ZoneMove.cs" />
     <Compile Include="Gamecore\GameplaySettings.cs" />
     <Compile Include="Gamecore\GameTime.cs" />
     <Compile Include="Gamecore\Helpers\Actions.cs" />

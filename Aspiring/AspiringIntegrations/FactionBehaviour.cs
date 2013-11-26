@@ -115,30 +115,29 @@ namespace AspiringDemoIntegrations
             //Assert.AreEqual(3, _faction.Units.Where(x => x.State == UnitState.Idle).Count());
         }
 
-        ////TODO: Remove/rework this?
-        //private IFaction LoadFaction()
-        //{
-        //    IFaction faction = NinFactory.Instance.Get<IFaction>();
-        //    faction.Initialize();
-        //    faction.Wealth = 1000;
+        //TODO: Remove/rework this?
+        private IFaction LoadFaction()
+        {
+            IFaction faction = NinFactory.Instance.Get<IFaction>();
+            faction.Initialize();
+            faction.Wealth = 1000;
 
-        //    //faction.FactionManager = new FactionManager(faction);
-        //    //faction.FactionManager.BuildManager = new BuildingManager(faction);
-        //    //faction.FactionManager.RecruitmentManager = new RecruitmentManager(faction);
+            //faction.FactionManager = new FactionManager(faction);
+            //faction.FactionManager.BuildManager = new BuildingManager(faction);
+            //faction.FactionManager.RecruitmentManager = new RecruitmentManager(faction);
 
-        //    Outpost outpost = new Outpost (faction, null)
-        //    {AreaValue = 700, BuildTime = 20, Cost = 700};
+            Outpost outpost = new Outpost(faction, null) { AreaValue = 700, BuildTime = 20, Cost = 700 };
 
-        //    var fp = new FactionPreference();
-        //    fp.ObjectType = typeof(Outpost);
-        //    fp.SerializedData = outpost.GetSerializedData();
+            var fp = new FactionPreference();
+            fp.ObjectType = typeof(Outpost);
+            fp.SerializedData = outpost.GetSerializedData();
 
-        //    var settings = new System.Collections.Generic.List<ISerializedTypeData>();
-        //    settings.Add(fp);
+            var settings = new System.Collections.Generic.List<ISerializedTypeData>();
+            settings.Add(fp);
 
-        //    faction.FactionManager.BuildManager.BuildingSettings = settings;
+            faction.FactionManager.BuildManager.BuildingSettings = settings;
 
-        //    return faction;
-        //}
+            return faction;
+        }
     }
 }
