@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="Actions.cs" />
     <Compile Include="ANN.cs" />
+    <Compile Include="Behaviour\Actions.cs" />
     <Compile Include="Combat\Flee.cs" />
     <Compile Include="Combat\Looting.cs" />
     <Compile Include="FactionAI.cs" />

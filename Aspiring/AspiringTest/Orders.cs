@@ -72,8 +72,7 @@ namespace AspiringDemoTest
             Assert.AreEqual(unit1.Order.GetType(), typeof(GuardAreaOrder));
             Assert.AreEqual(unit1.Faction, faction);
 
-            zone.EnterZone(unit1);
-
+            unit1.EnterZone(zone);
             area.Owner = faction;
             faction.Army.Units.Add(unit1);
 
@@ -115,7 +114,7 @@ namespace AspiringDemoTest
             Assert.AreNotEqual(areaZone, unit1.Zone);
             Assert.AreEqual(startZone, unit1.Zone);
 
-            order.Work(1);
+            order.Update(1f);
 
             Assert.AreNotEqual( startZone, unit1.Zone);
             Assert.AreEqual(areaZone, unit1.Zone);
@@ -156,17 +155,17 @@ namespace AspiringDemoTest
             squad.Members.ForEach(x => x.Order.Execute());
             Assert.AreEqual(SquadState.ExecutingOrder, squad.State);
 
-            squad.Members.ForEach(x => x.Order.Work(1));
-            squad.Members.ForEach(x => x.Order.Work(2));
+            squad.Members.ForEach(x => x.Order.Update(1f));
+            squad.Members.ForEach(x => x.Order.Update(2f));
             Assert.AreEqual(3, squad.Members.Count(unit => unit.State == UnitState.Waiting));
 
             action.Work();
             Assert.IsTrue(action.IsEveryoneInGatherZone());
 
-            squad.Members.ForEach(x => x.Order.Work(3));
+            squad.Members.ForEach(x => x.Order.Update(3f));
             Assert.AreEqual(3, squad.Members.Count(unit => unit.State == UnitState.ExecutingOrder));
 
-            squad.Members.ForEach(x => x.Order.Work(4));
+            squad.Members.ForEach(x => x.Order.Update(4f));
             Assert.AreEqual(3, squad.Members.Count(unit => unit.State == UnitState.Idle));
         }
 
@@ -179,7 +178,7 @@ namespace AspiringDemoTest
 
             IZone gatherZone = new Zone();
             IZone targetZone = new Zone(); 
-            gatherZone.EnterZone(sq);
+            sq.EnterZone(gatherZone);
 
             var action = new AttackAction(new Faction(), targetZone, gatherZone, 1);
             action.AddSquad(sq);
@@ -203,8 +202,7 @@ namespace AspiringDemoTest
 
             GameFrame.Game.GameTime = gametime;
             
-            zones[0].EnterZone(unit);
-
+            unit.EnterZone(zones[0]);
             AspiringDemo.Gamecore.Helpers.Actions.GiveRetreatOrder(unit, zones[4]);
             Assert.IsTrue(unit.Order != null);
             Assert.AreEqual(unit.Zone, zones[1]);

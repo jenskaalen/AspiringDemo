@@ -24,15 +24,15 @@ namespace AspiringDemoTest
             var faction1 = GameFrame.Game.Factory.Get<IFaction>();
             var faction2 = GameFrame.Game.Factory.Get<IFaction>();
             var unit1 = GameFrame.Game.Factory.Get<IUnit>(new ConstructorArgument("faction", faction1));
-            unit1.Weapons.Add(new Sword());
+            unit1.Items.Weapons.Add(new Sword());
             var unit2 = GameFrame.Game.Factory.Get<IUnit>(new ConstructorArgument("faction", faction2));
 
             var attack = new UnitAttack(unit1, unit2);
-            attack.Work(1);
+            attack.Update(1f);
             Assert.AreEqual(UnitState.Idle, unit2.State);
 
             for (int i=0; i < 15; i++)
-                attack.Work(1);
+                attack.Update(1);
 
             Assert.AreEqual(UnitState.Dead, unit2.State);
         }

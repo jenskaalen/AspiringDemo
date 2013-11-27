@@ -64,6 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ability.cs" />
+    <Compile Include="Combat\CombatModule.cs" />
+    <Compile Include="Combat\INewFight.cs" />
+    <Compile Include="Combat\NewFight.cs" />
     <Compile Include="GameActions\CompositeAction.cs" />
     <Compile Include="GameActions\GameAction.cs" />
     <Compile Include="ANN\ActionManager.cs" />
@@ -93,7 +96,7 @@
     <Compile Include="AttackResult.cs" />
     <Compile Include="Combat\IActionHandler.cs" />
     <Compile Include="Combat\Fleeing.cs" />
-    <Compile Include="Combat\ICombatBehaviour.cs" />
+    <Compile Include="Combat\ICombatModule.cs" />
     <Compile Include="Combat\IFight.cs" />
     <Compile Include="Factions\Army.cs" />
     <Compile Include="Factions\Custom\INeutralFaction.cs" />
@@ -129,6 +132,10 @@
     <Compile Include="Gamecore\XmlCreator.cs" />
     <Compile Include="GameFrame.cs" />
     <Compile Include="IGame.cs" />
+    <Compile Include="Roleplaying\IItems.cs" />
+    <Compile Include="Roleplaying\Items.cs" />
+    <Compile Include="Units\ActionProcesser.cs" />
+    <Compile Include="Units\IActionProcesser.cs" />
     <Compile Include="Units\Actions\IUnitAction.cs" />
     <Compile Include="Units\Actions\UnitActionIntent.cs" />
     <Compile Include="Units\Actions\UnitAttack.cs" />
@@ -166,9 +173,9 @@
     <Compile Include="Roleplaying\ICharacterLevel.cs" />
     <Compile Include="Roleplaying\ICharacterModifier.cs" />
     <Compile Include="Roleplaying\IRoleplayable.cs" />
-    <Compile Include="Roleplaying\Stats\CharacterStats.cs" />
+    <Compile Include="Roleplaying\Stats\UnitStats.cs" />
     <Compile Include="Roleplaying\Stats\ICharacterSkills.cs" />
-    <Compile Include="Roleplaying\Stats\ICharacterStats.cs" />
+    <Compile Include="Roleplaying\Stats\IUnitStats.cs" />
     <Compile Include="Roleplaying\Stats\IWeaponStats.cs" />
     <Compile Include="Roleplaying\LevelProgressModifier.cs" />
     <Compile Include="Roleplaying\Stats\WeaponStats.cs" />

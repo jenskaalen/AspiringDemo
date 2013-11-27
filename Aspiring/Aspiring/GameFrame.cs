@@ -44,9 +44,9 @@ namespace AspiringDemo
 
                 return _instance;
             }
-        } 
+        }
 
-        private static void ReadXmlCreation(long time)
+        private static void ReadXmlCreation(float time)
         {
             _creator.ReadXml("units.xml");
         }

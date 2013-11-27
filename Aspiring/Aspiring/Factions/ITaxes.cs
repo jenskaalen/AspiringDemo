@@ -9,10 +9,10 @@ namespace AspiringDemo.Factions
 {
     public interface ITaxes
     {
-        long LastTaxCollection { get; set; }
-        long NextTaxCollection { get; set; }
-        int CollectionRate { get; set; }
+        float LastTaxCollection { get; set; }
+        float NextTaxCollection { get; set; }
+        float CollectionRate { get; set; }
         double TaxPerPayer { get; set; }
-        int CollectTaxes(List<IPopulatedArea> areas, double taxPerCitizen, long time);
+        int CollectTaxes(List<IPopulatedArea> areas, double taxPerCitizen, float time);
     }
 }

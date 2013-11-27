@@ -120,6 +120,14 @@ namespace AspiringDemo.Units
             }
         }
 
+        public void EnterZone(IZone zone)
+        {
+            foreach (var member in Members)
+            {
+                member.EnterZone(zone);
+            }
+        }
+
 
         public void UpdateMembers()
         {

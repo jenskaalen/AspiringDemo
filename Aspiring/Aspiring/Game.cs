@@ -63,25 +63,25 @@ namespace AspiringDemo
 
         public void Initialize()
         {
-            GameTime.MilisecondsPerTick = MilisecondsPerTimeTick;
+            GameTime.SecondsPerTick = MilisecondsPerTimeTick;
             Factions = new List<IFaction>();
             PopulateZonesAndNodes();
 
-            if (GameTime.MilisecondsPerTick == 0)
+            if (GameTime.SecondsPerTick == 0)
             {
-                GameTime.MilisecondsPerTick = 1000;
+                GameTime.SecondsPerTick = 1f;
             }
         }
 
         [Obsolete]
         public void Initialize(bool populateZones)
         {
-            GameTime.MilisecondsPerTick = MilisecondsPerTimeTick;
+            GameTime.SecondsPerTick = MilisecondsPerTimeTick;
             Factions = new List<IFaction>();
 
-            if (GameTime.MilisecondsPerTick == 0)
+            if (GameTime.SecondsPerTick == 0)
             {
-                GameTime.MilisecondsPerTick = 1000;
+                GameTime.SecondsPerTick = 1f;
             }
 
             if (populateZones)
@@ -163,7 +163,7 @@ namespace AspiringDemo
             while (true)
             {
                 GametimeTick();
-                System.Threading.Thread.Sleep(GameTime.MilisecondsPerTick);
+                System.Threading.Thread.Sleep((int)(GameTime.SecondsPerTick * 1000));
             }
         }
 

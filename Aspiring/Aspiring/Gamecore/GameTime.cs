@@ -8,8 +8,8 @@ namespace AspiringDemo.Gamecore
 {
     public class GameTime : IGameTime
     {
-        public long Time { get; set; }
-        public int MilisecondsPerTick { get; set; }
+        public float Time { get; set; }
+        public float SecondsPerTick { get; set; }
         public bool GamePaused { get; set; }
         public GameTimeTicker TimeTicker { get; set; }
     }

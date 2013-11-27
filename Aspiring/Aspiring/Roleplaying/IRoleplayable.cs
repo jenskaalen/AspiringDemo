@@ -10,8 +10,7 @@ namespace AspiringDemo.Roleplaying
 {
     public interface IRoleplayable
     {
-        ICharacterStats Stats { get; set; }
-        IWeaponStats WeaponStats { get; set; }
+        IUnitStats Stats { get; set; }
         ICharacterSkills Skills { get; set; }
         ICharacterLevel CharacterLevel { get; set; }
         void Loot(IUnit unit);

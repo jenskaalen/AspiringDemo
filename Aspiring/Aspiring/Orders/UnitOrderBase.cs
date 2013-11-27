@@ -36,7 +36,7 @@ namespace AspiringDemo.Orders
             throw new NotImplementedException();
         }
 
-        public virtual void Work(long gameTime)
+        public virtual void Update(float gameTime)
         {
             throw new NotImplementedException();
         }

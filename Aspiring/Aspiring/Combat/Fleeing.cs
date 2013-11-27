@@ -70,12 +70,12 @@ namespace AspiringDemo.Combat
             var enemySpeed =
                 fight.FightingUnits.Where(
                     unit => unit.Faction.Relations.GetRelation(faction).Relation == RelationType.Hostile)
-                    .Average(unit => unit.Speed);
+                    .Average(unit => unit.Stats.Speed);
 
             var selfSpeed =
                 fight.FightingUnits.Where(
                     unit => unit.Faction.Relations.GetRelation(faction).Relation == RelationType.Friendly)
-                    .Average(unit => unit.Speed);
+                    .Average(unit => unit.Stats.Speed);
 
             double speedDifference = selfSpeed - enemySpeed;
             fleeChance += speedDifference;

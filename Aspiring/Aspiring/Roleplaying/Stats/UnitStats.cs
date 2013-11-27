@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AspiringDemo.Roleplaying.Stats
 {
-    public class CharacterStats : ICharacterStats
+    public class UnitStats : IUnitStats
     {
         public int CurrentHp
         {
@@ -62,7 +62,7 @@ namespace AspiringDemo.Roleplaying.Stats
         private int _currentHp;
         private int _nextRegen;
 
-        public CharacterStats()
+        public UnitStats()
         {
             BaseSpeed = 0;
             BaseStrength = 0;
@@ -98,7 +98,7 @@ namespace AspiringDemo.Roleplaying.Stats
             CurrentHp += (MaxHp / 2);
         }
 
-        public void Regen(long time)
+        public void Regen(float time)
         {
             if (time >= _nextRegen)
             {

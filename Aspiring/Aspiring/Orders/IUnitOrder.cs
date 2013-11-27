@@ -16,7 +16,7 @@ namespace AspiringDemo.Orders
         bool IsExecuting { get; set; }
         bool IsDone { get; set; }
         void Execute();
-        void Work(long gameTime);
+        void Update(float gameTime);
         OrderFinished Finish { get; set; }
         string OrderName { get;  }
     }

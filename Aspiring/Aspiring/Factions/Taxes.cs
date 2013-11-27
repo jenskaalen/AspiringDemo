@@ -10,15 +10,15 @@ namespace AspiringDemo.Factions
 {
     public class Taxes : ITaxes
     {
-        public long LastTaxCollection { get; set; }
+        public float LastTaxCollection { get; set; }
 
-        public long NextTaxCollection { get; set; }
+        public float NextTaxCollection { get; set; }
 
-        public int CollectionRate { get; set; }
+        public float CollectionRate { get; set; }
 
         public double TaxPerPayer { get; set; }
 
-        public int CollectTaxes(List<IPopulatedArea> areas, double taxPerCitizen, long time)
+        public int CollectTaxes(List<IPopulatedArea> areas, double taxPerCitizen, float time)
         {
             if (NextTaxCollection > time)
                 return 0;

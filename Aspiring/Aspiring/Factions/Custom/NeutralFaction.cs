@@ -52,7 +52,7 @@ namespace AspiringDemo.Factions.Custom
             var zone = GameFrame.Game.ZonePathfinder.Nodes[GameFrame.Random.Next(0, GameFrame.Game.ZonePathfinder.Nodes.Count)];
             Army.AddUnit(zed);
 
-            zone.EnterZone(zed);
+            zed.EnterZone(zone);
 
             return zed;
         }
@@ -60,8 +60,7 @@ namespace AspiringDemo.Factions.Custom
         public IUnit CreateStandardUnit(IZone zone)
         {
             var zed = new Zombie(this);
-
-            zone.EnterZone(zed);
+            zed.EnterZone(zone);
             Army.AddUnit(zed);
 
             return zed;
@@ -112,7 +111,7 @@ namespace AspiringDemo.Factions.Custom
             throw new NotImplementedException();
         }
 
-        public void GameTimeTick(long time)
+        public void GameTimeTick(float time)
         {
             bool isZombieTime = GameFrame.Random.Next(0, 30) == 1;
 
@@ -151,7 +150,7 @@ namespace AspiringDemo.Factions.Custom
                 if (unit.State == UnitState.Idle)
                     unit.State = UnitState.ExecutingOrder;
 
-                unit.Order.Work(time);
+                unit.Order.Update(time);
             }
         }
 

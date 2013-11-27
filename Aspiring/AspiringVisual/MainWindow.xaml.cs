@@ -101,7 +101,7 @@ namespace AspiringVisual
             _squad.Members[3].Name = "Rotor";
             _squad.Members[4].Name = "Muldvarpen";
             _squad.Members[4].Rank = SquadRank.Commander;
-            _squad.Members[4].Weapons.Add(new Smackhammer());
+            _squad.Members[4].Items.Weapons.Add(new Smackhammer());
 
             _game.Factions[0].CreateUnit();
             _game.Factions[0].CreateUnit();

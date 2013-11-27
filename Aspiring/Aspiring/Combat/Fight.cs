@@ -53,7 +53,7 @@ namespace AspiringDemo.Combat
                     if (target == null) continue;
 
                     var attack = new UnitAttack(member, target);
-                    attack.Work(GameFrame.Game.GameTime.Time);
+                    attack.Update(GameFrame.Game.GameTime.Time);
                 }
                 
             }
@@ -97,7 +97,7 @@ namespace AspiringDemo.Combat
 
         private List<IUnit> GetAttackersByOrder()
         {
-            return _allUnits.OrderBy(x => x.Speed).ToList();
+            return _allUnits.OrderBy(x => x.Stats.Speed).ToList();
         }
 
         private IUnit GetTarget(IUnit member, List<IUnit> attackersByOrder)

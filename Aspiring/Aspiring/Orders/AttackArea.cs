@@ -67,7 +67,7 @@ namespace AspiringDemo.Orders
             }
         }
 
-        public void Work(long gameTime)
+        public void Update(float gameTime)
         {
             if (Unit.Zone == TargetZone)
             {
@@ -92,7 +92,7 @@ namespace AspiringDemo.Orders
                 {
                     if (_nextWorkTime < gameTime)
                     {
-                        TravelPath.First().EnterZone(Unit);
+                        Unit.EnterZone(TravelPath.First());
                         TravelPath.Remove(Unit.Zone);
                         _nextWorkTime += GameFrame.Game.TimeToTravelThroughZone;
                     }

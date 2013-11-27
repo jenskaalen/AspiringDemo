@@ -2,6 +2,8 @@
 using AspiringDemo.ANN;
 using AspiringDemo.Factions;
 using AspiringDemo.Factions.Diplomacy;
+using AspiringDemo.Roleplaying;
+using AspiringDemo.Roleplaying.Stats;
 using AspiringDemo.Units;
 using Ninject;
 using Ninject.Modules;
@@ -45,6 +47,9 @@ namespace AspiringDemo
             Bind<IFactionRelations>().To<FactionRelations>();
             Bind<IFactionRelation>().To<FactionRelation>();
             Bind<IFight>().To<Fight>();
+            Bind<IItems>().To<Items>();
+            Bind<ICombatModule>().To<CombatModule>();
+            Bind<IUnitStats>().To<UnitStats>();
         }
     }
 }

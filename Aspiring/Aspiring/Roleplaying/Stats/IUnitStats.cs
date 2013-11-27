@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AspiringDemo.Roleplaying.Stats
 {
-    public interface ICharacterStats
+    public interface IUnitStats
     {
         int CurrentHp { get; set; }
         int MaxHp { get; set; }
@@ -24,6 +24,6 @@ namespace AspiringDemo.Roleplaying.Stats
 
         void GainLevel();
         void SetLevel(int level);
-        void Regen(long time);
+        void Regen(float time);
     }
 }

@@ -14,7 +14,7 @@ namespace AspiringDemo.Units
     //TODO: Extract interface
     public sealed class Unit : BaseUnit, IUnitRoleplayable
     {
-        public ICharacterStats Stats { get; set; }
+        public IUnitStats Stats { get; set; }
         public ICharacterSkills Skills { get; set; }
         public ICharacterLevel CharacterLevel { get; set; }
 
@@ -38,29 +38,9 @@ namespace AspiringDemo.Units
             }
         }
 
-        //public override UnitState State
-        //{
-        //    get
-        //    {
-        //        return _state;
-        //    }
-        //    set
-        //    {
-        //        ChangeState(this, value);
-
-        //        if (Squad != null)
-        //            Squad.MemberChangedState(this, value);
-        //        //throw new NotImplementedException();
-        //    }
-        //}
-
-        //private SquadRank _rank;
-        //private UnitState _state;
-        //private long _objectDestructionTime;
-
         public Unit(IFaction faction) : base(faction)
         {
-            Stats = new CharacterStats();
+            Stats = new UnitStats();
             Speed = 20;
             Hp = 25;
             XPWorth = 50;
@@ -69,7 +49,7 @@ namespace AspiringDemo.Units
             Name = "Soldier";
         }
 
-        public override void TimeTick(long time)
+        public override void TimeTick(float time)
         {
             if (State == UnitState.Dead)
             {
@@ -87,12 +67,12 @@ namespace AspiringDemo.Units
 
             int bestweapon = Weapons.Max(x => x.BaseDamage);
 
-            foreach (var weapon in target.Weapons.Where(wpn => wpn.BaseDamage > bestweapon))
+            foreach (var weapon in target.Items.Weapons.Where(wpn => wpn.BaseDamage > bestweapon))
             {
                 Weapons.Add(weapon);
             }
 
-            target.Weapons.RemoveAll(wpn => wpn.BaseDamage > bestweapon);
+            target.Items.Weapons.RemoveAll(wpn => wpn.BaseDamage > bestweapon);
             CharacterLevel.GainXP(target.XPWorth);
         }
 

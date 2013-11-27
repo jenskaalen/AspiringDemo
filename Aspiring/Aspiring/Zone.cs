@@ -70,60 +70,60 @@ namespace AspiringDemo
             area.Zone = this;
         }
 
-        /// <summary>
-        /// Adds the unit to the zone and checks if the zone is contested
-        /// </summary>
-        /// <param name="character"></param>
-        public void EnterZone(IUnit unit)
-        {
-            AddUnit(unit);
+        ///// <summary>
+        ///// Adds the unit to the zone and checks if the zone is contested
+        ///// </summary>
+        ///// <param name="character"></param>
+        //public void EnterZone(IUnit unit)
+        //{
+        //    AddUnit(unit);
 
-            //TODO: Remove this
-            if (unit.Zone != null && unit.Zone != this)
-                unit.Zone.LeaveZone(unit);
+        //    //TODO: Remove this
+        //    if (unit.Zone != null && unit.Zone != this)
+        //        unit.Zone.LeaveZone(unit);
 
-            unit.Zone = this;
+        //    unit.Zone = this;
 
-            if (unit.IsPlayer)
-                IsPlayerNearby = true;
+        //    if (unit.IsPlayer)
+        //        IsPlayerNearby = true;
 
-            if (Fight != null)
-            {
-                unit.State = UnitState.Fighting;
-                Fight.AddUnit(unit);
-            }
-            else
-            {
-                bool contested = IsZoneContested();
+        //    if (Fight != null)
+        //    {
+        //        unit.State = UnitState.Fighting;
+        //        Fight.AddUnit(unit);
+        //    }
+        //    else
+        //    {
+        //        bool contested = IsZoneContested();
 
-                if (contested)
-                {
-                    CreateFight();
+        //        if (contested)
+        //        {
+        //            CreateFight();
 
-                    foreach (IUnit squnit in Units)
-                    {
-                        Fight.AddUnit(squnit);
-                    }
+        //            foreach (IUnit squnit in Units)
+        //            {
+        //                Fight.AddUnit(squnit);
+        //            }
 
-                    foreach (IPopulatedArea area in PopulatedAreas)
-                    {
-                        area.IsUnderAttack = true;
-                    }
-                }
-                else
-                {
-                    TryRazeZone(unit);
-                }
-            }
-        }
+        //            foreach (IPopulatedArea area in PopulatedAreas)
+        //            {
+        //                area.IsUnderAttack = true;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            TryRazeZone(unit);
+        //        }
+        //    }
+        //}
 
-        public void LeaveZone(IUnit unit)
-        {
-            Units.Remove(unit);
+        //public void LeaveZone(IUnit unit)
+        //{
+        //    Units.Remove(unit);
 
-            if (!Units.Where(x => x.IsPlayer).Any())
-                IsPlayerNearby = false;
-        }
+        //    if (!Units.Where(x => x.IsPlayer).Any())
+        //        IsPlayerNearby = false;
+        //}
 
         private void CreateFight()
         {
@@ -175,10 +175,11 @@ namespace AspiringDemo
             }
         }
 
-        public void EnterZone(ISquad squad)
-        {
-            squad.Members.ForEach(EnterZone);
-        }
+        //TODO: Remove
+        //public void EnterZone(ISquad squad)
+        //{
+        //    squad.Members.ForEach(EnterZone);
+        //}
 
         private bool IsZoneContested()
         {

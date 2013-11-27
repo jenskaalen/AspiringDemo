@@ -45,9 +45,9 @@ namespace AspiringDemoTest
         }
 
         //TODO: Remove
-        //public static CharacterStats GetStandardStats()
+        //public static UnitStats GetStandardStats()
         //{
-        //    CharacterStats stats = new CharacterStats();
+        //    UnitStats stats = new UnitStats();
         //    stats.Speed = 10;
         //    stats.Strength = 10;
         //    stats.Constitution = 10;

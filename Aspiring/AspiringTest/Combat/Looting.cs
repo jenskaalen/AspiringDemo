@@ -25,12 +25,12 @@ namespace AspiringDemoTest.Combat
             var unit2 = GameFrame.Game.Factory.Get<IUnit>(new ConstructorArgument("faction", faction2));
 
             var smack = new Smackhammer();
-            unit2.Weapons.Add(smack);
+            unit2.Items.Weapons.Add(smack);
 
-            unit.KilledUnit(unit2);
+            unit.CombatModule.AttackTarget(unit2);
 
-            Assert.IsTrue(unit.Weapons.Contains(smack));
-            Assert.IsTrue(!unit2.Weapons.Contains(smack));
+            Assert.IsTrue(unit.Items.Weapons.Contains(smack));
+            Assert.IsTrue(!unit2.Items.Weapons.Contains(smack));
         }
     }
 }

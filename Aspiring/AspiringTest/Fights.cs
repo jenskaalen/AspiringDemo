@@ -20,14 +20,15 @@ namespace AspiringDemoTest
         [TestMethod]
         public void Unit_Selects_Weapon()
         {
-            var unit = Factories.Kernel.Get<IUnit>();
-            IWeapon wpn = new Sword();
+            throw new NotImplementedException();
+            //var unit = Factories.Kernel.Get<IUnit>();
+            //IWeapon wpn = new Sword();
 
-            unit.Weapons = new List<IWeapon>();
-            unit.Weapons.Add(wpn);
+            //unit.Weapons = new List<IWeapon>();
+            //unit.Weapons.Add(wpn);
 
-            var weapon = unit.SelectBestWeapon();
-            Assert.IsTrue(weapon == wpn);
+            //var weapon = unit.GetBestWeapon();
+            //Assert.IsTrue(weapon == wpn);
         }
 
         [TestMethod]
@@ -45,8 +46,8 @@ namespace AspiringDemoTest
             fight.AddUnit(unit1);
             fight.AddUnit(unit2);
 
-            unit1.Weapons.Add(new Smackhammer());
-            unit2.Weapons.Add(new Smackhammer());
+            unit1.Items.Weapons.Add(new Smackhammer());
+            unit2.Items.Weapons.Add(new Smackhammer());
 
             //unit1.ChangeState(unit1, UnitState.Dead);
             fight.PerformFightRound();

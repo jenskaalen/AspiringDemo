@@ -10,8 +10,8 @@ namespace AspiringDemo.Factions
     public class StrengthMap
     {
         public List<IFaction>  Factions { get; set; }
-        public long NextStrenghtMapping { get; set; }
-        public long StrengthMappingInterval { get; set; }
+        public float NextStrenghtMapping { get; set; }
+        public float StrengthMappingInterval { get; set; }
 
         public StrengthMap()
         {
@@ -20,7 +20,7 @@ namespace AspiringDemo.Factions
         }
 
         //TODO: implement a base construcotr call here
-        public StrengthMap(long currentTime)
+        public StrengthMap(float currentTime)
         {
             StrengthMappingInterval = 5;
             NextStrenghtMapping = currentTime + 5;
@@ -28,7 +28,7 @@ namespace AspiringDemo.Factions
             GameFrame.Game.GameTime.TimeTicker += GametickTime;
         }
 
-        public void GametickTime(long time)
+        public void GametickTime(float time)
         {
             if (time <= NextStrenghtMapping) return;
 

@@ -22,7 +22,7 @@ namespace AspiringDemoTest
 
             Assert.IsTrue(zone.Units.Count == 0);
 
-            zone.EnterZone(unit);
+            unit.EnterZone(zone);
 
             Assert.AreEqual(1, zone.Units.Count);
         }
@@ -37,8 +37,8 @@ namespace AspiringDemoTest
             var unit1 = Factories.Kernel.Get<IUnit>(new ConstructorArgument("faction", faction1));
             var unit2 = Factories.Kernel.Get<IUnit>(new ConstructorArgument("faction", faction2));
 
-            zone1.EnterZone(unit1);
-            zone1.EnterZone(unit2);
+            unit1.EnterZone(zone1);
+            unit1.EnterZone(zone1);
 
             Assert.IsTrue(zone1.Fight != null);
         }
@@ -54,10 +54,8 @@ namespace AspiringDemoTest
             var unit2 = Factories.Kernel.Get<IUnit>(new ConstructorArgument("faction", faction2));
 
             unit1.State = UnitState.Dead;
-
-            zone1.EnterZone(unit1);
-            zone1.EnterZone(unit2);
-
+            unit1.EnterZone(zone1);
+            unit2.EnterZone(zone1);
             Assert.IsTrue(zone1.Fight == null);
         }
 

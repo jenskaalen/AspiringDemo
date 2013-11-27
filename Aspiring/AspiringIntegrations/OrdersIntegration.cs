@@ -65,11 +65,11 @@ namespace AspiringDemoTest
             bjorneSquad.AddMember(storebjorn);
 
             foreach (var unit in muldvarpFaction.Army.Units)
-                GameFrame.Game.ZonePathfinder.Nodes[0].EnterZone(unit);
+                unit.EnterZone(GameFrame.Game.ZonePathfinder.Nodes[0]);
 
 
             foreach (var unit in bjorneFaction.Army.Units)
-                GameFrame.Game.ZonePathfinder.Nodes[8].EnterZone(unit);
+                unit.EnterZone(GameFrame.Game.ZonePathfinder.Nodes[8]);
         }
 
         [TestMethod]
@@ -79,7 +79,7 @@ namespace AspiringDemoTest
 
             IUnit muldvarpen = muldvarpSquad.Leader;
 
-            GameFrame.Game.ZonePathfinder.Nodes.First().EnterZone(muldvarpen);
+            muldvarpen.EnterZone(GameFrame.Game.ZonePathfinder.Nodes.First());
             
             var targetZone = GameFrame.Game.ZonePathfinder.Nodes[2];
 

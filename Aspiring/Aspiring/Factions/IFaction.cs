@@ -26,7 +26,7 @@ namespace AspiringDemo.Factions
         List<IZone> GetGameZones();
         void AddArea(IPopulatedArea area);
         void RemoveArea(IPopulatedArea area);
-        void GameTimeTick(long time);
+        void GameTimeTick(float time);
         IArmy Army { get; set; }
         StrengthMeasurement Strength { get; set; }
         IFactionRelations Relations { get; set; }

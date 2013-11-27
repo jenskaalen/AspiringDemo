@@ -25,11 +25,11 @@ namespace AspiringDemoTest
             unit2.CharacterLevel = new CharacterLevel(new LevelProgressModifier());
 
             var attack = new UnitAttack(unit1, unit2);
-            attack.Work(0);
+            attack.Update(0);
             Assert.IsTrue(unit2.Hp < unit1.Hp);
 
             for (int i = 1; i < 10; i++)
-                attack.Work(i);
+                attack.Update(i);
 
             Assert.IsTrue(unit2.State == UnitState.Dead);
             Assert.AreEqual(1, unit1.Kills);
@@ -87,7 +87,7 @@ namespace AspiringDemoTest
         [TestMethod]
         public void Regen_Hp()
         {
-            var stats = new CharacterStats {MaxHp = 50, BaseHp = 50, CurrentHp = 30, RegenRate = 10, RegenHpAmount = 5};
+            var stats = new UnitStats {MaxHp = 50, BaseHp = 50, CurrentHp = 30, RegenRate = 10, RegenHpAmount = 5};
 
             stats.Regen(0);
             Assert.AreEqual(30, stats.CurrentHp);

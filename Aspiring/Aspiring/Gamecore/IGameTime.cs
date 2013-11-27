@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace AspiringDemo.Gamecore
 {
-    public delegate void GameTimeTicker(long time);
+    public delegate void GameTimeTicker(float time);
 
     public interface IGameTime
     {
-        long Time { get; set; }
-        int MilisecondsPerTick { get; set; }
+        float Time { get; set; }
+        float SecondsPerTick { get; set; }
         bool GamePaused { get; set; }
         GameTimeTicker TimeTicker { get; set; }
     }

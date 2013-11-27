@@ -59,7 +59,7 @@ namespace AspiringDemo.Orders
             IsDone = false;
         }
 
-        public void Work(long gameTime)
+        public void Update(float gameTime)
         {
             if (!IsExecuting)
                 return;
@@ -80,7 +80,7 @@ namespace AspiringDemo.Orders
                 else if (_nextWorkTime < gameTime)
                 {
                     var enteredZone = _travelPath.First();
-                    enteredZone.EnterZone(Unit);
+                    Unit.EnterZone(enteredZone);
                     _travelPath.Remove(Unit.Zone);
                     _nextWorkTime += GameFrame.Game.TimeToTravelThroughZone;
 

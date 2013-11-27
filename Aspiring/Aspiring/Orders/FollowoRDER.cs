@@ -44,13 +44,13 @@ namespace AspiringDemo.Orders
         }
 
         //TODO: Order never gets finished
-        public void Work(long gameTime)
+        public void Update(float gameTime)
         {
             if (!IsPlayerNearby)
             {
                 if (FollowTarget != Unit.Zone)
                 {
-                    FollowTarget.Zone.EnterZone(Unit);
+                    Unit.EnterZone(FollowTarget.Zone);
                 }
             }
             else

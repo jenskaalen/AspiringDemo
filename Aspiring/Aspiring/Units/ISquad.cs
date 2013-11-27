@@ -14,5 +14,6 @@
         void RemoveMember(IUnit member);
         SquadState State { get; set; }
         void MemberChangedState(IUnit unit, UnitState state);
+        void EnterZone(IZone zone);
     }
 }

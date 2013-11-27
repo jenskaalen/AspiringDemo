@@ -66,8 +66,8 @@ namespace AspiringDemoTest
             ISquad squad1 = GameFrame.Game.Factions[0].Army.Squads.FirstOrDefault();
             ISquad squad2 = GameFrame.Game.Factions[1].Army.Squads.FirstOrDefault();
 
-            GameFrame.Game.Pathfinding.Zones[2].EnterZone(squad1);
-            GameFrame.Game.Pathfinding.Zones[2].EnterZone(squad2);
+            squad1.EnterZone(GameFrame.Game.Pathfinding.Zones[2]);
+            squad2.EnterZone(GameFrame.Game.Pathfinding.Zones[2]);
 
             IZone testzone = GameFrame.Game.Pathfinding.Zones[2];
 
@@ -105,9 +105,11 @@ namespace AspiringDemoTest
 
             Assert.IsTrue(squad1.Leader == unit3);
 
-            zonudes.EnterZone(unit1);
-            zonudes.EnterZone(unit3);
-            zonudes.EnterZone(unit2);
+            //zonudes.EnterZone(unit1);
+            //zonudes.EnterZone(unit3);
+            //zonudes.EnterZone(unit2);
+
+            unit1.EnterZone(zonudes);
 
             Assert.IsTrue(zonudes.Fight != null);
 
@@ -170,21 +172,21 @@ namespace AspiringDemoTest
             Unit player = new Unit(new Faction());
             player.IsPlayer = true;
             IZone zone = new Zone();
-            zone.EnterZone(player);
+            player.EnterZone(zone);
 
             Assert.IsTrue(zone.IsPlayerNearby == true);
 
             IZone zone2 = new Zone();
-            zone2.EnterZone(player);
+            player.EnterZone(zone2);
 
             Assert.IsTrue(zone.IsPlayerNearby == false);
 
             Squad s1 = new Squad();
             s1.AddMember(player);
-            zone.EnterZone(s1);
+            s1.EnterZone(zone);
 
             Assert.IsTrue(zone.IsPlayerNearby == true);
-            zone2.EnterZone(s1);
+            s1.EnterZone(zone2);
             Assert.IsTrue(zone.IsPlayerNearby == false);
         }
     }

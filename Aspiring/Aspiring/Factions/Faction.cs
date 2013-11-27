@@ -129,13 +129,13 @@ namespace AspiringDemo.Factions
         {
             //TODO: Rework defaults
             IUnit newUnit = GameFrame.Game.Factory.Get<Unit>(new ConstructorArgument("faction", this));
-            newUnit.Weapons = new List<IWeapon>();
-            newUnit.Weapons.Add(new Unarmed());
+            newUnit.Items.Weapons = new List<IWeapon>();
+            newUnit.Items.Weapons.Add(new Unarmed());
             Army.Units.Add(newUnit);
 
             //TODO: Only spawnable in eeas is now
             if (CapitalZone != null)
-                CapitalZone.EnterZone(newUnit);
+                newUnit.EnterZone(CapitalZone);
 
             return newUnit;
         }
@@ -178,7 +178,7 @@ namespace AspiringDemo.Factions
             StructurePoints -= area.AreaValue;
         }
 
-        public void GameTimeTick(long time)
+        public void GameTimeTick(float time)
         {
 
             //regen hp
@@ -248,7 +248,7 @@ namespace AspiringDemo.Factions
                 if (unit.State == UnitState.Idle)
                     unit.State = UnitState.ExecutingOrder;
 
-                unit.Order.Work(time);
+                unit.Order.Update(time);
             }
         }
 

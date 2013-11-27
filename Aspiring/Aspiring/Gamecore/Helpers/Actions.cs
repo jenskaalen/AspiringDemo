@@ -16,7 +16,7 @@ namespace AspiringDemo.Gamecore.Helpers
         {
             TravelOrder.GiveTravelOrder(unit, retreatZone, false);
             unit.Order.Execute();
-            unit.Order.Work(GameFrame.Game.GameTime.Time);
+            unit.Order.Update(GameFrame.Game.GameTime.Time);
         }
 
         public static void GiveRetreatOrder(IFaction faction, IFight fight, IZone retreatZone)
@@ -31,7 +31,7 @@ namespace AspiringDemo.Gamecore.Helpers
                     return;
                 }
                 unit.Order.Execute();
-                unit.Order.Work(GameFrame.Game.GameTime.Time);
+                unit.Order.Update(GameFrame.Game.GameTime.Time);
             }
         }
     }
