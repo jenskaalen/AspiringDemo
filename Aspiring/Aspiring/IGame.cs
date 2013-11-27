@@ -25,6 +25,7 @@ namespace AspiringDemo
         int TimeToTravelThroughZone { get; set; }
         StandardKernel Factory { get; set; }
         void Initialize();
+        IActionProcesser ActionProcesser { get; set; }
 
         [Obsolete]
         void Initialize(bool populateZones);

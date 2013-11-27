@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AspiringDemo;
+using AspiringDemo.Combat;
 using AspiringDemo.Factions;
+using AspiringDemo.GameActions.Combat;
 using AspiringDemo.Units;
 using AspiringDemo.Units.Actions;
 using AspiringDemo.Weapons;
@@ -19,20 +21,23 @@ namespace AspiringDemoTest
     public class Actions
     {
         [TestMethod]
-        public void AttackUnit_Unit()
+        public void GameAction_AttackUnit()
         {
             var faction1 = GameFrame.Game.Factory.Get<IFaction>();
             var faction2 = GameFrame.Game.Factory.Get<IFaction>();
             var unit1 = GameFrame.Game.Factory.Get<IUnit>(new ConstructorArgument("faction", faction1));
             unit1.Items.Weapons.Add(new Sword());
             var unit2 = GameFrame.Game.Factory.Get<IUnit>(new ConstructorArgument("faction", faction2));
+            var zone = GameFrame.Game.Factory.Get<IZone>();
+            unit1.EnterZone(zone);
+            unit2.EnterZone(zone);
 
             var attack = new UnitAttack(unit1, unit2);
             attack.Update(1f);
-            Assert.AreEqual(UnitState.Idle, unit2.State);
+            Assert.AreEqual(UnitState.Fighting, unit2.State);
 
             for (int i=0; i < 15; i++)
-                attack.Update(1);
+                attack.Update(i);
 
             Assert.AreEqual(UnitState.Dead, unit2.State);
         }

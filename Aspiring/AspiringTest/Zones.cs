@@ -38,13 +38,14 @@ namespace AspiringDemoTest
             var unit2 = Factories.Kernel.Get<IUnit>(new ConstructorArgument("faction", faction2));
 
             unit1.EnterZone(zone1);
-            unit1.EnterZone(zone1);
+            unit2.EnterZone(zone1);
 
-            Assert.IsTrue(zone1.Fight != null);
+            Assert.IsTrue(unit1.CombatModule.CurrentFight != null);
+            Assert.IsTrue(unit1.CombatModule.CurrentFight != null);
         }
 
         [TestMethod]
-        public void Dead_Units_Dont_Cause_Fights()
+        public void Dead_Units_Dont_Enter_Fights()
         {
             var faction1 = Factories.Kernel.Get<IFaction>();
             var faction2 = Factories.Kernel.Get<IFaction>();
@@ -56,7 +57,8 @@ namespace AspiringDemoTest
             unit1.State = UnitState.Dead;
             unit1.EnterZone(zone1);
             unit2.EnterZone(zone1);
-            Assert.IsTrue(zone1.Fight == null);
+
+            Assert.IsTrue(unit1.CombatModule.CurrentFight == null);
         }
 
         [TestMethod]

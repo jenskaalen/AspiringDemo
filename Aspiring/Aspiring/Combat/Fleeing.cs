@@ -15,16 +15,16 @@ namespace AspiringDemo.Combat
         private const double ThresholdPercentage = 70.0;
         private const double InitialFleeChance = 100.0;
 
-        public static bool WantsToFlee(IUnit unit, IFight fight)
+        public static bool WantsToFlee(IUnit unit, INewFight fight)
         {
             // do a simple measurement of faction count
             //fight.
             var friendlyUnits =
-                fight.FightingUnits.Where(
+                fight.Units.Where(
                     funit => funit.Faction.Relations.GetRelation(unit.Faction).Relation == RelationType.Friendly);
 
             var enemyUnits =
-                fight.FightingUnits.Where(
+                fight.Units.Where(
                     funit => funit.Faction.Relations.GetRelation(unit.Faction).Relation == RelationType.Hostile);
 
             int friendlyPower = friendlyUnits.Count();
@@ -36,16 +36,16 @@ namespace AspiringDemo.Combat
                 return false;
         }
 
-        public static bool WantsToFlee(IFaction faction, IFight fight)
+        public static bool WantsToFlee(IFaction faction, INewFight fight)
         {
             // do a simple measurement of faction count
             //fight.
             var friendlyUnits =
-                fight.FightingUnits.Where(
+                fight.Units.Where(
                     funit => funit.Faction.Relations.GetRelation(faction).Relation == RelationType.Friendly);
 
             var enemyUnits =
-                fight.FightingUnits.Where(
+                fight.Units.Where(
                     funit => funit.Faction.Relations.GetRelation(faction).Relation == RelationType.Hostile);
 
             int friendlyPower = friendlyUnits.Count();
@@ -57,23 +57,23 @@ namespace AspiringDemo.Combat
                 return false;
         }
 
-        public static double FleeChance(IFaction faction, IFight fight)
+        public static double FleeChance(IFaction faction, INewFight fight)
         {
-            if (fight.FightingUnits.All(unit => unit.Faction != faction))
+            if (fight.Units.All(unit => unit.Faction != faction))
                 throw new Exception("Faction does not participate in fight");
 
             // reduced chance by average unit speed compared to enemy
             // reduced chance by large unit counts            
             double fleeChance = InitialFleeChance;
-            fleeChance -= fight.FightingUnits.Count(unit => unit.Faction == faction);
+            fleeChance -= fight.Units.Count(unit => unit.Faction == faction);
 
             var enemySpeed =
-                fight.FightingUnits.Where(
+                fight.Units.Where(
                     unit => unit.Faction.Relations.GetRelation(faction).Relation == RelationType.Hostile)
                     .Average(unit => unit.Stats.Speed);
 
             var selfSpeed =
-                fight.FightingUnits.Where(
+                fight.Units.Where(
                     unit => unit.Faction.Relations.GetRelation(faction).Relation == RelationType.Friendly)
                     .Average(unit => unit.Stats.Speed);
 
@@ -103,9 +103,9 @@ namespace AspiringDemo.Combat
             }
         }
 
-        public static void CheckAndPerformFleeing(IFaction faction, IFight fight)
+        public static void CheckAndPerformFleeing(IFaction faction, INewFight fight)
         {
-            if (WantsToFlee(fight.FightingUnits.FirstOrDefault(unit => unit.Faction == faction), fight))
+            if (WantsToFlee(fight.Units.FirstOrDefault(unit => unit.Faction == faction), fight))
             {
                 double fleeRoll = 100 - GameFrame.Random.Next(0, 100);
                 double chance =  FleeChance(faction, fight);
@@ -113,7 +113,7 @@ namespace AspiringDemo.Combat
                 if (chance > fleeRoll)
                 {
                     // now we flee for real
-                    var anyUnit = fight.FightingUnits.FirstOrDefault(unit => unit.Faction == faction);
+                    var anyUnit = fight.Units.FirstOrDefault(unit => unit.Faction == faction);
                     var retreatZone = DetermineRetreatZone(anyUnit);
 
                     if (retreatZone != null)

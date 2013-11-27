@@ -18,7 +18,7 @@ namespace AspiringDemo.Saving
         public List<Squad> Squads { get; set; }
         public List<Unit> Units { get; set; }
         //public DbSet<IWeapon> Weapons { get; set; }
-        public List<Fight> Fights { get; set; }
+        public List<NewFight> Fights { get; set; }
         public List<Zone> Zones { get; set; }
 
         private List<Unit> _unitsCache = new List<Unit>();

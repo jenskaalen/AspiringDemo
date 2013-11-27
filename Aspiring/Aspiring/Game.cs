@@ -31,6 +31,7 @@ namespace AspiringDemo
         public Pathfinder<IZone> ZonePathfinder { get; set; }
         //public const int TimeToTravelThroughZone = 1;
         public int TimeToTravelThroughZone { get; set; }
+        public IActionProcesser ActionProcesser { get; set; }
 
         //const int ZoneWidth = 500;
         //const int ZoneHeight = 500;
@@ -51,7 +52,7 @@ namespace AspiringDemo
         public Game()
         {
             GameTime = new GameTime();
-            GameTime = new GameTime();
+            ActionProcesser = new ActionProcesser();
         }
 
         public Game(ISavegame savegame, IObjectFactory factory)
@@ -59,6 +60,7 @@ namespace AspiringDemo
             GameTime = new GameTime();
             Savegame = savegame;
             ObjectFactory = factory;
+            ActionProcesser = new ActionProcesser();
         }
 
         public void Initialize()
@@ -72,6 +74,7 @@ namespace AspiringDemo
                 GameTime.SecondsPerTick = 1f;
             }
         }
+
 
         [Obsolete]
         public void Initialize(bool populateZones)
@@ -151,7 +154,8 @@ namespace AspiringDemo
         {
             foreach (Zone zone in Pathfinding.Zones)
             {
-                zone.Fight.PerformFightRound();
+                //TODO: remove this - zones no longer control the fights
+               // zone.Fight.PerformFightRound();
             }
         }
 
@@ -181,8 +185,7 @@ namespace AspiringDemo
                     GameTime.TimeTicker(GameTime.Time);
                 }
 
-                foreach (var zone in ZonePathfinder.Nodes.Where(x => x.Fight != null))
-                    zone.Fight.PerformFightRound();
+                ActionProcesser.Update(GameTime.Time);
             }
         }
 

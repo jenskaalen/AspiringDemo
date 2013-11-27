@@ -11,7 +11,7 @@ namespace AspiringDemoTest.Creator
     public class Creation
     {
         [TestMethod]
-        public void CreateUnit()
+        public void Create_Unit_From_Xml()
         {
             var creator = new AspiringDemo.Gamecore.XmlCreator();
             XDocument xdoc = XDocument.Load("Creator\\units.xml");

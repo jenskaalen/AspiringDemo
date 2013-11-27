@@ -67,6 +67,7 @@
     <Compile Include="Combat\CombatModule.cs" />
     <Compile Include="Combat\INewFight.cs" />
     <Compile Include="Combat\NewFight.cs" />
+    <Compile Include="GameActions\Combat\Fighting.cs" />
     <Compile Include="GameActions\CompositeAction.cs" />
     <Compile Include="GameActions\GameAction.cs" />
     <Compile Include="ANN\ActionManager.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Gamecore\GameplaySettings.cs" />
     <Compile Include="Gamecore\GameTime.cs" />
     <Compile Include="Gamecore\Helpers\Actions.cs" />
+    <Compile Include="Gamecore\Helpers\Relations.cs" />
     <Compile Include="Gamecore\Helpers\Zones.cs" />
     <Compile Include="Gamecore\IGameTime.cs" />
     <Compile Include="Factions\IFaction.cs" />
@@ -134,11 +136,11 @@
     <Compile Include="IGame.cs" />
     <Compile Include="Roleplaying\IItems.cs" />
     <Compile Include="Roleplaying\Items.cs" />
-    <Compile Include="Units\ActionProcesser.cs" />
-    <Compile Include="Units\IActionProcesser.cs" />
+    <Compile Include="Gamecore\ActionProcesser.cs" />
+    <Compile Include="Gamecore\IActionProcesser.cs" />
     <Compile Include="Units\Actions\IUnitAction.cs" />
     <Compile Include="Units\Actions\UnitActionIntent.cs" />
-    <Compile Include="Units\Actions\UnitAttack.cs" />
+    <Compile Include="GameActions\Combat\UnitAttack.cs" />
     <Compile Include="Units\BaseUnit.cs" />
     <Compile Include="Units\ISquad.cs" />
     <Compile Include="Units\IUnit.cs" />
@@ -158,7 +160,7 @@
     <Compile Include="Sites\IPopulatedArea.cs" />
     <Compile Include="Sites\Outpost.cs" />
     <Compile Include="Sites\PopulatedArea.cs" />
-    <Compile Include="Units\IUnitRoleplayable.cs" />
+    <Compile Include="Units\IUnitLeveling.cs" />
     <Compile Include="Units\Squads\ISquadBehaviour.cs" />
     <Compile Include="Units\UnitState.cs" />
     <Compile Include="Units\Zombie.cs" />
@@ -172,7 +174,7 @@
     <Compile Include="Roleplaying\CharacterLevel.cs" />
     <Compile Include="Roleplaying\ICharacterLevel.cs" />
     <Compile Include="Roleplaying\ICharacterModifier.cs" />
-    <Compile Include="Roleplaying\IRoleplayable.cs" />
+    <Compile Include="Roleplaying\ILeveling.cs" />
     <Compile Include="Roleplaying\Stats\UnitStats.cs" />
     <Compile Include="Roleplaying\Stats\ICharacterSkills.cs" />
     <Compile Include="Roleplaying\Stats\IUnitStats.cs" />

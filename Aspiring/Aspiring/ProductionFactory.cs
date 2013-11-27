@@ -46,10 +46,10 @@ namespace AspiringDemo
             Bind<IZone>().To<Zone>();
             Bind<IFactionRelations>().To<FactionRelations>();
             Bind<IFactionRelation>().To<FactionRelation>();
-            Bind<IFight>().To<Fight>();
             Bind<IItems>().To<Items>();
             Bind<ICombatModule>().To<CombatModule>();
             Bind<IUnitStats>().To<UnitStats>();
+            Bind<INewFight>().To<NewFight>();
         }
     }
 }

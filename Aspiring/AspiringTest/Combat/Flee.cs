@@ -18,7 +18,7 @@ namespace AspiringDemoTest.Combat
     {
         //Fleeing.
         [TestMethod]
-        public void Determine_Wants_To_Flee()
+        public void Unit_Wants_To_Flee()
         {
             var faction = GameFrame.Game.Factory.Get<IFaction>();
             var faction2 = GameFrame.Game.Factory.Get<IFaction>();
@@ -28,22 +28,21 @@ namespace AspiringDemoTest.Combat
             var unit3 = GameFrame.Game.Factory.Get<IUnit>(new ConstructorArgument("faction", faction2));
             var unit4 = GameFrame.Game.Factory.Get<IUnit>(new ConstructorArgument("faction", faction2));
 
-            IFight fight = GameFrame.Game.Factory.Get<IFight>();
-            fight.AddUnit(unit);
-            fight.AddUnit(unit2);
-            fight.AddUnit(unit3);
-            fight.AddUnit(unit3);
-            fight.AddUnit(unit4);
-
+            var fight = GameFrame.Game.Factory.Get<INewFight>();
+            fight.Enter(unit);
+            fight.Enter(unit2);
+            fight.Enter(unit3);
+            fight.Enter(unit3);
+            fight.Enter(unit4);
 
             bool wantsToFlee = Fleeing.WantsToFlee(unit, fight);
             Assert.IsTrue(wantsToFlee);
 
-            fight = GameFrame.Game.Factory.Get<IFight>();
+            fight = GameFrame.Game.Factory.Get<INewFight>();
 
-            fight = GameFrame.Game.Factory.Get<IFight>();
-            fight.AddUnit(unit);
-            fight.AddUnit(unit2);
+            fight = GameFrame.Game.Factory.Get<INewFight>();
+            fight.Enter(unit);
+            fight.Enter(unit2);
 
             wantsToFlee = Fleeing.WantsToFlee(unit, fight);
             Assert.IsFalse(wantsToFlee);
@@ -60,12 +59,12 @@ namespace AspiringDemoTest.Combat
             var unit3 = GameFrame.Game.Factory.Get<IUnit>(new ConstructorArgument("faction", faction2));
             var unit4 = GameFrame.Game.Factory.Get<IUnit>(new ConstructorArgument("faction", faction2));
 
-            IFight fight = GameFrame.Game.Factory.Get<IFight>();
-            fight.AddUnit(unit);
-            fight.AddUnit(unit2);
-            fight.AddUnit(unit3);
-            fight.AddUnit(unit3);
-            fight.AddUnit(unit4);
+            var fight = GameFrame.Game.Factory.Get<INewFight>();
+            fight.Enter(unit);
+            fight.Enter(unit2);
+            fight.Enter(unit3);
+            fight.Enter(unit3);
+            fight.Enter(unit4);
 
             double fleeChance = Fleeing.FleeChance(unit.Faction, fight);
             Assert.IsTrue(fleeChance > 95 && fleeChance < 100);

@@ -26,8 +26,9 @@ namespace AspiringDemoTest.Combat
 
             var smack = new Smackhammer();
             unit2.Items.Weapons.Add(smack);
+            unit.Items.Weapons[0].BaseDamage = 50;
 
-            unit.CombatModule.AttackTarget(unit2);
+            unit.CombatModule.AttackTarget(unit2, 1);
 
             Assert.IsTrue(unit.Items.Weapons.Contains(smack));
             Assert.IsTrue(!unit2.Items.Weapons.Contains(smack));

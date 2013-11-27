@@ -28,9 +28,17 @@ namespace AspiringDemo.Roleplaying.Stats
             set { _maxHp = value; }
         }
 
-        public int Speed { get; set; }
+        public int Speed
+        {
+            get { return _speed; }
+            set { _speed = value < 1 ? 1 : value; }
+        }
 
-        public int Strength { get; set; }
+        public int Strength
+        {
+            get { return _strength; }
+            set { _strength = value < 1 ? 1 : value; }
+        }
 
         public int BaseStrength { get; set; }
 
@@ -61,6 +69,8 @@ namespace AspiringDemo.Roleplaying.Stats
         private int _maxHp = 25;
         private int _currentHp;
         private int _nextRegen;
+        private int _speed;
+        private int _strength;
 
         public UnitStats()
         {

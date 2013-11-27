@@ -29,7 +29,6 @@ namespace AspiringDemo
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         public ZoneType Type { get; set; }
-        public Fight Fight { get; set; }
         public IEnumerable<IPathfindingNode> Neighbours { get; set; }
         public IPathfindingNode Parent { get; set; }
         public List<IPopulatedArea> PopulatedAreas { get; set; }
@@ -70,115 +69,15 @@ namespace AspiringDemo
             area.Zone = this;
         }
 
-        ///// <summary>
-        ///// Adds the unit to the zone and checks if the zone is contested
-        ///// </summary>
-        ///// <param name="character"></param>
-        //public void EnterZone(IUnit unit)
+        //private void TryRazeZone(IUnit unit)
         //{
-        //    AddUnit(unit);
-
-        //    //TODO: Remove this
-        //    if (unit.Zone != null && unit.Zone != this)
-        //        unit.Zone.LeaveZone(unit);
-
-        //    unit.Zone = this;
-
-        //    if (unit.IsPlayer)
-        //        IsPlayerNearby = true;
-
-        //    if (Fight != null)
+        //    //Checks if the losing side had any buildings in the area that will be razed
+        //    foreach (IPopulatedArea area in PopulatedAreas)
         //    {
-        //        unit.State = UnitState.Fighting;
-        //        Fight.AddUnit(unit);
+        //        area.IsUnderAttack = false;
+
+        //        area.Razed = area.Owner != unit.Faction;
         //    }
-        //    else
-        //    {
-        //        bool contested = IsZoneContested();
-
-        //        if (contested)
-        //        {
-        //            CreateFight();
-
-        //            foreach (IUnit squnit in Units)
-        //            {
-        //                Fight.AddUnit(squnit);
-        //            }
-
-        //            foreach (IPopulatedArea area in PopulatedAreas)
-        //            {
-        //                area.IsUnderAttack = true;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            TryRazeZone(unit);
-        //        }
-        //    }
-        //}
-
-        //public void LeaveZone(IUnit unit)
-        //{
-        //    Units.Remove(unit);
-
-        //    if (!Units.Where(x => x.IsPlayer).Any())
-        //        IsPlayerNearby = false;
-        //}
-
-        private void CreateFight()
-        {
-            Fight fight = new Fight();
-            this.Fight = fight;
-            this.Fight.FightEnded += EndFight;
-        }
-
-        private void TryRazeZone(IUnit unit)
-        {
-            //Checks if the losing side had any buildings in the area that will be razed
-            foreach (IPopulatedArea area in PopulatedAreas)
-            {
-                area.IsUnderAttack = false;
-
-                area.Razed = area.Owner != unit.Faction;
-            }
-        }
-
-        private void EndFight()
-        {
-            //TODO: This will have to be reworked to support allied factions
-            IUnit anyUnit = Units.FirstOrDefault(x => x.State != UnitState.Dead);
-
-            if (anyUnit == null)
-            {
-                if (Units.All(unit => unit.State == UnitState.Dead))
-                {
-                    Fight = null;
-                    return;
-                }
-                else
-                {
-                    //throw new Exception("No units found in zone after fight - this was not supposed to happen!");
-                }
-            }
-
-            Fight = null;
-
-            //Checks if the losing side had any buildings in the area that will be razed
-            foreach (IPopulatedArea area in PopulatedAreas)
-            {
-                area.IsUnderAttack = false;
-
-                if (area.Owner == anyUnit.Faction)
-                    area.Razed = false;
-                else
-                    area.Razed = true;
-            }
-        }
-
-        //TODO: Remove
-        //public void EnterZone(ISquad squad)
-        //{
-        //    squad.Members.ForEach(EnterZone);
         //}
 
         private bool IsZoneContested()

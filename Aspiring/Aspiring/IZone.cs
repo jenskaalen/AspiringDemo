@@ -9,10 +9,11 @@ namespace AspiringDemo
     {
         void AddArea(AspiringDemo.Sites.IPopulatedArea area);
         void AddNeighbour(IZone zone);
+        //TODO: cleanup
         //void EnterZone(ISquad squad);
         //void EnterZone(IUnit unit);
         //void LeaveZone(IUnit unit);
-        Fight Fight { get; set; }
+        //Fight Fight { get; set; }
         int ID { get; set; }
         bool IsPlayerNearby { get; set; }
         System.Collections.Generic.List<AspiringDemo.Sites.IPopulatedArea> PopulatedAreas { get; set; }

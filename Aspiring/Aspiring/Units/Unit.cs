@@ -12,36 +12,13 @@ namespace AspiringDemo.Units
 {
 
     //TODO: Extract interface
-    public sealed class Unit : BaseUnit, IUnitRoleplayable
+    public sealed class Unit : BaseUnit, IUnitLeveling
     {
-        public IUnitStats Stats { get; set; }
-        public ICharacterSkills Skills { get; set; }
         public ICharacterLevel CharacterLevel { get; set; }
-
-        public override int Hp
-        {
-            get
-            {
-                return Stats.CurrentHp;
-            }
-            set
-            {
-                if (State == UnitState.Dead || State == UnitState.ObjectDisabled)
-                    return;
-
-                if (value < 1)
-                {
-                    Die();
-                }
-
-                Stats.CurrentHp = value;
-            }
-        }
 
         public Unit(IFaction faction) : base(faction)
         {
-            Stats = new UnitStats();
-            Speed = 20;
+            Stats.Speed = 20;
             Hp = 25;
             XPWorth = 50;
             CharacterLevel = new CharacterLevel(new LevelProgressModifier());
@@ -49,31 +26,26 @@ namespace AspiringDemo.Units
             Name = "Soldier";
         }
 
-        public override void TimeTick(float time)
+        //public override void KilledUnit(IUnit target)
+        //{
+        //    Kills++;
+
+        //    int bestweapon = Items.Weapons.Max(x => x.BaseDamage);
+
+        //    foreach (var weapon in target.Items.Weapons.Where(wpn => wpn.BaseDamage > bestweapon))
+        //    {
+        //        Items.Weapons.Add(weapon);
+        //    }
+
+        //    target.Items.Weapons.RemoveAll(wpn => wpn.BaseDamage > bestweapon);
+        //    CharacterLevel.GainXP(target.XPWorth);
+        //}
+
+        public override void KilledUnit(IUnit unit)
         {
-            if (State == UnitState.Dead)
-            {
-                if (ObjectDestructionTime < time)
-                    Remove();
-                return;
-            }
-
-            Stats.Regen(time);
-        }
-
-        public override void KilledUnit(IUnit target)
-        {
-            Kills++;
-
-            int bestweapon = Weapons.Max(x => x.BaseDamage);
-
-            foreach (var weapon in target.Items.Weapons.Where(wpn => wpn.BaseDamage > bestweapon))
-            {
-                Weapons.Add(weapon);
-            }
-
-            target.Items.Weapons.RemoveAll(wpn => wpn.BaseDamage > bestweapon);
-            CharacterLevel.GainXP(target.XPWorth);
+            base.KilledUnit(unit);
+            Loot(unit);
+            CharacterLevel.GainXP(unit.XPWorth);
         }
 
         //private void Remove()

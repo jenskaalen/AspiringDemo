@@ -1,4 +1,6 @@
 ﻿using System;
+using AspiringDemo.Combat;
+using AspiringDemo.GameActions.Combat;
 using AspiringDemo.Units;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AspiringDemo;
@@ -54,10 +56,14 @@ namespace AspiringDemoTest
         [TestMethod]
         public void ChangeRank()
         {
-            ISquad muldvarpsquad = GameFrame.Game.Factions.Where(x => x.Name.Contains("Muldvarp")).FirstOrDefault().Army.Squads.FirstOrDefault();
-            IUnit muldvarpen = muldvarpsquad.Members.Where(x => x.Name == "Muldvarpen").FirstOrDefault();
-            muldvarpen.Rank = SquadRank.Commander;
-            Assert.AreEqual(muldvarpen, muldvarpsquad.Leader);
+            var firstOrDefault = GameFrame.Game.Factions.FirstOrDefault(x => x.Name.Contains("Muldvarp"));
+            if (firstOrDefault != null)
+            {
+                ISquad muldvarpsquad = firstOrDefault.Army.Squads.FirstOrDefault();
+                IUnit muldvarpen = muldvarpsquad.Members.FirstOrDefault(x => x.Name == "Muldvarpen");
+                muldvarpen.Rank = SquadRank.Commander;
+                Assert.AreEqual(muldvarpen, muldvarpsquad.Leader);
+            }
         }
 
         [TestMethod]
@@ -71,55 +77,20 @@ namespace AspiringDemoTest
 
             IZone testzone = GameFrame.Game.Pathfinding.Zones[2];
 
-            Assert.IsTrue(testzone.Fight != null);
-            Assert.IsTrue(testzone.Fight.FightersCount == 5);
+            var fight = squad1.Members[0].CombatModule.CurrentFight;
 
-            Assert.IsNotNull(testzone.Fight);
+            Assert.IsTrue(fight != null);
+            Assert.IsTrue(fight.Units.Count == 5);
 
-            for (int i = 0; i < 10; i++)
+            var fighting = (Fighting) GameFrame.Game.ActionProcesser.Actions[0];
+
+            for (int i = 0; i < 20; i++)
             {
-                if (testzone.Fight != null)
-                    testzone.Fight.PerformFightRound();
+                GameFrame.Game.ActionProcesser.Update(i);
             }
 
-            Assert.IsNull(testzone.Fight);
+            Assert.IsTrue(GameFrame.Game.ActionProcesser.Actions.Count == 0);
         }
-
-        [TestMethod]
-        public void IsolatedFight()
-        {
-            IZone zonudes = new Zone();
-            IFaction f1 = GameFrame.Game.Factory.Get<IFaction>();
-            IFaction f2 = GameFrame.Game.Factory.Get<IFaction>();
-
-            ISquad squad1 = f1.CreateSquad();
-
-            var unit1 = f1.CreateUnit();
-            var unit2 = f2.CreateUnit();
-            var unit3 = f1.CreateUnit();
-
-            squad1.AddMember(unit1);
-            squad1.AddMember(unit3);
-
-            unit3.Rank = SquadRank.Veteran;
-
-            Assert.IsTrue(squad1.Leader == unit3);
-
-            //zonudes.EnterZone(unit1);
-            //zonudes.EnterZone(unit3);
-            //zonudes.EnterZone(unit2);
-
-            unit1.EnterZone(zonudes);
-
-            Assert.IsTrue(zonudes.Fight != null);
-
-            while(zonudes.Fight != null)
-                zonudes.Fight.PerformFightRound();
-
-            Assert.IsTrue(zonudes.Fight == null);
-            Assert.AreEqual(UnitState.Dead, unit2.State);
-        }
-
 
         [TestMethod]
         public void ComputedPathfinding()
@@ -166,26 +137,23 @@ namespace AspiringDemoTest
             Assert.AreEqual(2, path.Count);
         }
 
-        [TestMethod]
         public void PlayerEnterLeaveArea()
         {
             Unit player = new Unit(new Faction());
             player.IsPlayer = true;
             IZone zone = new Zone();
             player.EnterZone(zone);
-
-            Assert.IsTrue(zone.IsPlayerNearby == true);
+            Assert.IsTrue(zone.IsPlayerNearby);
 
             IZone zone2 = new Zone();
             player.EnterZone(zone2);
-
             Assert.IsTrue(zone.IsPlayerNearby == false);
 
             Squad s1 = new Squad();
             s1.AddMember(player);
             s1.EnterZone(zone);
+            Assert.IsTrue(zone.IsPlayerNearby);
 
-            Assert.IsTrue(zone.IsPlayerNearby == true);
             s1.EnterZone(zone2);
             Assert.IsTrue(zone.IsPlayerNearby == false);
         }

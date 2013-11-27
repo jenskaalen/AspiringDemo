@@ -18,7 +18,7 @@
                 <GridView>
                     <GridViewColumn Header="Name" Width="auto"  DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="Hp" Width="auto"  DisplayMemberBinding="{Binding Hp}"/>
-                    <GridViewColumn Header="Kills" Width="auto"  DisplayMemberBinding="{Binding Kills}"/>
+                    <GridViewColumn Header="Kills" Width="auto"  DisplayMemberBinding="{Binding CombatModule.Kills}"/>
                     <GridViewColumn Header="Level" Width="auto"  DisplayMemberBinding="{Binding CharacterLevel.Level}"/>
                     <GridViewColumn Header="State" Width="auto"  DisplayMemberBinding="{Binding State}"/>
                     <GridViewColumn Header="X-position" Width="auto" DisplayMemberBinding="{Binding Zone.Position.X}"/>

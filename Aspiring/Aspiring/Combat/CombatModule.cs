@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Odbc;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AspiringDemo.Gamecore;
+using AspiringDemo.Gamecore.Helpers;
 using AspiringDemo.Units;
 
 namespace AspiringDemo.Combat
@@ -13,13 +15,14 @@ namespace AspiringDemo.Combat
         public bool CanFlee { get; set; }
         public int CombatReluctance { get; set; }
         public int Kills { get; set; }
+        public INewFight CurrentFight { get; set; }
+        public IUnit CurrentTarget { get; set; }
 
         private float _nextAttack;
         private const float SpeedModifier = 0.1f;
-
         private IUnit _unit;
 
-        public void AttackTarget(IUnit target)
+        public void AttackTarget(IUnit target, float time)
         {
             if (target.State == UnitState.Dead)
                 return;
@@ -30,17 +33,44 @@ namespace AspiringDemo.Combat
             if (_unit.Items.CurrentWeapon != bestWeapon)
                 ChangeWeapon(_unit.Items.GetBestWeapon());
 
-            if (_nextAttack < GameFrame.Game.GameTime.Time)
+            if (_nextAttack < time)
             {
-                SetNextAttack();
+                SetNextAttack(time);
                 // do attack...
                 target.Hp -= _unit.Items.CurrentWeapon.BaseDamage + _unit.Stats.Strength;
+                //IF WE KILLED 'IM
+                if (target.State == UnitState.Dead)
+                {
+                    _unit.KilledUnit(target);
+                }
             }
         }
 
-        public void EnterFight(NewFight fight)
+        public IUnit GetTarget(List<IUnit> potentialTargets)
         {
+            // lol, we pick random (...)
+            var unit = potentialTargets[GameFrame.Random.Next(0, potentialTargets.Count)];
+            return unit;
+        }
 
+        public List<IUnit> GetPotentialTargets(List<IUnit> units)
+        {
+            return units.Where(unit => _unit.IsEnemy(unit)).ToList();
+        }
+
+        public void ShoutForHelp()
+        {
+            if (_unit.CombatModule.CurrentFight == null)
+                throw new Exception("Cant shout from help because unit is not in a fight.");
+
+            if (_unit.Zone == null) return;
+
+            foreach (var ally in _unit.Zone.Units.Where(fightUnit => 
+                fightUnit.CombatModule.CurrentFight == null
+                && _unit.Faction.Relations.Allies.Contains(fightUnit.Faction)))
+            {
+                CurrentFight.Enter(ally);
+            }
         }
 
         public void ChangeWeapon(IWeapon weapon)
@@ -48,9 +78,9 @@ namespace AspiringDemo.Combat
             _unit.Items.EquipWeapon(weapon);
         }
 
-        private void SetNextAttack()
+        private void SetNextAttack(float time)
         {
-            _nextAttack = (_unit.Items.CurrentWeapon.WeaponSpeed / _unit.Stats.Speed) * SpeedModifier + GameFrame.Game.GameTime.Time;
+            _nextAttack = (_unit.Items.CurrentWeapon.WeaponSpeed / _unit.Stats.Speed) * SpeedModifier + time;
         }
 
         public CombatModule(IUnit unit)

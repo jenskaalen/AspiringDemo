@@ -1,4 +1,5 @@
 ﻿using System;
+using AspiringDemo.GameActions.Combat;
 using AspiringDemo.Roleplaying.Stats;
 using AspiringDemo.Units;
 using AspiringDemo.Units.Actions;
@@ -7,6 +8,7 @@ using AspiringDemo;
 using AspiringDemo.Roleplaying;
 using AspiringDemo.Factions;
 using Ninject;
+using Ninject.Parameters;
 
 namespace AspiringDemoTest
 {
@@ -16,23 +18,19 @@ namespace AspiringDemoTest
         [TestMethod]
         public void KillGainXPAndLevel()
         {
-            Unit unit1 = Factories.GetStandardUnit();
-            unit1.CharacterLevel = new CharacterLevel(new LevelProgressModifier());
-            unit1.CharacterLevel.NextLevelXP = 50;
-
-            Unit unit2 = new Unit(new Faction());
-            unit2.XPWorth = 50;
-            unit2.CharacterLevel = new CharacterLevel(new LevelProgressModifier());
+            var faction1 = GameFrame.Game.Factory.Get<IFaction>();
+            var faction2 = GameFrame.Game.Factory.Get<IFaction>();
+            //var unit1 = GameFrame.Game.Factory.Get<IUnit>(new ConstructorArgument("faction", faction1));
+            var unit1 = new Unit(faction1);
+            var unit2 = new Unit(faction2);
 
             var attack = new UnitAttack(unit1, unit2);
-            attack.Update(0);
-            Assert.IsTrue(unit2.Hp < unit1.Hp);
 
-            for (int i = 1; i < 10; i++)
+            for (int i = 1; i < 30; i++)
                 attack.Update(i);
 
             Assert.IsTrue(unit2.State == UnitState.Dead);
-            Assert.AreEqual(1, unit1.Kills);
+            Assert.AreEqual(1, unit1.CombatModule.Kills);
             Assert.IsTrue(unit1.CharacterLevel.CurrentXP > 0);
             Assert.AreEqual(1, unit1.CharacterLevel.Level);
         }

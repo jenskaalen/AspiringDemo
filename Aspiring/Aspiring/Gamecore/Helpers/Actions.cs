@@ -19,10 +19,12 @@ namespace AspiringDemo.Gamecore.Helpers
             unit.Order.Update(GameFrame.Game.GameTime.Time);
         }
 
-        public static void GiveRetreatOrder(IFaction faction, IFight fight, IZone retreatZone)
+        public static void GiveRetreatOrder(IFaction faction, INewFight fight, IZone retreatZone)
         {
-            foreach (var unit in fight.FightingUnits.Where(un => un.Faction == faction))
+            foreach (var unit in fight.Units.Where(un => un.Faction == faction))
             {
+                unit.CombatModule.CurrentFight.Leave(unit);
+
                 TravelOrder.GiveTravelOrder(unit, retreatZone, false);
 
                 if (unit.Order == null)

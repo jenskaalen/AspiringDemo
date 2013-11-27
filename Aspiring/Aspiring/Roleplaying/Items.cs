@@ -11,6 +11,11 @@ namespace AspiringDemo.Roleplaying
         public IWeapon CurrentWeapon { get; private set; }
         public List<IWeapon> Weapons { get; set; }
 
+        public Items()
+        {
+            Weapons = new List<IWeapon>();
+        }
+
         public IWeapon GetBestWeapon()
         {
             IWeapon bestWeapon = Weapons.Aggregate((seed, f) => f.BaseDamage > seed.BaseDamage ? f : seed);

@@ -18,8 +18,11 @@ namespace AspiringDemo.Factions.Diplomacy
             _relations.Add(new FactionRelation(faction)
                 {
                     Relation = RelationType.Friendly
-            
                 });
+        }
+
+        public List<IFaction> Allies {
+            get { return _relations.Where(relation => relation.Relation == RelationType.Friendly).Select(relation => relation.Faction).ToList(); }
         }
 
         public void SetRelation(IFaction faction, RelationType relation)

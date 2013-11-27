@@ -27,13 +27,7 @@ namespace AspiringDemoTest
         /// <returns></returns>
         public static Unit GetStandardUnit()
         {
-            Unit unit = new Unit(GetStandardFaction());
-
-            unit.CharacterLevel = new CharacterLevel(new LevelProgressModifier());
-            unit.CharacterLevel.NextLevelXP = 30;
-            unit.Weapons = new List<IWeapon>();
-            unit.Weapons.Add(GetStandardWeaponSword());
-
+            var unit = new Unit(GetStandardFaction());
             return unit;
         }
 
