@@ -2,10 +2,8 @@ G:\Prosjekter\Aspiring\Aspiring\AspiringImplementation\bin\Debug\AspiringImpleme
 G:\Prosjekter\Aspiring\Aspiring\AspiringImplementation\bin\Debug\AspiringImplementation.pdb
 G:\Prosjekter\Aspiring\Aspiring\AspiringImplementation\bin\Debug\AspiringDemo.dll
 G:\Prosjekter\Aspiring\Aspiring\AspiringImplementation\bin\Debug\Ninject.dll
-G:\Prosjekter\Aspiring\Aspiring\AspiringImplementation\bin\Debug\EntityFramework.dll
 G:\Prosjekter\Aspiring\Aspiring\AspiringImplementation\bin\Debug\AspiringDemo.pdb
 G:\Prosjekter\Aspiring\Aspiring\AspiringImplementation\bin\Debug\Ninject.xml
-G:\Prosjekter\Aspiring\Aspiring\AspiringImplementation\bin\Debug\EntityFramework.xml
 G:\Prosjekter\Aspiring\Aspiring\AspiringImplementation\obj\Debug\AspiringImplementation.csprojResolveAssemblyReference.cache
 G:\Prosjekter\Aspiring\Aspiring\AspiringImplementation\obj\Debug\AspiringImplementation.exe
 G:\Prosjekter\Aspiring\Aspiring\AspiringImplementation\obj\Debug\AspiringImplementation.pdb

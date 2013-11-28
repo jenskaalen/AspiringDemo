@@ -1,19 +1,13 @@
-﻿using System;
-using AspiringDemo.Combat;
-using AspiringDemo.GameActions.Combat;
-using AspiringDemo.GameObjects;
+﻿using AspiringDemo.GameActions.Combat;
 using AspiringDemo.GameObjects.Squads;
 using AspiringDemo.GameObjects.Units;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AspiringDemo;
 using System.Linq;
-using System.Data;
-using System.IO;
 using System.Collections.Generic;
 using AspiringDemo.Saving;
 using AspiringDemo.Factions;
 using AspiringDemo.GameCore;
-using Ninject;
 
 namespace AspiringDemoTest
 {

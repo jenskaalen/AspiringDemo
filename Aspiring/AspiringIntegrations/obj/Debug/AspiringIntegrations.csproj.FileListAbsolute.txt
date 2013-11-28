@@ -3,14 +3,10 @@ G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\AspiringDemoInteg
 G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\AspiringDemoIntegrations.pdb
 G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\AspiringDemo.dll
 G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\AspiringDemoTest.dll
-G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\EntityFramework.dll
-G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\EntityFramework.SqlServer.dll
 G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\Moq.dll
 G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\Ninject.dll
 G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\AspiringDemoTest.pdb
 G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\AspiringDemo.pdb
-G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\EntityFramework.xml
-G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\EntityFramework.SqlServer.xml
 G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\Moq.xml
 G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\bin\Debug\Ninject.xml
 G:\Prosjekter\Aspiring\Aspiring\AspiringIntegrations\obj\Debug\AspiringIntegrations.csprojResolveAssemblyReference.cache

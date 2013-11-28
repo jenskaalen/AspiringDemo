@@ -1,14 +1,7 @@
 G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\AspiringDemo.dll.config
 G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\AspiringDemo.dll
 G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\AspiringDemo.pdb
-G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\EntityFramework.dll
-G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\EntityFramework.SqlServer.dll
-G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\EntityFramework.SqlServerCompact.dll
 G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\Ninject.dll
-G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\System.Data.SqlServerCe.dll
-G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\EntityFramework.xml
-G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\EntityFramework.SqlServer.xml
-G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\EntityFramework.SqlServerCompact.xml
 G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\Ninject.xml
 G:\Prosjekter\Aspiring\Aspiring\Aspiring\obj\Debug\Aspiring.csprojResolveAssemblyReference.cache
 G:\Prosjekter\Aspiring\Aspiring\Aspiring\obj\Debug\AspiringDemo.dll

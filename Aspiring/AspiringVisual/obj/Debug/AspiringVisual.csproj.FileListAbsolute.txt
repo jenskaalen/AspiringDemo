@@ -4,11 +4,9 @@ G:\Prosjekter\Aspiring\Aspiring\AspiringVisual\bin\Debug\AspiringVisual.pdb
 G:\Prosjekter\Aspiring\Aspiring\AspiringVisual\bin\Debug\AspiringDemo.dll
 G:\Prosjekter\Aspiring\Aspiring\AspiringVisual\bin\Debug\AspiringImplementation.exe
 G:\Prosjekter\Aspiring\Aspiring\AspiringVisual\bin\Debug\Ninject.dll
-G:\Prosjekter\Aspiring\Aspiring\AspiringVisual\bin\Debug\EntityFramework.dll
 G:\Prosjekter\Aspiring\Aspiring\AspiringVisual\bin\Debug\AspiringDemo.pdb
 G:\Prosjekter\Aspiring\Aspiring\AspiringVisual\bin\Debug\AspiringImplementation.pdb
 G:\Prosjekter\Aspiring\Aspiring\AspiringVisual\bin\Debug\Ninject.xml
-G:\Prosjekter\Aspiring\Aspiring\AspiringVisual\bin\Debug\EntityFramework.xml
 G:\Prosjekter\Aspiring\Aspiring\AspiringVisual\obj\Debug\AspiringVisual.csprojResolveAssemblyReference.cache
 G:\Prosjekter\Aspiring\Aspiring\AspiringVisual\obj\Debug\FactionsOverview.baml
 G:\Prosjekter\Aspiring\Aspiring\AspiringVisual\obj\Debug\MainWindow.baml
