@@ -1,8 +1,0 @@
-G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\AspiringDemo.dll.config
-G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\AspiringDemo.dll
-G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\AspiringDemo.pdb
-G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\Ninject.dll
-G:\Prosjekter\Aspiring\Aspiring\Aspiring\bin\Debug\Ninject.xml
-G:\Prosjekter\Aspiring\Aspiring\Aspiring\obj\Debug\Aspiring.csprojResolveAssemblyReference.cache
-G:\Prosjekter\Aspiring\Aspiring\Aspiring\obj\Debug\AspiringDemo.dll
-G:\Prosjekter\Aspiring\Aspiring\Aspiring\obj\Debug\AspiringDemo.pdb
