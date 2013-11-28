@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AspiringDemo.ANN.Actions;
-using AspiringDemo.Factions;
 using AspiringDemo.ANN.Actions.Unit;
+using AspiringDemo.Factions;
 using AspiringDemo.Sites;
 
 namespace AspiringDemo.ANN

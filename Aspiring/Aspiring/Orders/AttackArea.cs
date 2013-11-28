@@ -1,12 +1,4 @@
-﻿using AspiringDemo.Sites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AspiringDemo.Units;
-
-namespace AspiringDemo.Orders
+﻿namespace AspiringDemo.Orders
 {
     //TODO: lol, remove
 

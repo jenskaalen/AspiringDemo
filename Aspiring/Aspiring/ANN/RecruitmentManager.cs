@@ -1,18 +1,11 @@
-﻿using AspiringDemo.ANN.Actions;
+﻿using System.Collections.Generic;
+using AspiringDemo.ANN.Actions;
 using AspiringDemo.Factions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AspiringDemo.ANN
 {
     public class RecruitmentManager : IRecruitmentManager
     {
-        public IFaction Faction { get; set; }
-        public List<IManagementAction> AllowedActions { get; set; }
-
         private const int UNIT_COST = 100;
 
         public RecruitmentManager()
@@ -27,6 +20,9 @@ namespace AspiringDemo.ANN
             AllowedActions.Add(new RecruitUnit());
             Faction = faction;
         }
+
+        public IFaction Faction { get; set; }
+        public List<IManagementAction> AllowedActions { get; set; }
 
         public IManagementAction GetMostWeightedAction(ref double priorityRequirement)
         {

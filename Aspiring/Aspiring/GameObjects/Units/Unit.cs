@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AspiringDemo.Factions;
-using AspiringDemo.Gamecore;
-using AspiringDemo.Orders;
+﻿using AspiringDemo.Factions;
 using AspiringDemo.Roleplaying;
-using AspiringDemo.Roleplaying.Stats;
-using AspiringDemo.Weapons;
 
-namespace AspiringDemo.Units
+namespace AspiringDemo.GameObjects.Units
 {
-
     //TODO: Extract interface
     public sealed class Unit : BaseUnit, IUnitLeveling
     {
-        public ICharacterLevel CharacterLevel { get; set; }
-
         public Unit(IFaction faction) : base(faction)
         {
             Stats.Speed = 20;
@@ -25,6 +15,8 @@ namespace AspiringDemo.Units
             CharacterLevel.GainLevel += Stats.GainLevel;
             Name = "Soldier";
         }
+
+        public ICharacterLevel CharacterLevel { get; set; }
 
         //public override void KilledUnit(IUnit target)
         //{

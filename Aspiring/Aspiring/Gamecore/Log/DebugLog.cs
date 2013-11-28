@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace AspiringDemo.Gamecore.Log
 {
     public class DebugLog : ILogger
     {
-        private bool _initalized = false;
+        private bool _initalized;
         private StreamWriter _writer;
 
         public void Log(string text)

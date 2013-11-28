@@ -3,34 +3,27 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using AspiringDemo.Factions;
+using AspiringDemo.GameObjects.Units;
 
-namespace AspiringDemo.Units
+namespace AspiringDemo.GameObjects.Squads
 {
-    public enum SquadState 
-    {
-        Idle,
-        Fighting,
-        Fleeing,
-        Destroyed,
-        Waiting,
-        ExecutingOrder,
-        Mixed
-    }
-
     public class Squad : ISquad
     {
+        public Squad()
+        {
+            Members = new List<IUnit>();
+        }
+
         public virtual List<IUnit> Members { get; set; }
         //public IFaction Faction { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
-        public SquadState State
-        {
-            get;
-            set;
-            //get { return CurrentState(); }
+
+        public SquadState State { get; set; //get { return CurrentState(); }
             //set { throw new NotImplementedException(); } 
         }
+
         public IUnit Leader { get; set; }
         public int KillCounter { get; set; }
         public bool IsVisible { get; set; }
@@ -71,7 +64,7 @@ namespace AspiringDemo.Units
                 return;
 
             switch (state)
-            { 
+            {
                 case UnitState.Dead:
                     //set the leader in case there has been a change in highest ranking, 
                     SetMostQualifiedLeader();
@@ -122,7 +115,7 @@ namespace AspiringDemo.Units
 
         public void EnterZone(IZone zone)
         {
-            foreach (var member in Members)
+            foreach (IUnit member in Members)
             {
                 member.EnterZone(zone);
             }
@@ -131,12 +124,12 @@ namespace AspiringDemo.Units
 
         public void UpdateMembers()
         {
-            var unit = Members.FirstOrDefault();
+            IUnit unit = Members.FirstOrDefault();
 
             if (unit == null)
                 return;
 
-            var state = unit.State;
+            UnitState state = unit.State;
 
             switch (state)
             {
@@ -196,15 +189,10 @@ namespace AspiringDemo.Units
 
         private void SetMostQualifiedLeader()
         {
-            var membor = Members.Where(x => x.State != UnitState.Dead).OrderByDescending(x => x.Rank).FirstOrDefault();
+            IUnit membor = Members.Where(x => x.State != UnitState.Dead).OrderByDescending(x => x.Rank).FirstOrDefault();
 
             if (Leader != membor)
                 Leader = membor;
-        }
-
-        public Squad()
-        {
-            Members = new List<IUnit>();
         }
 
         //private SquadState CurrentState()

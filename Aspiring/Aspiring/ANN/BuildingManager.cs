@@ -1,22 +1,15 @@
-﻿using AspiringDemo.ANN.Actions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AspiringDemo.ANN.Actions;
 using AspiringDemo.Factions;
 using AspiringDemo.Saving;
 using AspiringDemo.Sites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AspiringDemo.ANN
 {
     public class BuildingManager : IBuildingManager
     {
-        public AspiringDemo.Factions.IFaction Faction { get; set; }
-        public List<IBuildAction> AllowedActions { get; set; }
-        public IPlacementDecider PlacementDecider { get; set; }
-        public List<ISerializedTypeData> BuildingSettings { get; set; }
-
         public BuildingManager()
         {
             AllowedActions = new List<IBuildAction>();
@@ -26,9 +19,15 @@ namespace AspiringDemo.ANN
         {
             Faction = faction;
             AllowedActions = new List<IBuildAction>();
-            var newbuild = new BuildOutpost(this.Faction);
+            var newbuild = new BuildOutpost(Faction);
             AllowedActions.Add(newbuild);
         }
+
+        public IPlacementDecider PlacementDecider { get; set; }
+
+        public IFaction Faction { get; set; }
+        public List<IBuildAction> AllowedActions { get; set; }
+        public List<ISerializedTypeData> BuildingSettings { get; set; }
 
         public IBuildAction GetMostWeightedAction(ref double priorityRequirement)
         {
@@ -49,7 +48,7 @@ namespace AspiringDemo.ANN
                 }
             }
 
-                return selectedAction;
+            return selectedAction;
         }
 
         public void ExecuteAction(IBuildAction buildingAction)
@@ -60,18 +59,18 @@ namespace AspiringDemo.ANN
             //IPopulatedArea area = CreateAreaDefaultSettings(buildingAction.A reaType);
             //TODO: one area of entry!
             placementZone.AddArea(buildingAction.AreaType);
-            var area = buildingAction.AreaType;
+            IPopulatedArea area = buildingAction.AreaType;
             area.Zone = placementZone;
 
             Faction.AddArea(buildingAction.AreaType);
         }
 
-        public Sites.IPopulatedArea CreateAreaDefaultSettings(Type type)
+        public IPopulatedArea CreateAreaDefaultSettings(Type type)
         {
             if (BuildingSettings == null)
                 throw new Exception("Buildsettings have not been loaded");
 
-            IPopulatedArea area = (IPopulatedArea)Activator.CreateInstance(type);
+            var area = (IPopulatedArea) Activator.CreateInstance(type);
             //Type type = area.GetType();
             ISerializedTypeData typeData = BuildingSettings.FirstOrDefault(x => x.ObjectType == type);
 

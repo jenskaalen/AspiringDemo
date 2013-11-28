@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AspiringDemo.Pathfinding;
 using System.Threading;
-using System.Diagnostics;
-using AspiringDemo.Gamecore;
-using AspiringDemo.Saving;
 using AspiringDemo.Factions;
 using AspiringDemo.GameCore;
+using AspiringDemo.Gamecore;
+using AspiringDemo.Pathfinding;
+using AspiringDemo.Saving;
 using Ninject;
 using Ninject.Parameters;
 
@@ -18,6 +15,26 @@ namespace AspiringDemo
     // or?
     public class Game : IGame
     {
+        private StandardKernel _kernel = new StandardKernel(new ProductionFactory());
+        private StrengthMap _strengthMap;
+        private bool _timerStarted = false;
+
+        public Game()
+        {
+            GameTime = new GameTime();
+            ActionProcesser = new ActionProcesser();
+        }
+
+        public Game(ISavegame savegame, IObjectFactory factory)
+        {
+            GameTime = new GameTime();
+            Savegame = savegame;
+            ObjectFactory = factory;
+            ActionProcesser = new ActionProcesser();
+        }
+
+        private int MilisecondsPerTimeTick { get; set; }
+
         public List<IFaction> Factions { get; set; }
         public List<IWeapon> Weapons { get; set; }
         public int FactionCount { get; set; }
@@ -37,30 +54,11 @@ namespace AspiringDemo
         //const int ZoneHeight = 500;
 
         //private int _milisecondsPerTimeTick = 1000;
-        private int MilisecondsPerTimeTick { get; set; }
 
-        private bool _timerStarted = false;
-        private StrengthMap _strengthMap;
-        public StandardKernel Factory 
+        public StandardKernel Factory
         {
             get { return _kernel; }
-            set { _kernel = value;  }
-        }
-
-        private StandardKernel _kernel = new StandardKernel(new ProductionFactory());
-
-        public Game()
-        {
-            GameTime = new GameTime();
-            ActionProcesser = new ActionProcesser();
-        }
-
-        public Game(ISavegame savegame, IObjectFactory factory)
-        {
-            GameTime = new GameTime();
-            Savegame = savegame;
-            ObjectFactory = factory;
-            ActionProcesser = new ActionProcesser();
+            set { _kernel = value; }
         }
 
         public void Initialize()
@@ -101,35 +99,15 @@ namespace AspiringDemo
         }
 
         /// <summary>
-        /// Starts the game clock which will automatically call the GameTimeTick at set intervalls
+        ///     Starts the game clock which will automatically call the GameTimeTick at set intervalls
         /// </summary>
         public void StartTimer()
         {
             if (!_timerStarted)
             {
-                Thread timerThread = new Thread(GameTickTimeLoop);
+                var timerThread = new Thread(GameTickTimeLoop);
                 timerThread.Start();
             }
-        }
-
-        private List<IZone> CreateZones(int width, int height)
-        {
-            List<IZone> zones = new List<IZone>();
-
-            for (int i = 0; i < ZonesWidth; i++)
-            {
-                for (int j = 0; j < ZonesHeight; j++)
-                {
-                    IZone newZone = new Zone();
-                    newZone.PositionXStart = width * i + 1;
-                    newZone.PositionXEnd = width * i + width;
-                    newZone.PositionYStart = height * j + 1;
-                    newZone.PositionYEnd = height * j + height;
-                    zones.Add(newZone);
-                }
-            }
-
-            return zones;
         }
 
         public Faction CreateFaction()
@@ -137,7 +115,7 @@ namespace AspiringDemo
             if (Factions == null)
                 Factions = new List<IFaction>();
 
-            Faction newFaction = _kernel.Get<Faction>(new ConstructorArgument("factory", this.ObjectFactory));
+            var newFaction = _kernel.Get<Faction>(new ConstructorArgument("factory", ObjectFactory));
             newFaction.Initialize();
             Factions.Add(newFaction);
 
@@ -148,31 +126,19 @@ namespace AspiringDemo
         }
 
         /// <summary>
-        /// Processes a zone and creates the necessary events - fights
+        ///     Processes a zone and creates the necessary events - fights
         /// </summary>
         public void ProcessZones()
         {
             foreach (Zone zone in Pathfinding.Zones)
             {
                 //TODO: remove this - zones no longer control the fights
-               // zone.Fight.PerformFightRound();
+                // zone.Fight.PerformFightRound();
             }
         }
 
         /// <summary>
-        /// Keeps ticking time in a loop
-        /// </summary>
-        private void GameTickTimeLoop()
-        {
-            while (true)
-            {
-                GametimeTick();
-                System.Threading.Thread.Sleep((int)(GameTime.SecondsPerTick * 1000));
-            }
-        }
-
-        /// <summary>
-        /// One tick of gametime
+        ///     One tick of gametime
         /// </summary>
         public void GametimeTick()
         {
@@ -189,6 +155,36 @@ namespace AspiringDemo
             }
         }
 
+        private List<IZone> CreateZones(int width, int height)
+        {
+            var zones = new List<IZone>();
 
+            for (int i = 0; i < ZonesWidth; i++)
+            {
+                for (int j = 0; j < ZonesHeight; j++)
+                {
+                    IZone newZone = new Zone();
+                    newZone.PositionXStart = width*i + 1;
+                    newZone.PositionXEnd = width*i + width;
+                    newZone.PositionYStart = height*j + 1;
+                    newZone.PositionYEnd = height*j + height;
+                    zones.Add(newZone);
+                }
+            }
+
+            return zones;
+        }
+
+        /// <summary>
+        ///     Keeps ticking time in a loop
+        /// </summary>
+        private void GameTickTimeLoop()
+        {
+            while (true)
+            {
+                GametimeTick();
+                Thread.Sleep((int) (GameTime.SecondsPerTick*1000));
+            }
+        }
     }
 }

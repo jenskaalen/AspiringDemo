@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AspiringDemo.Units;
+﻿using AspiringDemo.GameObjects.Squads;
+using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.Factions
 {
-    interface IArmyUnit
+    internal interface IArmyUnit
     {
         IUnit Unit { get; set; }
         ISquad Squad { get; set; }

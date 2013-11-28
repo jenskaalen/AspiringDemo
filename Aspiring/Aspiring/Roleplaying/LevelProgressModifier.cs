@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace AspiringDemo.Roleplaying
 {
@@ -19,7 +16,7 @@ namespace AspiringDemo.Roleplaying
             if (currentLevelXp == 0)
                 throw new Exception("currentLevelXp cant be 0!");
 
-            return (int)(currentLevelXp * XpMultiplier);
+            return (int) (currentLevelXp*XpMultiplier);
         }
     }
 }

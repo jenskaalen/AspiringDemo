@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AspiringDemo.Pathfinding
 {
     public class Pathfinder<T> : IPathfinder<T> where T : class, IPathfindingNode, IComparable<T>
     {
-        public List<T> Nodes { get; set;  }
         public PriorityQueue<T> OpenList { get; set; }
         public List<T> ClosedList { get; set; }
+        public List<T> Nodes { get; set; }
 
         public List<T> GetPath(Vector2 startPosition, Vector2 endPosition)
         {
@@ -22,7 +20,7 @@ namespace AspiringDemo.Pathfinding
             if (startNode == null || endNode == null)
                 throw new Exception("Startnode or endnode cant be null");
 
-            List<T> path = new List<T>();
+            var path = new List<T>();
             OpenList = new PriorityQueue<T>();
             ClosedList = new List<T>();
 
@@ -34,7 +32,7 @@ namespace AspiringDemo.Pathfinding
                 currentNode = OpenList.Pop();
 
                 if (currentNode == endNode)
-                { 
+                {
                     // end
                     ClosedList.Add(currentNode);
 
@@ -46,7 +44,8 @@ namespace AspiringDemo.Pathfinding
         }
 
         /// <summary>
-        /// Finds nodes and adds them to OpenList if viable for the path. If node already is in OpenList - f,g,h values of node are re-computed
+        ///     Finds nodes and adds them to OpenList if viable for the path. If node already is in OpenList - f,g,h values of node
+        ///     are re-computed
         /// </summary>
         /// <param name="currentNode"></param>
         /// <param name="endNode"></param>
@@ -76,7 +75,9 @@ namespace AspiringDemo.Pathfinding
                 if (!OpenList.ContainsNode(nNode))
                 {
                     nNode.GValue = gCost;
-                    nNode.HValue = Math.Abs(endNode.Position.X - nNode.Position.X) + Math.Abs(endNode.Position.Y - nNode.Position.Y ); //+ Math.Abs(endNode.Position.z - nNode.Position.z);
+                    nNode.HValue = Math.Abs(endNode.Position.X - nNode.Position.X) +
+                                   Math.Abs(endNode.Position.Y - nNode.Position.Y);
+                        //+ Math.Abs(endNode.Position.z - nNode.Position.z);
                     nNode.FValue = nNode.GValue + nNode.HValue;
                     nNode.Parent = currentNode;
                     OpenList.Put(nNode);
@@ -104,7 +105,7 @@ namespace AspiringDemo.Pathfinding
 
         private List<T> BacktraceParents(T node, T startNode)
         {
-            List<T> tracedNodes = new List<T>();
+            var tracedNodes = new List<T>();
 
             while (node != startNode)
             {

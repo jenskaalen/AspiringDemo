@@ -1,10 +1,5 @@
-﻿using AspiringDemo.Factions;
+﻿using System.Collections.Generic;
 using AspiringDemo.Sites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AspiringDemo.Factions
 {
@@ -25,9 +20,9 @@ namespace AspiringDemo.Factions
 
             int goldCollected = 0;
 
-            foreach (var area in areas)
+            foreach (IPopulatedArea area in areas)
             {
-                goldCollected += (int)(area.Population * taxPerCitizen);
+                goldCollected += (int) (area.Population*taxPerCitizen);
             }
 
             NextTaxCollection += CollectionRate;

@@ -1,6 +1,7 @@
 ﻿using AspiringDemo;
 using AspiringDemo.Factions;
-using AspiringDemo.Units;
+using AspiringDemo.GameObjects;
+using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Weapons;
 using AspiringImplementation;
 using System;

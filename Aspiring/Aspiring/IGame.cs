@@ -24,8 +24,8 @@ namespace AspiringDemo
         Pathfinder<IZone> ZonePathfinder { get; set; }
         int TimeToTravelThroughZone { get; set; }
         StandardKernel Factory { get; set; }
-        void Initialize();
         IActionProcesser ActionProcesser { get; set; }
+        void Initialize();
 
         [Obsolete]
         void Initialize(bool populateZones);
@@ -33,19 +33,19 @@ namespace AspiringDemo
         void PopulateZonesAndNodes();
 
         /// <summary>
-        /// Starts the game clock which will automatically call the GameTimeTick at set intervalls
+        ///     Starts the game clock which will automatically call the GameTimeTick at set intervalls
         /// </summary>
         void StartTimer();
 
         Faction CreateFaction();
 
         /// <summary>
-        /// Processes a zone and creates the necessary events - fights
+        ///     Processes a zone and creates the necessary events - fights
         /// </summary>
         void ProcessZones();
 
         /// <summary>
-        /// One tick of gametime
+        ///     One tick of gametime
         /// </summary>
         void GametimeTick();
     }

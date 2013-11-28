@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AspiringDemo.Pathfinding
 {
@@ -12,7 +9,7 @@ namespace AspiringDemo.Pathfinding
 
         public PriorityQueue()
         {
-            this.data = new List<T>();
+            data = new List<T>();
         }
 
         public void Put(T item)
@@ -21,9 +18,11 @@ namespace AspiringDemo.Pathfinding
             int ci = data.Count - 1;
             while (ci > 0)
             {
-                int pi = (ci - 1) / 2;
+                int pi = (ci - 1)/2;
                 if (data[ci].CompareTo(data[pi]) >= 0) break;
-                T tmp = data[ci]; data[ci] = data[pi]; data[pi] = tmp;
+                T tmp = data[ci];
+                data[ci] = data[pi];
+                data[pi] = tmp;
                 ci = pi;
             }
         }
@@ -39,13 +38,15 @@ namespace AspiringDemo.Pathfinding
             int pi = 0;
             while (true)
             {
-                int ci = pi * 2 + 1;
+                int ci = pi*2 + 1;
                 if (ci > li) break;
                 int rc = ci + 1;
                 if (rc <= li && data[rc].CompareTo(data[ci]) < 0)
                     ci = rc;
                 if (data[pi].CompareTo(data[ci]) <= 0) break;
-                T tmp = data[pi]; data[pi] = data[ci]; data[ci] = tmp;
+                T tmp = data[pi];
+                data[pi] = data[ci];
+                data[ci] = tmp;
                 pi = ci;
             }
             return frontItem;
@@ -62,15 +63,14 @@ namespace AspiringDemo.Pathfinding
         {
             if (data.Contains(node))
                 return true;
-            else
-                return false;
+            return false;
         }
 
         public override string ToString()
         {
             string s = "";
             for (int i = 0; i < data.Count; ++i)
-                s += data[i].ToString() + " ";
+                s += data[i] + " ";
             s += "count = " + data.Count;
             return s;
         }
@@ -82,10 +82,11 @@ namespace AspiringDemo.Pathfinding
             int li = data.Count - 1; // last index
             for (int pi = 0; pi < data.Count; ++pi) // each parent index
             {
-                int lci = 2 * pi + 1; // left child index
-                int rci = 2 * pi + 2; // right child index
+                int lci = 2*pi + 1; // left child index
+                int rci = 2*pi + 2; // right child index
 
-                if (lci <= li && data[pi].CompareTo(data[lci]) > 0) return false; // if lc exists and it's greater than parent then bad.
+                if (lci <= li && data[pi].CompareTo(data[lci]) > 0)
+                    return false; // if lc exists and it's greater than parent then bad.
                 if (rci <= li && data[pi].CompareTo(data[rci]) > 0) return false; // check the right child too.
             }
             return true; // passed all checks

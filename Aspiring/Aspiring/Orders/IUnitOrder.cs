@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AspiringDemo.Units;
+﻿using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.Orders
 {
     public delegate void OrderFinished();
+
     public delegate int OrderTick();
 
     public interface IUnitOrder
@@ -15,9 +11,9 @@ namespace AspiringDemo.Orders
         IUnit Unit { get; }
         bool IsExecuting { get; set; }
         bool IsDone { get; set; }
+        OrderFinished Finish { get; set; }
+        string OrderName { get; }
         void Execute();
         void Update(float gameTime);
-        OrderFinished Finish { get; set; }
-        string OrderName { get;  }
     }
 }

@@ -1,10 +1,4 @@
-﻿using AspiringDemo.Roleplaying.Stats;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AspiringDemo.Units;
+﻿using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.Roleplaying
 {

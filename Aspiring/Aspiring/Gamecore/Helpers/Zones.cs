@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AspiringDemo.Gamecore.Helpers
 {
@@ -13,14 +10,14 @@ namespace AspiringDemo.Gamecore.Helpers
             double lowestVal = int.MaxValue;
             IZone selectedZone = null;
             //search neighbours...
-            foreach (var zone in zones)
+            foreach (IZone zone in zones)
             {
                 double val = Math.Abs(targetPosition.X - zone.Position.X) + Math.Abs(targetPosition.Y - zone.Position.Y);
 
                 if (val > lowestVal)
                     continue;
 
-                selectedZone = (IZone)zone;
+                selectedZone = zone;
                 lowestVal = val;
             }
 

@@ -1,13 +1,9 @@
-﻿using AspiringDemo.Factions;
-using AspiringDemo.Saving;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
+using AspiringDemo.Factions;
 
 namespace AspiringDemo.Sites
 {
@@ -41,15 +37,15 @@ namespace AspiringDemo.Sites
         public void LoadSerializedData(string data)
         {
             Convert.FromBase64String(data);
-            List<int> values = new List<int>();
+            var values = new List<int>();
 
             IFormatter formatter = new BinaryFormatter();
 
-            using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(data)))
+            using (var ms = new MemoryStream(Convert.FromBase64String(data)))
             {
                 try
                 {
-                    values = (List<int>)formatter.Deserialize(ms);
+                    values = (List<int>) formatter.Deserialize(ms);
                 }
                 catch (Exception ex)
                 {
@@ -65,21 +61,21 @@ namespace AspiringDemo.Sites
         }
 
         /// <summary>
-        /// Returns a string of serialized, base64 encoded data
+        ///     Returns a string of serialized, base64 encoded data
         /// </summary>
         /// <returns></returns>
         public string GetSerializedData()
         {
             string data = "";
-            List<int> list = new List<int>();
+            var list = new List<int>();
 
             list.Add(AreaValue);
             list.Add(BuildTime);
             list.Add(Cost);
 
             IFormatter formatter = new BinaryFormatter();
-           
-            using (MemoryStream ms = new MemoryStream())
+
+            using (var ms = new MemoryStream())
             {
                 formatter.Serialize(ms, list);
 

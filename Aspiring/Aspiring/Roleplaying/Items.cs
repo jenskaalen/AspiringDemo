@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AspiringDemo.Roleplaying
 {
     public class Items : IItems
     {
-        public IWeapon CurrentWeapon { get; private set; }
-        public List<IWeapon> Weapons { get; set; }
-
         public Items()
         {
             Weapons = new List<IWeapon>();
         }
+
+        public IWeapon CurrentWeapon { get; private set; }
+        public List<IWeapon> Weapons { get; set; }
 
         public IWeapon GetBestWeapon()
         {

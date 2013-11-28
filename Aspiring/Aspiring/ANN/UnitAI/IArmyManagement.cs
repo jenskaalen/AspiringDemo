@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AspiringDemo.ANN.Actions;
 using AspiringDemo.Factions;
 
 namespace AspiringDemo.ANN.UnitAI
 {
-    interface IArmyManagement
+    internal interface IArmyManagement
     {
         IFaction Faction { get; set; }
         List<IManagementAction> AllowedActions { get; set; }

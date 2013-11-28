@@ -1,10 +1,11 @@
-﻿using AspiringDemo.Units;
+﻿using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.GameActions.Combat
 {
     public class UnitAttack : GameAction
     {
-        private IUnit _attacker, _target;
+        private readonly IUnit _attacker;
+        private readonly IUnit _target;
 
         public UnitAttack(IUnit attacker, IUnit target)
         {

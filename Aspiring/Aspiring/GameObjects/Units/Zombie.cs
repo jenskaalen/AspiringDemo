@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AspiringDemo.Factions;
+using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Orders;
 using AspiringDemo.Weapons;
 
-namespace AspiringDemo.Units
+namespace AspiringDemo.GameObjects.Units
 {
     public class Zombie : BaseUnit
     {
-        public Zombie(IFaction faction) : base(faction)
+        public Zombie(IFaction faction)
+            : base(faction)
         {
             Name = "Zombie";
             Stats.Speed = 20;

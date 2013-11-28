@@ -1,10 +1,6 @@
-﻿using AspiringDemo.ANN.Actions;
+﻿using System;
+using AspiringDemo.ANN.Actions;
 using AspiringDemo.Factions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AspiringDemo.ANN
 {
@@ -14,7 +10,6 @@ namespace AspiringDemo.ANN
 
         public IManagementAction GetMostWeightedAction()
         {
-
             throw new NotImplementedException();
         }
     }

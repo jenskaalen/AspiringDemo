@@ -6,6 +6,7 @@ using AspiringDemo.Factions;
 using AspiringDemo.Factions.Diplomacy;
 using AspiringDemo.GameActions;
 using AspiringDemo.Gamecore;
+using AspiringDemo.GameObjects.Squads;
 using AspiringDemo.Orders;
 using AspiringDemo.Roleplaying;
 using AspiringDemo.Roleplaying.Stats;
@@ -13,15 +14,36 @@ using AspiringDemo.Weapons;
 using Ninject;
 using Ninject.Parameters;
 
-namespace AspiringDemo.Units
+namespace AspiringDemo.GameObjects.Units
 {
-    public delegate ActionResult ActionApplied(Action action);
-    public delegate void StateChanged(IUnit unit, UnitState state);
-    public delegate void RankChanged(IUnit unit, SquadRank rank);
-
     //TODO: Extract interface
     public class BaseUnit : IUnit
     {
+        protected float ObjectDestructionTime;
+        protected int _hp;
+        protected SquadRank _rank;
+        protected UnitState _state;
+
+        protected BaseUnit(IFaction faction)
+        {
+            Faction = faction;
+            ChangeState += ChangeStateSelf;
+            Rank = SquadRank.Private;
+            State = UnitState.Idle;
+            Stats = GameFrame.Game.Factory.Get<IUnitStats>();
+            Items = GameFrame.Game.Factory.Get<IItems>();
+            CombatModule = GameFrame.Game.Factory.Get<ICombatModule>(new ConstructorArgument("unit", this));
+            Stats.Speed = 20;
+            _hp = 25;
+            XPWorth = 50;
+            //Weapons = new List<IWeapon>();
+            //Weapons.Add(new Unarmed());
+            Items.Weapons.Add(new Unarmed());
+            Name = "Soldier";
+        }
+
+        public StateChanged ChangeState { get; set; }
+
         public SquadRank Rank
         {
             get { return _rank; }
@@ -42,9 +64,8 @@ namespace AspiringDemo.Units
         public IItems Items { get; set; }
         public List<GameAction> Actions { get; set; }
         public IFaction Faction { get; protected set; }
-        public Combat.ICombatModule CombatModule { get; set; }
+        public ICombatModule CombatModule { get; set; }
         public RankChanged ChangeRank { get; set; }
-        public StateChanged ChangeState { get; set; }
         public IUnitOrder Order { get; set; }
         public IZone Zone { get; set; }
         public IUnitStats Stats { get; set; }
@@ -54,10 +75,7 @@ namespace AspiringDemo.Units
 
         public virtual int Hp
         {
-            get
-            {
-                return Stats.CurrentHp;
-            }
+            get { return Stats.CurrentHp; }
             set
             {
                 if (State == UnitState.Dead || State == UnitState.ObjectDisabled)
@@ -74,10 +92,7 @@ namespace AspiringDemo.Units
 
         public virtual UnitState State
         {
-            get
-            {
-                return _state;
-            }
+            get { return _state; }
             set
             {
                 ChangeState(this, value);
@@ -88,43 +103,20 @@ namespace AspiringDemo.Units
             }
         }
 
-        protected SquadRank _rank;
-        protected UnitState _state;
-        protected float ObjectDestructionTime;
-        protected int _hp;
-
-        protected BaseUnit(IFaction faction)
-        {
-            Faction = faction;
-            ChangeState += ChangeStateSelf;
-            Rank = SquadRank.Private;
-            State = UnitState.Idle;
-            Stats = GameFrame.Game.Factory.Get<IUnitStats>();
-            Items = GameFrame.Game.Factory.Get<IItems>();
-            CombatModule = GameFrame.Game.Factory.Get<ICombatModule>(new ConstructorArgument("unit", this));
-            Stats.Speed = 20;
-            _hp = 25;
-            XPWorth = 50;
-            //Weapons = new List<IWeapon>();
-            //Weapons.Add(new Unarmed());
-            Items.Weapons.Add(new Unarmed());
-            Name = "Soldier";
-        }
-
         public void EnterZone(IZone zone)
         {
             if (Zone != null)
                 LeaveZone();
 
-            this.Zone = zone;
+            Zone = zone;
             Zone.Units.Add(this);
 
 
-            if (this.State == UnitState.Dead)
+            if (State == UnitState.Dead)
                 return;
             //unit enters combat..
-            var enemyUnit = Zone.Units.Where(unit => unit.State != UnitState.Dead).FirstOrDefault(
-                unit => unit.Faction.Relations.GetRelation(this.Faction).Relation == RelationType.Hostile);
+            IUnit enemyUnit = Zone.Units.Where(unit => unit.State != UnitState.Dead).FirstOrDefault(
+                unit => unit.Faction.Relations.GetRelation(Faction).Relation == RelationType.Hostile);
 
             if (enemyUnit != null)
             {
@@ -146,18 +138,6 @@ namespace AspiringDemo.Units
             Zone = null;
         }
 
-        protected virtual void ChangeStateSelf(IUnit unit, UnitState state)
-        {
-            // we dont want to change the state of a dead unit
-            if (State == UnitState.Dead || State == UnitState.ObjectDisabled)
-                return;
-
-            if (state == UnitState.Idle && unit.Order != null)
-                _state = UnitState.ExecutingOrder;
-            else
-                _state = state;
-        }
-
         public virtual void AssignOrder(IUnitOrder order)
         {
             Order = order;
@@ -174,10 +154,22 @@ namespace AspiringDemo.Units
 
             Stats.Regen(time);
         }
-        
+
         public virtual void KilledUnit(IUnit unit)
         {
             CombatModule.Kills++;
+        }
+
+        protected virtual void ChangeStateSelf(IUnit unit, UnitState state)
+        {
+            // we dont want to change the state of a dead unit
+            if (State == UnitState.Dead || State == UnitState.ObjectDisabled)
+                return;
+
+            if (state == UnitState.Idle && unit.Order != null)
+                _state = UnitState.ExecutingOrder;
+            else
+                _state = state;
         }
 
         protected virtual void Die()
@@ -208,10 +200,10 @@ namespace AspiringDemo.Units
             if (unit.State == UnitState.Dead)
             {
                 int highestBasedmg = Items.Weapons.Max(wpn => wpn.BaseDamage);
-                var lootable = unit.Items.Weapons.Where(weapon => weapon.BaseDamage > highestBasedmg);
+                IEnumerable<IWeapon> lootable = unit.Items.Weapons.Where(weapon => weapon.BaseDamage > highestBasedmg);
                 var toBeRemoved = new List<IWeapon>();
 
-                foreach (var weapon in lootable)
+                foreach (IWeapon weapon in lootable)
                 {
                     Items.Weapons.Add(weapon);
                     toBeRemoved.Add(weapon);
@@ -221,7 +213,9 @@ namespace AspiringDemo.Units
             }
             else
             {
-                GameFrame.Debug.Log(String.Format("Can't loot a unit that is not dead (this was not supposed to happen): {0}", unit.GetHashCode()));
+                GameFrame.Debug.Log(
+                    String.Format("Can't loot a unit that is not dead (this was not supposed to happen): {0}",
+                        unit.GetHashCode()));
             }
         }
     }

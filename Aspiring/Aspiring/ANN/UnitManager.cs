@@ -4,22 +4,19 @@ using System.Linq;
 using AspiringDemo.ANN.Actions;
 using AspiringDemo.ANN.Actions.Unit;
 using AspiringDemo.ANN.War;
+using AspiringDemo.Factions;
+using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Orders;
 using AspiringDemo.Sites;
-using AspiringDemo.Factions;
-using AspiringDemo.Units;
 
 namespace AspiringDemo.ANN
 {
     public class UnitManager : IUnitManager
     {
-        public IFaction Faction { get; private set; }
-        public List<Actions.Unit.IUnitAction> AllowedActions { get; set; }
-
-        private List<AttackAction> _currentAttackActions; 
         private const double AreaGuardModifier = 1.0;
         private const int AreaGuardsRequirement = 3;
-        private IWarmodule _warmodule;
+        private readonly List<AttackAction> _currentAttackActions;
+        private readonly IWarmodule _warmodule;
 
         public UnitManager(IFaction faction)
         {
@@ -31,16 +28,20 @@ namespace AspiringDemo.ANN
             _warmodule = new Warmodule();
         }
 
+        public IFaction Faction { get; private set; }
+        public List<IUnitAction> AllowedActions { get; set; }
+
         public void ManageUnits()
         {
             SquadFormAction.FormSquad(Faction);
 
-            var attacksToRemove = _currentAttackActions.Where(attack => attack.AttackStarted).ToList();
+            List<AttackAction> attacksToRemove = _currentAttackActions.Where(attack => attack.AttackStarted).ToList();
             attacksToRemove.ForEach(atck => _currentAttackActions.Remove(atck));
 
             if (Faction.Strength > StrengthMeasurement.Abysmal && _currentAttackActions.Count == 0)
             {
-                _currentAttackActions.Add(new AttackAction(Faction, _warmodule.BestAreaToAttackFromAllFactions(this.Faction).Zone, this.Faction.CapitalZone, 5));
+                _currentAttackActions.Add(new AttackAction(Faction,
+                    _warmodule.BestAreaToAttackFromAllFactions(Faction).Zone, Faction.CapitalZone, 5));
             }
 
             _currentAttackActions.ForEach(action => action.Work());
@@ -57,7 +58,7 @@ namespace AspiringDemo.ANN
             double highestPrio = 0;
             IUnitAction action = null;
 
-            foreach (var area in Faction.Areas)
+            foreach (IPopulatedArea area in Faction.Areas)
             {
                 //double priority = (double)Faction.Army.AliveUnits.Count(unit => unit.Order.GetType() == typeof(GuardAreaOrder)) / Faction.Areas.Count;
 
@@ -90,7 +91,7 @@ namespace AspiringDemo.ANN
             return areaPrio;
         }
 
-        public void ExecuteAction(Actions.IManagementAction action)
+        public void ExecuteAction(IManagementAction action)
         {
             throw new NotImplementedException();
         }

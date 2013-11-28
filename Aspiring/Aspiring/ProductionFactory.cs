@@ -1,23 +1,20 @@
-﻿using System.Runtime.Serialization.Formatters;
-using AspiringDemo.ANN;
+﻿using AspiringDemo.ANN;
+using AspiringDemo.Combat;
 using AspiringDemo.Factions;
 using AspiringDemo.Factions.Diplomacy;
+using AspiringDemo.GameObjects.Squads;
+using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Roleplaying;
 using AspiringDemo.Roleplaying.Stats;
-using AspiringDemo.Units;
 using Ninject;
 using Ninject.Modules;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AspiringDemo.Combat;
 
 namespace AspiringDemo
 {
     public class ProductionFactory : NinjectModule
     {
+        private static IKernel _kernel;
+
         public static IKernel Instance
         {
             get
@@ -28,8 +25,6 @@ namespace AspiringDemo
                 return _kernel;
             }
         }
-
-        private static IKernel _kernel;
 
         public override void Load()
         {

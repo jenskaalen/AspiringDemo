@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Odbc;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AspiringDemo.Gamecore;
 using AspiringDemo.Gamecore.Helpers;
-using AspiringDemo.Units;
+using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.Combat
 {
     public class CombatModule : ICombatModule
     {
+        private const float SpeedModifier = 0.1f;
+        private readonly IUnit _unit;
+        private float _nextAttack;
+
+        public CombatModule(IUnit unit)
+        {
+            _unit = unit;
+        }
+
         public bool CanFlee { get; set; }
         public int CombatReluctance { get; set; }
         public int Kills { get; set; }
         public INewFight CurrentFight { get; set; }
         public IUnit CurrentTarget { get; set; }
-
-        private float _nextAttack;
-        private const float SpeedModifier = 0.1f;
-        private IUnit _unit;
 
         public void AttackTarget(IUnit target, float time)
         {
@@ -28,7 +29,7 @@ namespace AspiringDemo.Combat
                 return;
 
             //TODO: refactor this into some kind of attack
-            var bestWeapon = _unit.Items.GetBestWeapon();
+            IWeapon bestWeapon = _unit.Items.GetBestWeapon();
 
             if (_unit.Items.CurrentWeapon != bestWeapon)
                 ChangeWeapon(_unit.Items.GetBestWeapon());
@@ -49,7 +50,7 @@ namespace AspiringDemo.Combat
         public IUnit GetTarget(List<IUnit> potentialTargets)
         {
             // lol, we pick random (...)
-            var unit = potentialTargets[GameFrame.Random.Next(0, potentialTargets.Count)];
+            IUnit unit = potentialTargets[GameFrame.Random.Next(0, potentialTargets.Count)];
             return unit;
         }
 
@@ -65,7 +66,7 @@ namespace AspiringDemo.Combat
 
             if (_unit.Zone == null) return;
 
-            foreach (var ally in _unit.Zone.Units.Where(fightUnit => 
+            foreach (IUnit ally in _unit.Zone.Units.Where(fightUnit =>
                 fightUnit.CombatModule.CurrentFight == null
                 && _unit.Faction.Relations.Allies.Contains(fightUnit.Faction)))
             {
@@ -80,12 +81,7 @@ namespace AspiringDemo.Combat
 
         private void SetNextAttack(float time)
         {
-            _nextAttack = (_unit.Items.CurrentWeapon.WeaponSpeed / _unit.Stats.Speed) * SpeedModifier + time;
-        }
-
-        public CombatModule(IUnit unit)
-        {
-            _unit = unit;
+            _nextAttack = (_unit.Items.CurrentWeapon.WeaponSpeed/_unit.Stats.Speed)*SpeedModifier + time;
         }
     }
 }

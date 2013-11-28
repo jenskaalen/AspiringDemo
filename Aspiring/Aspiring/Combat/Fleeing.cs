@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AspiringDemo.Factions;
 using AspiringDemo.Factions.Diplomacy;
 using AspiringDemo.Gamecore.Helpers;
-using AspiringDemo.Units;
+using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.Combat
 {
@@ -19,11 +17,11 @@ namespace AspiringDemo.Combat
         {
             // do a simple measurement of faction count
             //fight.
-            var friendlyUnits =
+            IEnumerable<IUnit> friendlyUnits =
                 fight.Units.Where(
                     funit => funit.Faction.Relations.GetRelation(unit.Faction).Relation == RelationType.Friendly);
 
-            var enemyUnits =
+            IEnumerable<IUnit> enemyUnits =
                 fight.Units.Where(
                     funit => funit.Faction.Relations.GetRelation(unit.Faction).Relation == RelationType.Hostile);
 
@@ -32,29 +30,27 @@ namespace AspiringDemo.Combat
 
             if ((friendlyPower + (friendlyPower*ThresholdPercentage/100)) < enemyPower)
                 return true;
-            else
-                return false;
+            return false;
         }
 
         public static bool WantsToFlee(IFaction faction, INewFight fight)
         {
             // do a simple measurement of faction count
             //fight.
-            var friendlyUnits =
+            IEnumerable<IUnit> friendlyUnits =
                 fight.Units.Where(
                     funit => funit.Faction.Relations.GetRelation(faction).Relation == RelationType.Friendly);
 
-            var enemyUnits =
+            IEnumerable<IUnit> enemyUnits =
                 fight.Units.Where(
                     funit => funit.Faction.Relations.GetRelation(faction).Relation == RelationType.Hostile);
 
             int friendlyPower = friendlyUnits.Count();
             int enemyPower = enemyUnits.Count();
 
-            if ((friendlyPower + (friendlyPower * ThresholdPercentage / 100)) < enemyPower)
+            if ((friendlyPower + (friendlyPower*ThresholdPercentage/100)) < enemyPower)
                 return true;
-            else
-                return false;
+            return false;
         }
 
         public static double FleeChance(IFaction faction, INewFight fight)
@@ -67,19 +63,19 @@ namespace AspiringDemo.Combat
             double fleeChance = InitialFleeChance;
             fleeChance -= fight.Units.Count(unit => unit.Faction == faction);
 
-            var enemySpeed =
+            double enemySpeed =
                 fight.Units.Where(
                     unit => unit.Faction.Relations.GetRelation(faction).Relation == RelationType.Hostile)
                     .Average(unit => unit.Stats.Speed);
 
-            var selfSpeed =
+            double selfSpeed =
                 fight.Units.Where(
                     unit => unit.Faction.Relations.GetRelation(faction).Relation == RelationType.Friendly)
                     .Average(unit => unit.Stats.Speed);
 
             double speedDifference = selfSpeed - enemySpeed;
             fleeChance += speedDifference;
-            fleeChance += (speedDifference * 10);
+            fleeChance += (speedDifference*10);
 
             return fleeChance;
         }
@@ -94,13 +90,10 @@ namespace AspiringDemo.Combat
 
                 return retreatZone;
             }
-            else
-            {
-                //any port in a storm - we pick any neighbor 
-                if (unit.Zone.Neighbours.Any())
-                    return (IZone) unit.Zone.Neighbours.FirstOrDefault();
-                else return null;
-            }
+            //any port in a storm - we pick any neighbor 
+            if (unit.Zone.Neighbours.Any())
+                return (IZone) unit.Zone.Neighbours.FirstOrDefault();
+            return null;
         }
 
         public static void CheckAndPerformFleeing(IFaction faction, INewFight fight)
@@ -108,13 +101,13 @@ namespace AspiringDemo.Combat
             if (WantsToFlee(fight.Units.FirstOrDefault(unit => unit.Faction == faction), fight))
             {
                 double fleeRoll = 100 - GameFrame.Random.Next(0, 100);
-                double chance =  FleeChance(faction, fight);
+                double chance = FleeChance(faction, fight);
 
                 if (chance > fleeRoll)
                 {
                     // now we flee for real
-                    var anyUnit = fight.Units.FirstOrDefault(unit => unit.Faction == faction);
-                    var retreatZone = DetermineRetreatZone(anyUnit);
+                    IUnit anyUnit = fight.Units.FirstOrDefault(unit => unit.Faction == faction);
+                    IZone retreatZone = DetermineRetreatZone(anyUnit);
 
                     if (retreatZone != null)
                         Actions.GiveRetreatOrder(faction, fight, retreatZone);

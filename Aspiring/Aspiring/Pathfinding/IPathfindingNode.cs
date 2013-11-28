@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AspiringDemo.Pathfinding
 {
@@ -12,7 +9,7 @@ namespace AspiringDemo.Pathfinding
         Closed
     }
 
-    public interface IPathfindingNode: IComparable<IPathfindingNode>
+    public interface IPathfindingNode : IComparable<IPathfindingNode>
     {
         Vector2 Position { get; set; }
         IEnumerable<IPathfindingNode> Neighbours { get; set; }

@@ -1,11 +1,8 @@
-﻿using System;
-using AspiringDemo.Units;
+﻿using AspiringDemo.GameObjects.Units;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AspiringDemo;
 using Ninject;
-using System.Collections.Generic;
 using AspiringDemo.Factions;
-using AspiringDemo.Weapons;
 using Ninject.Parameters;
 
 namespace AspiringDemoTest

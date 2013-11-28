@@ -2,8 +2,10 @@
 using AspiringDemo.ANN;
 using AspiringDemo.Factions;
 using AspiringDemo.Factions.Diplomacy;
+using AspiringDemo.GameObjects;
+using AspiringDemo.GameObjects.Squads;
+using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Sites;
-using AspiringDemo.Units;
 using Ninject;
 using Ninject.Modules;
 using System;

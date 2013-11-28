@@ -1,5 +1,4 @@
-﻿using System;
-namespace AspiringDemo
+﻿namespace AspiringDemo
 {
     public interface IWeapon
     {

@@ -1,28 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AspiringDemo.Factions.Diplomacy
 {
     public class FactionRelations : IFactionRelations
     {
+        private readonly IFaction _faction;
         private List<IFactionRelation> _relations;
-        private IFaction _faction;
 
         public FactionRelations(IFaction faction)
         {
             _faction = faction;
             _relations = new List<IFactionRelation>();
             _relations.Add(new FactionRelation(faction)
-                {
-                    Relation = RelationType.Friendly
-                });
+            {
+                Relation = RelationType.Friendly
+            });
         }
 
-        public List<IFaction> Allies {
-            get { return _relations.Where(relation => relation.Relation == RelationType.Friendly).Select(relation => relation.Faction).ToList(); }
+        public List<IFaction> Allies
+        {
+            get
+            {
+                return
+                    _relations.Where(relation => relation.Relation == RelationType.Friendly)
+                        .Select(relation => relation.Faction)
+                        .ToList();
+            }
         }
 
         public void SetRelation(IFaction faction, RelationType relation)
@@ -66,11 +71,11 @@ namespace AspiringDemo.Factions.Diplomacy
 
         public static bool ContainsHostileFactions(IEnumerable<IFaction> factions)
         {
-            var enumerable = factions as IList<IFaction> ?? factions.ToList();
+            IList<IFaction> enumerable = factions as IList<IFaction> ?? factions.ToList();
 
-            foreach (var relation in enumerable.Select(faction => faction.Relations))
+            foreach (IFactionRelations relation in enumerable.Select(faction => faction.Relations))
             {
-                foreach (var faction in enumerable)
+                foreach (IFaction faction in enumerable)
                 {
                     if (relation.GetRelation(faction).Relation == RelationType.Hostile)
                         return true;

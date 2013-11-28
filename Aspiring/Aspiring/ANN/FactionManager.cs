@@ -1,11 +1,9 @@
-﻿using AspiringDemo.ANN.Actions;
-using AspiringDemo.ANN.Actions.Unit;
-using AspiringDemo.Factions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AspiringDemo.ANN.Actions;
+using AspiringDemo.ANN.Actions.Unit;
+using AspiringDemo.Factions;
 using Ninject;
 using Ninject.Parameters;
 
@@ -13,6 +11,16 @@ namespace AspiringDemo.ANN
 {
     public class FactionManager : IFactionManager
     {
+        public FactionManager(IFaction faction)
+        {
+            Faction = faction;
+            QueuedActions = new List<IManagementAction>();
+            RecruitmentManager =
+                GameFrame.Game.Factory.Get<IRecruitmentManager>(new ConstructorArgument("faction", faction));
+            BuildManager = GameFrame.Game.Factory.Get<IBuildingManager>(new ConstructorArgument("faction", faction));
+            UnitManager = GameFrame.Game.Factory.Get<IUnitManager>(new ConstructorArgument("faction", faction));
+        }
+
         public IFaction Faction { get; set; }
         public IBuildingManager BuildManager { get; set; }
         public IRecruitmentManager RecruitmentManager { get; set; }
@@ -20,15 +28,6 @@ namespace AspiringDemo.ANN
         public IPlacementDecider PlacementDecider { get; set; }
         public int ActionsPerTurn { get; set; }
         public List<IManagementAction> QueuedActions { get; set; }
-
-        public FactionManager(IFaction faction)
-        {
-            Faction = faction;
-            QueuedActions = new List<IManagementAction>();
-            RecruitmentManager = GameFrame.Game.Factory.Get<IRecruitmentManager>(new ConstructorArgument("faction", faction));
-            BuildManager = GameFrame.Game.Factory.Get<IBuildingManager>(new ConstructorArgument("faction", faction));
-            UnitManager = GameFrame.Game.Factory.Get<IUnitManager>(new ConstructorArgument("faction", faction));
-        }
 
         public void ManageUnits()
         {
@@ -58,24 +57,13 @@ namespace AspiringDemo.ANN
                 QueueAction(recruitAction);
                 return recruitAction;
             }
-            else if (buildAction != null)
+            if (buildAction != null)
             {
                 QueueAction(buildAction);
                 return buildAction;
             }
-            else
-            { 
-                //nothing
-                return null;
-            }
-        }
-
-        private void QueueAction(IManagementAction action)
-        {
-            if (QueuedActions == null)
-                QueuedActions = new List<IManagementAction>();
-
-            QueuedActions.Add(action);
+            //nothing
+            return null;
         }
 
 
@@ -84,11 +72,11 @@ namespace AspiringDemo.ANN
             if (!QueuedActions.Any())
                 return;
 
-            var action = QueuedActions.First();
+            IManagementAction action = QueuedActions.First();
 
             if (action is IBuildAction)
             {
-                BuildManager.ExecuteAction((IBuildAction)action);
+                BuildManager.ExecuteAction((IBuildAction) action);
             }
             else if (action is RecruitUnit)
             {
@@ -98,6 +86,14 @@ namespace AspiringDemo.ANN
                 throw new NotImplementedException("Action type is not supported");
 
             QueuedActions.RemoveAt(0);
+        }
+
+        private void QueueAction(IManagementAction action)
+        {
+            if (QueuedActions == null)
+                QueuedActions = new List<IManagementAction>();
+
+            QueuedActions.Add(action);
         }
     }
 }

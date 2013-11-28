@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AspiringDemo.Units;
+﻿using System.Collections.Generic;
+using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.Combat
 {
@@ -14,5 +10,4 @@ namespace AspiringDemo.Combat
         void Leave(IUnit unit);
         void Enter(IUnit unit);
     }
-
 }

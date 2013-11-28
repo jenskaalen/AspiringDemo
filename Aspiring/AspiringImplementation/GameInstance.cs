@@ -5,7 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AspiringDemo.Units;
+using AspiringDemo.GameObjects;
+using AspiringDemo.GameObjects.Units;
 
 namespace AspiringImplementation
 {

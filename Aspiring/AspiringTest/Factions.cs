@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations.Model;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AspiringDemo;
 using AspiringDemo.ANN;
 using AspiringDemo.Factions;
 using AspiringDemo.Factions.Diplomacy;
+using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Sites;
-using AspiringDemo.Units;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
-using Ninject.Parameters;
 
 namespace AspiringDemoTest
 {

@@ -1,29 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AspiringDemo.ANN;
 using AspiringDemo.ANN.Actions.Unit;
 using AspiringDemo.Factions.Diplomacy;
 using AspiringDemo.Gamecore;
+using AspiringDemo.GameObjects.Squads;
+using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Orders;
 using AspiringDemo.Sites;
-using AspiringDemo.Units;
-using Ninject.Parameters;
 using Ninject;
-using Ninject.Planning.Targets;
+using Ninject.Parameters;
 
 namespace AspiringDemo.Factions.Custom
 {
     public class NeutralFaction : INeutralFaction
     {
-        private bool _initialized { get; set; }
-
-        public UnitCreationDelegate CreateUnit { get; set; }
-        public IFactionRelations Relations { get; set; }
-        public List<Sites.IPopulatedArea> Areas { get; set; }
-
         public NeutralFaction()
         {
             Areas = new List<IPopulatedArea>();
@@ -33,9 +25,15 @@ namespace AspiringDemo.Factions.Custom
             //FactionManager.RecruitmentManager = GameFrame.Game.Factory.Get<IRecruitmentManager>(new ConstructorArgument("faction", this));
             //FactionManager.UnitManager = GameFrame.Game.Factory.Get<IUnitManager>(new ConstructorArgument("faction", this));
             Relations = GameFrame.Game.Factory.Get<IFactionRelations>(new ConstructorArgument("faction", this));
-            Areas = new List<Sites.IPopulatedArea>();
+            Areas = new List<IPopulatedArea>();
             CreateUnit += CreateStandardUnit;
         }
+
+        private bool _initialized { get; set; }
+
+        public UnitCreationDelegate CreateUnit { get; set; }
+        public IFactionRelations Relations { get; set; }
+        public List<IPopulatedArea> Areas { get; set; }
 
         public ISquad CreateSquad()
         {
@@ -49,7 +47,8 @@ namespace AspiringDemo.Factions.Custom
         public IUnit CreateStandardUnit()
         {
             var zed = new Zombie(this);
-            var zone = GameFrame.Game.ZonePathfinder.Nodes[GameFrame.Random.Next(0, GameFrame.Game.ZonePathfinder.Nodes.Count)];
+            IZone zone =
+                GameFrame.Game.ZonePathfinder.Nodes[GameFrame.Random.Next(0, GameFrame.Game.ZonePathfinder.Nodes.Count)];
             Army.AddUnit(zed);
 
             zed.EnterZone(zone);
@@ -57,19 +56,10 @@ namespace AspiringDemo.Factions.Custom
             return zed;
         }
 
-        public IUnit CreateStandardUnit(IZone zone)
-        {
-            var zed = new Zombie(this);
-            zed.EnterZone(zone);
-            Army.AddUnit(zed);
-
-            return zed;
-        }
-
-        public ANN.IFactionManager FactionManager { get; set; }
+        public IFactionManager FactionManager { get; set; }
 
         public void Initialize()
-        { 
+        {
             // possibly throw an exception here just to weed out bad code (i.e. calling initializer several times)
             if (_initialized)
                 return;
@@ -101,12 +91,12 @@ namespace AspiringDemo.Factions.Custom
             throw new NotImplementedException();
         }
 
-        public void AddArea(Sites.IPopulatedArea area)
+        public void AddArea(IPopulatedArea area)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveArea(Sites.IPopulatedArea area)
+        public void RemoveArea(IPopulatedArea area)
         {
             throw new NotImplementedException();
         }
@@ -121,24 +111,26 @@ namespace AspiringDemo.Factions.Custom
             {
                 // create zombie squad
                 IZone targetZone =
-                    GameFrame.Game.ZonePathfinder.Nodes.Where(zone => !zone.PopulatedAreas.Any()).ToList().GetRandomNode();
+                    GameFrame.Game.ZonePathfinder.Nodes.Where(zone => !zone.PopulatedAreas.Any())
+                        .ToList()
+                        .GetRandomNode();
 
                 int zombieAmount = GameFrame.Random.Next(7, 18);
 
                 ISquad squad = CreateSquad();
 
-                for (int i=0; i < zombieAmount; i++)
+                for (int i = 0; i < zombieAmount; i++)
                     squad.AddMember(CreateStandardUnit(targetZone));
             }
 
             foreach (ISquad squad in Army.Squads)
             {
                 // order squad around
-               if (squad.State == SquadState.Idle)
-                   TravelOrder.GiveTravelOrder(squad, Utility.GetRandomZone(), false);
+                if (squad.State == SquadState.Idle)
+                    TravelOrder.GiveTravelOrder(squad, Utility.GetRandomZone(), false);
             }
 
-            foreach (var unit in Army.Units.Where(unit => unit.Order != null))
+            foreach (IUnit unit in Army.Units.Where(unit => unit.Order != null))
             {
                 //TODO: Should the order be removed?
                 if (unit.Order.IsDone)
@@ -163,6 +155,13 @@ namespace AspiringDemo.Factions.Custom
             throw new NotImplementedException();
         }
 
-        
+        public IUnit CreateStandardUnit(IZone zone)
+        {
+            var zed = new Zombie(this);
+            zed.EnterZone(zone);
+            Army.AddUnit(zed);
+
+            return zed;
+        }
     }
 }

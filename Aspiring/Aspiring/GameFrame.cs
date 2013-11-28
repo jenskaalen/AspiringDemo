@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using AspiringDemo.Gamecore;
 using AspiringDemo.Gamecore.Log;
 
@@ -14,7 +9,7 @@ namespace AspiringDemo
         private static IGame _instance;
         private static ILogger _debugLogger;
         private static Random _random;
-        private static XmlCreator _creator = new XmlCreator();
+        private static readonly XmlCreator _creator = new XmlCreator();
 
         public static Random Random
         {
@@ -52,7 +47,7 @@ namespace AspiringDemo
         }
 
         /// <summary>
-        /// Used if you want to override the standard game
+        ///     Used if you want to override the standard game
         /// </summary>
         /// <param name="game"></param>
         public static void SetGame(IGame game)

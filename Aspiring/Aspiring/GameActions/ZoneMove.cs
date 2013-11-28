@@ -1,24 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AspiringDemo.Gamecore;
-using AspiringDemo.Orders;
-using AspiringDemo.Units;
+using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.GameActions
 {
     public class ZoneMove : GameAction
     {
-        private readonly IZone _targetZone;
-        private readonly IZone _startZone;
-        private readonly IUnit _unit;
-        private List<IZone> _travelPath;
-        private float _nextZoneChange;
-        private bool _started = false;
-
         private const float ZoneTravelTime = 1.0f;
+        private readonly IZone _startZone;
+        private readonly IZone _targetZone;
+        private readonly List<IZone> _travelPath;
+        private readonly IUnit _unit;
+        private float _nextZoneChange;
+        private bool _started;
 
         //TODO: Make a zonemove that doesnt need startzone explicitly stated
 

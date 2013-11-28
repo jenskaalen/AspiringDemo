@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
-using AspiringDemo.Pathfinding;
+﻿using System.Collections.Generic;
 
 namespace AspiringDemo.Gamecore
 {
@@ -18,7 +11,8 @@ namespace AspiringDemo.Gamecore
 
         public static IZone GetRandomZone()
         {
-            return GameFrame.Game.ZonePathfinder.Nodes[GameFrame.Random.Next(0, GameFrame.Game.ZonePathfinder.Nodes.Count)];
+            return
+                GameFrame.Game.ZonePathfinder.Nodes[GameFrame.Random.Next(0, GameFrame.Game.ZonePathfinder.Nodes.Count)];
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using AspiringDemo.Gamecore;
-using AspiringDemo.Units;
+using AspiringDemo.GameObjects;
+using AspiringDemo.GameObjects.Squads;
+using AspiringDemo.GameObjects.Units;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AspiringDemo;
 using System.IO;

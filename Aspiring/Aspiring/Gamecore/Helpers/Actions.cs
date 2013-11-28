@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AspiringDemo.Orders;
-using AspiringDemo.Units;
-using AspiringDemo.Factions;
 using AspiringDemo.Combat;
+using AspiringDemo.Factions;
+using AspiringDemo.GameObjects.Units;
+using AspiringDemo.Orders;
 
 namespace AspiringDemo.Gamecore.Helpers
 {
@@ -21,7 +18,7 @@ namespace AspiringDemo.Gamecore.Helpers
 
         public static void GiveRetreatOrder(IFaction faction, INewFight fight, IZone retreatZone)
         {
-            foreach (var unit in fight.Units.Where(un => un.Faction == faction))
+            foreach (IUnit unit in fight.Units.Where(un => un.Faction == faction))
             {
                 unit.CombatModule.CurrentFight.Leave(unit);
 
@@ -29,7 +26,8 @@ namespace AspiringDemo.Gamecore.Helpers
 
                 if (unit.Order == null)
                 {
-                    GameFrame.Debug.Log(String.Format("Unit can't retreat because order is null: {0} , {1}, {2}", unit.Faction, unit.State, unit.GetHashCode()));
+                    GameFrame.Debug.Log(String.Format("Unit can't retreat because order is null: {0} , {1}, {2}",
+                        unit.Faction, unit.State, unit.GetHashCode()));
                     return;
                 }
                 unit.Order.Execute();

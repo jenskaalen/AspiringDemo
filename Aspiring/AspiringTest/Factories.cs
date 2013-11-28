@@ -1,8 +1,10 @@
 ﻿using AspiringDemo;
 using AspiringDemo.Factions;
+using AspiringDemo.GameObjects;
+using AspiringDemo.GameObjects.Squads;
+using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Roleplaying;
 using AspiringDemo.Roleplaying.Stats;
-using AspiringDemo.Units;
 using AspiringDemo.Weapons;
 using Ninject;
 using System;

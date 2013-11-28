@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AspiringDemo.Factions;
+using AspiringDemo.GameObjects.Squads;
+using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Orders;
 using AspiringDemo.Sites;
-using AspiringDemo.Units;
 
 namespace AspiringDemo.ANN.Actions.Unit
 {
     public class GuardAction : IUnitAction
     {
-        public Factions.IFaction Faction { get; set; }
-        private readonly IUnit _unit;
         private readonly IPopulatedArea _areaToGuard;
+        private readonly IUnit _unit;
 
         public GuardAction(IPopulatedArea areaToGuard, IUnit unit)
         {
@@ -26,13 +23,15 @@ namespace AspiringDemo.ANN.Actions.Unit
             throw new NotImplementedException();
         }
 
-        public double GetPriority(Factions.IFaction faction)
+        public IFaction Faction { get; set; }
+
+        public double GetPriority(IFaction faction)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// Gives executes the order for the unit
+        ///     Gives executes the order for the unit
         /// </summary>
         public void Execute()
         {

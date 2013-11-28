@@ -1,36 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AspiringDemo.Units;
+using AspiringDemo.GameObjects.Squads;
+using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.Factions
 {
     public class Army : IArmy
     {
-        public List<ISquad> Squads
-        {
-            get;
-            set;
-        }
-
-        public List<IUnit> Units
-        {
-            get;
-            set;
-        }
-
         public Army()
         {
             Squads = new List<ISquad>();
             Units = new List<IUnit>();
         }
 
+        public List<ISquad> Squads { get; set; }
+
+        public List<IUnit> Units { get; set; }
+
         public List<IUnit> AliveUnits
         {
             get { return Units.Where(unit => unit.State != UnitState.Dead).ToList(); }
-        } 
+        }
 
 
         public int AliveUnitsCount
@@ -39,7 +29,7 @@ namespace AspiringDemo.Factions
         }
 
         /// <summary>
-        /// Returns all units considered idle
+        ///     Returns all units considered idle
         /// </summary>
         /// <returns></returns>
         public List<IUnit> GetIdleUnits()
@@ -47,7 +37,7 @@ namespace AspiringDemo.Factions
             //TOOD: Optimalize this
             var units = new List<IUnit>();
 
-            foreach (var unit in Units.Where(x => x.State == UnitState.Idle && x.Order == null))
+            foreach (IUnit unit in Units.Where(x => x.State == UnitState.Idle && x.Order == null))
             {
                 if (Squads.Count == 0 || Squads.Any(x => !x.Members.Contains(unit)))
                     units.Add(unit);
@@ -58,7 +48,7 @@ namespace AspiringDemo.Factions
 
         public ISquad GetUnitSquad(IUnit unit)
         {
-            var squad = Squads.FirstOrDefault(x => x.Members.Contains(unit));
+            ISquad squad = Squads.FirstOrDefault(x => x.Members.Contains(unit));
             return squad;
         }
 

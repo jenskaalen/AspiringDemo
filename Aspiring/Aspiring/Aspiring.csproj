@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ability.cs" />
+    <Compile Include="Combat\Attacks\AttackTypes.cs" />
+    <Compile Include="Combat\Attacks\IUnitModifier.cs" />
     <Compile Include="Combat\CombatModule.cs" />
     <Compile Include="Combat\INewFight.cs" />
     <Compile Include="Combat\NewFight.cs" />
@@ -133,17 +135,28 @@
     <Compile Include="Gamecore\Utility.cs" />
     <Compile Include="Gamecore\XmlCreator.cs" />
     <Compile Include="GameFrame.cs" />
+    <Compile Include="GameObjects\IGameObject.cs" />
+    <Compile Include="GameObjects\ObjectType.cs" />
+    <Compile Include="GameObjects\Squads\ISquad.cs" />
+    <Compile Include="GameObjects\Squads\ISquadBehaviour.cs" />
+    <Compile Include="GameObjects\Squads\Squad.cs" />
+    <Compile Include="GameObjects\Squads\SquadRank.cs" />
+    <Compile Include="GameObjects\Squads\SquadState.cs" />
+    <Compile Include="GameObjects\Units\ActionApplied.cs" />
+    <Compile Include="GameObjects\Units\BaseUnit.cs" />
+    <Compile Include="GameObjects\Units\IUnit.cs" />
+    <Compile Include="GameObjects\Units\IUnitLeveling.cs" />
+    <Compile Include="GameObjects\Units\RankChanged.cs" />
+    <Compile Include="GameObjects\Units\StateChanged.cs" />
+    <Compile Include="GameObjects\Units\Unit.cs" />
+    <Compile Include="GameObjects\Units\UnitState.cs" />
+    <Compile Include="GameObjects\Units\Zombie.cs" />
     <Compile Include="IGame.cs" />
     <Compile Include="Roleplaying\IItems.cs" />
     <Compile Include="Roleplaying\Items.cs" />
     <Compile Include="Gamecore\ActionProcesser.cs" />
     <Compile Include="Gamecore\IActionProcesser.cs" />
-    <Compile Include="Units\Actions\IUnitAction.cs" />
-    <Compile Include="Units\Actions\UnitActionIntent.cs" />
     <Compile Include="GameActions\Combat\UnitAttack.cs" />
-    <Compile Include="Units\BaseUnit.cs" />
-    <Compile Include="Units\ISquad.cs" />
-    <Compile Include="Units\IUnit.cs" />
     <Compile Include="IZone.cs" />
     <Compile Include="Orders\BuildOrder.cs" />
     <Compile Include="Orders\FollowOrder.cs" />
@@ -160,10 +173,6 @@
     <Compile Include="Sites\IPopulatedArea.cs" />
     <Compile Include="Sites\Outpost.cs" />
     <Compile Include="Sites\PopulatedArea.cs" />
-    <Compile Include="Units\IUnitLeveling.cs" />
-    <Compile Include="Units\Squads\ISquadBehaviour.cs" />
-    <Compile Include="Units\UnitState.cs" />
-    <Compile Include="Units\Zombie.cs" />
     <Compile Include="Weapons\IWeapon.cs" />
     <Compile Include="Orders\IUnitOrder.cs" />
     <Compile Include="Orders\TravelOrder.cs" />
@@ -192,9 +201,6 @@
     <Compile Include="Zone.cs" />
     <Compile Include="Pathfinding\Pathing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Units\Squad.cs" />
-    <Compile Include="Units\Unit.cs" />
-    <Compile Include="Units\SquadRank.cs" />
     <Compile Include="Weapons\Weapon.cs" />
   </ItemGroup>
   <ItemGroup>

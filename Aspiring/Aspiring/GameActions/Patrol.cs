@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AspiringDemo.Units;
+using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.GameActions
 {
@@ -14,7 +10,7 @@ namespace AspiringDemo.GameActions
             // first move to the target zone
             Actions.Add(new ZoneMove(unit, zoneA));
 
-            for (int i=0; i < patrols; i++)
+            for (int i = 0; i < patrols; i++)
             {
                 // move to location
                 Actions.Add(new ZoneMove(unit, zoneB));
@@ -25,7 +21,7 @@ namespace AspiringDemo.GameActions
 
         public override void Update(float elapsed)
         {
- 	        throw new NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

@@ -16,7 +16,8 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using AspiringDemo;
 using AspiringDemo.Factions;
-using AspiringDemo.Units;
+using AspiringDemo.GameObjects;
+using AspiringDemo.GameObjects.Units;
 using AspiringImplementation;
 using System.Threading;
 

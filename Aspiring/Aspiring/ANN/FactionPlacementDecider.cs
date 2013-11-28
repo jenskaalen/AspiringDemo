@@ -1,15 +1,15 @@
-﻿using AspiringDemo.Factions;
-using AspiringDemo.Sites;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AspiringDemo.Factions;
 
 namespace AspiringDemo.ANN
 {
     public class FactionPlacementDecider : IPlacementDecider
     {
+        private List<IZone> _factionZones;
+        private List<IZone> _openZones;
+        private List<IZone> _zones;
         public int PreferredCapitalDistance { get; set; }
         public int PreferredFactionZoneDistance { get; set; }
         public int MaxDistanceFromCapital { get; set; }
@@ -18,9 +18,6 @@ namespace AspiringDemo.ANN
         public int MinDistanceFromFactionZone { get; set; }
         // custom
         public IFaction Faction { get; set; }
-        private List<IZone> _zones;
-        private List<IZone> _factionZones;
-        private List<IZone> _openZones;
 
         public IZone GetBestZone(List<IZone> zonesToEvaluate)
         {
@@ -32,7 +29,7 @@ namespace AspiringDemo.ANN
             _factionZones = zonesToEvaluate.Where(x => x.PopulatedAreas.Any()).ToList();
             _openZones = zonesToEvaluate.Where(x => !x.PopulatedAreas.Any()).ToList();
 
-            foreach (var zone in _openZones)
+            foreach (IZone zone in _openZones)
             {
                 lastScore = ZoneScore(zone);
 
@@ -51,7 +48,7 @@ namespace AspiringDemo.ANN
             IZone capitalZone = Faction.CapitalZone;
             int score = 0;
 
-            int capitalDist = (int) zone.DistanceToNode(capitalZone);
+            var capitalDist = (int) zone.DistanceToNode(capitalZone);
 
             if (capitalDist > MaxDistanceFromCapital || capitalDist < MinDistanceFromCapital)
             {
@@ -66,11 +63,11 @@ namespace AspiringDemo.ANN
             //TODO: Check if this can be done in a more efficient way
             foreach (Zone factionZone in _factionZones)
             {
-                int distanceToZone = (int)(zone.DistanceToNode(factionZone));
+                var distanceToZone = (int) (zone.DistanceToNode(factionZone));
 
                 if (distanceToZone > MaxDistanceFromFactionZone || distanceToZone < MinDistanceFromFactionZone)
                     calcValue = int.MaxValue;
-                else 
+                else
                     calcValue = distanceToZone - PreferredFactionZoneDistance;
 
                 if (calcValue < lowestZoneValue)

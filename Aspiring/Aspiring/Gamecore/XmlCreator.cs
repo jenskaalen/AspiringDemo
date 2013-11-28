@@ -1,12 +1,7 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Xml.Linq;
 using AspiringDemo.Factions;
-using AspiringDemo.Units;
+using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.Gamecore
 {
@@ -21,8 +16,9 @@ namespace AspiringDemo.Gamecore
                 xml = XDocument.Load(xmlFile);
             }
             catch
-            {}
-                
+            {
+            }
+
             if (xml != null)
                 ReadXml(xml, xmlFile);
         }
@@ -32,7 +28,7 @@ namespace AspiringDemo.Gamecore
             if (!xmlFile.Descendants("Unit").Any())
                 return;
 
-            foreach (var unitele in xmlFile.Descendants("Unit"))
+            foreach (XElement unitele in xmlFile.Descendants("Unit"))
             {
                 CreateUnit(unitele);
             }
@@ -43,10 +39,10 @@ namespace AspiringDemo.Gamecore
 
         private void CreateUnit(XElement unitElement)
         {
-            var xElement = unitElement.Element("Faction");
+            XElement xElement = unitElement.Element("Faction");
             if (xElement != null)
             {
-                var factionName = xElement.Value;
+                string factionName = xElement.Value;
                 IFaction faction = GameFrame.Game.Factions.FirstOrDefault(x => x.Name == factionName);
 
                 if (faction != null)
@@ -59,9 +55,8 @@ namespace AspiringDemo.Gamecore
                     if (unitElement.Element("Level") != null)
                     {
                         int count = int.Parse(unitElement.Element("Level").Value);
-                        for (int i=0; i < count; i++)
+                        for (int i = 0; i < count; i++)
                             unit.CharacterLevel.GainLevel();
-
                     }
                 }
             }

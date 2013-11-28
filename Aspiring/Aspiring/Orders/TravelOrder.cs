@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AspiringDemo.Units;
-using Ninject.Planning.Targets;
+using AspiringDemo.GameObjects.Squads;
+using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.Orders
 {
@@ -15,16 +12,11 @@ namespace AspiringDemo.Orders
         //public bool IsExecuting { get; set; }
         //public bool IsDone { get; set; }
         //public OrderFinished Finish { get; set; }
-        public IZone TargetZone { get; set; }
-        public List<IZone> TravelPath { get; set; }
-        public new string OrderName { get { return this.ToString();  } }
-
+        private readonly bool _waitOnComplete;
         private long _nextWorkTime;
-        private bool _waitOnComplete = false;
 
         public TravelOrder(IEnumerable<IZone> travelpath, IUnit unit, bool waitOnComplete)
         {
-
             if (travelpath.Count() == 0)
             {
                 Unit = unit;
@@ -53,17 +45,25 @@ namespace AspiringDemo.Orders
             Unit = unit;
         }
 
+        public IZone TargetZone { get; set; }
+        public List<IZone> TravelPath { get; set; }
+
+        public new string OrderName
+        {
+            get { return ToString(); }
+        }
+
         public static void GiveTravelOrder(ISquad squad, IZone targetZone, bool waitOnComplete)
         {
             var lastTravelPath = new List<IZone>();
 
-            foreach (var member in squad.Members)
+            foreach (IUnit member in squad.Members)
             {
                 TravelOrder unitOrder;
 
                 if (member.Zone == targetZone)
                 {
-                    unitOrder = new TravelOrder(new List<IZone>() { targetZone}, member, waitOnComplete );
+                    unitOrder = new TravelOrder(new List<IZone> {targetZone}, member, waitOnComplete);
                     member.AssignOrder(unitOrder);
                     continue;
                 }
@@ -93,7 +93,7 @@ namespace AspiringDemo.Orders
 
             if (unit.Zone == targetZone)
             {
-                unitOrder = new TravelOrder(new List<IZone>() { targetZone }, unit, waitOnComplete);
+                unitOrder = new TravelOrder(new List<IZone> {targetZone}, unit, waitOnComplete);
                 unit.AssignOrder(unitOrder);
             }
             else if (lastTravelPath.Any() && unit.Zone == lastTravelPath.First())
@@ -138,20 +138,17 @@ namespace AspiringDemo.Orders
                 {
                     throw new NotImplementedException();
                 }
-                else
+                if (_nextWorkTime < gameTime)
                 {
-                    if (_nextWorkTime < gameTime)
-                    {
-                        var enteredZone = TravelPath.First();
-                        Unit.EnterZone(enteredZone);
-                        TravelPath.Remove(Unit.Zone);
-                        _nextWorkTime += GameFrame.Game.TimeToTravelThroughZone;
+                    IZone enteredZone = TravelPath.First();
+                    Unit.EnterZone(enteredZone);
+                    TravelPath.Remove(Unit.Zone);
+                    _nextWorkTime += GameFrame.Game.TimeToTravelThroughZone;
 
-                        //TODO: Uhh, remove?
-                        if (TravelPath.Count == 1 && TravelPath[0] != TargetZone)
-                        {
-                            throw new NotImplementedException();
-                        }
+                    //TODO: Uhh, remove?
+                    if (TravelPath.Count == 1 && TravelPath[0] != TargetZone)
+                    {
+                        throw new NotImplementedException();
                     }
                 }
             }

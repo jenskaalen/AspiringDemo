@@ -1,21 +1,11 @@
 ﻿using AspiringDemo.Factions;
 using AspiringDemo.Sites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AspiringDemo.ANN.Actions
 {
     public class BuildOutpost : IBuildAction
     {
-        const double FIXEDMULTIPLIER = 0.001;
-        public IPopulatedArea AreaType { get; private set; }
-        public IPlacementDecider PlacementDecider { get; set; }
-        public IFaction Faction { get; set; }
-
-        //public BuildOutpost() { }
+        private const double FIXEDMULTIPLIER = 0.001;
 
         public BuildOutpost(IFaction faction)
         {
@@ -24,7 +14,7 @@ namespace AspiringDemo.ANN.Actions
             AreaType.Cost = 700;
             AreaType.AreaValue = 700;
 
-            PlacementDecider = new FactionPlacementDecider()
+            PlacementDecider = new FactionPlacementDecider
             {
                 MaxDistanceFromCapital = int.MaxValue,
                 MaxDistanceFromFactionZone = int.MaxValue,
@@ -37,14 +27,17 @@ namespace AspiringDemo.ANN.Actions
             PlacementDecider.Faction = faction;
         }
 
+        public IPopulatedArea AreaType { get; private set; }
+        public IPlacementDecider PlacementDecider { get; set; }
+        public IFaction Faction { get; set; }
+
+        //public BuildOutpost() { }
+
         public double GetPriority(IFaction faction)
         {
-            double value = faction.Wealth * faction.Power * FIXEDMULTIPLIER / faction.StructurePoints;
+            double value = faction.Wealth*faction.Power*FIXEDMULTIPLIER/faction.StructurePoints;
 
             return value;
         }
-
-
-
     }
 }

@@ -1,14 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AspiringDemo.Units;
+using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.Orders
 {
     public class UnitOrderBase : IUnitOrder
     {
+        public UnitOrderBase(IUnit unit)
+        {
+            Unit = unit;
+        }
+
+        protected UnitOrderBase()
+        {
+        }
+
         public IUnit Unit { get; protected set; }
 
         public bool IsExecuting { get; set; }
@@ -20,15 +25,6 @@ namespace AspiringDemo.Orders
         public string OrderName
         {
             get { throw new NotImplementedException(); }
-        }
-
-        public UnitOrderBase(IUnit unit)
-        {
-            Unit = unit;
-        }
-
-        protected UnitOrderBase()
-        {
         }
 
         public virtual void Execute()

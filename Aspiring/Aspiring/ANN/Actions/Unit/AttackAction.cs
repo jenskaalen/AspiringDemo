@@ -1,33 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using AspiringDemo.Factions;
+using AspiringDemo.GameObjects.Squads;
 using AspiringDemo.Orders;
-using AspiringDemo.Units;
 
 namespace AspiringDemo.ANN.Actions.Unit
 {
     public class AttackAction
     {
         // change this to a settable value..
-        private readonly int _minAttackSize = 1;
-
-        public List<ISquad> Squads { get; set; }
-        public IZone AttackTargetZone { get; set; }
-        public IZone GatherZone { get; set; }
-        public bool AttackStarted { get; set; }
         private readonly IFaction _faction;
-
-        public int MemberCount
-        {
-            get
-            {
-                return Squads.Sum(squad => squad.Members.Count);
-            }
-        }
+        private readonly int _minAttackSize = 1;
 
         public AttackAction(IFaction faction, IZone targetZone, IZone gatherZone, int minUnitsInAttack)
         {
@@ -40,6 +24,17 @@ namespace AspiringDemo.ANN.Actions.Unit
             _faction = faction;
             _minAttackSize = minUnitsInAttack;
         }
+
+        public List<ISquad> Squads { get; set; }
+        public IZone AttackTargetZone { get; set; }
+        public IZone GatherZone { get; set; }
+        public bool AttackStarted { get; set; }
+
+        public int MemberCount
+        {
+            get { return Squads.Sum(squad => squad.Members.Count); }
+        }
+
         public void AddSquad(ISquad squad)
         {
             Squads.Add(squad);
@@ -50,9 +45,9 @@ namespace AspiringDemo.ANN.Actions.Unit
             if (AttackStarted)
                 return;
 
-            var emptySquads = Squads.Where(squad => !squad.Members.Any());
+            IEnumerable<ISquad> emptySquads = Squads.Where(squad => !squad.Members.Any());
 
-            foreach (var emptySquad in emptySquads.ToList())
+            foreach (ISquad emptySquad in emptySquads.ToList())
             {
                 Squads.Remove(emptySquad);
             }
@@ -60,7 +55,9 @@ namespace AspiringDemo.ANN.Actions.Unit
             if (MemberCount < _minAttackSize)
             {
                 // find a squad
-                ISquad squad = _faction.Army.Squads.FirstOrDefault(squad1 => squad1.State == SquadState.Idle && !Squads.Contains(squad1));
+                ISquad squad =
+                    _faction.Army.Squads.FirstOrDefault(
+                        squad1 => squad1.State == SquadState.Idle && !Squads.Contains(squad1));
 
                 if (squad != null)
                 {
@@ -72,11 +69,12 @@ namespace AspiringDemo.ANN.Actions.Unit
             }
             else
             {
-                var squadsNotInGatherZone = Squads.Where(squad => squad.Members.Any(unit => unit.Zone != GatherZone)).ToList();
+                List<ISquad> squadsNotInGatherZone =
+                    Squads.Where(squad => squad.Members.Any(unit => unit.Zone != GatherZone)).ToList();
 
                 if (squadsNotInGatherZone.Any())
                 {
-                    foreach (var squad in squadsNotInGatherZone)
+                    foreach (ISquad squad in squadsNotInGatherZone)
                     {
                         // give order to travel to  gatherzone
                         TravelOrder.GiveTravelOrder(squad, GatherZone, true);
@@ -85,7 +83,7 @@ namespace AspiringDemo.ANN.Actions.Unit
                 else
                 {
                     //everyone is here - get ready to boogiemove to attack
-                    foreach (var squad in Squads)
+                    foreach (ISquad squad in Squads)
                     {
                         TravelOrder.GiveTravelOrder(squad, AttackTargetZone, false);
                         squad.Members.ForEach(unit => unit.Order.Execute());
@@ -108,7 +106,6 @@ namespace AspiringDemo.ANN.Actions.Unit
 
         private void StartAttack()
         {
-            
         }
     }
 }

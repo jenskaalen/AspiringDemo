@@ -1,18 +1,15 @@
-﻿using AspiringDemo.ANN;
-using AspiringDemo.Factions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AspiringDemo.ANN;
 using AspiringDemo.Factions.Diplomacy;
-using AspiringDemo.Orders;
-using AspiringDemo.Roleplaying;
+using AspiringDemo.GameCore;
+using AspiringDemo.GameObjects.Squads;
+using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Sites;
-using AspiringDemo.Units;
 using AspiringDemo.Weapons;
 using Ninject;
 using Ninject.Parameters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AspiringDemo.GameCore;
 
 namespace AspiringDemo.Factions
 {
@@ -20,18 +17,38 @@ namespace AspiringDemo.Factions
 
     public class Faction : IFaction
     {
+        private readonly Random _random = new Random();
+        private bool _initialized;
+        private int _power;
+
+        public Faction()
+        {
+            Areas = new List<IPopulatedArea>();
+            Army = GameFrame.Game.Factory.Get<IArmy>();
+            FactionManager = GameFrame.Game.Factory.Get<FactionManager>(new ConstructorArgument("faction", this));
+            FactionManager.BuildManager =
+                GameFrame.Game.Factory.Get<IBuildingManager>(new ConstructorArgument("faction", this));
+            FactionManager.RecruitmentManager =
+                GameFrame.Game.Factory.Get<IRecruitmentManager>(new ConstructorArgument("faction", this));
+            FactionManager.UnitManager =
+                GameFrame.Game.Factory.Get<IUnitManager>(new ConstructorArgument("faction", this));
+            Relations = GameFrame.Game.Factory.Get<IFactionRelations>(new ConstructorArgument("faction", this));
+            Areas = new List<IPopulatedArea>();
+            CreateUnit += CreateStandardUnit;
+        }
+
+        public IObjectFactory ObjectFactory { get; set; }
+
         public int ID { get; set; }
         public bool IsComputer { get; set; }
         public string Name { get; set; }
         public IFactionManager FactionManager { get; set; }
         public UnitCreationDelegate CreateUnit { get; set; }
         public int Wealth { get; set; }
+
         public int Power
         {
-            get 
-            {
-                return Army.Units.Count * 100;
-            }
+            get { return Army.Units.Count*100; }
             set
             {
                 // remove set implementation
@@ -41,54 +58,31 @@ namespace AspiringDemo.Factions
 
         public int StructurePoints
         {
-            get 
+            get
             {
                 if (Areas.Count == 0)
                     return 0;
 
-                int structurePoints = Areas.Select(x => x.AreaValue).Aggregate ((a, b) => a + b);
+                int structurePoints = Areas.Select(x => x.AreaValue).Aggregate((a, b) => a + b);
                 return structurePoints;
             }
-            set 
+            set
             {
                 //TODO: Remove
             }
         }
 
-        public List<Sites.IPopulatedArea> Areas
-        {
-            get;
-            set;
-        }
-            //return GameFrame.Game.ZonePathfinder.Nodes.SelectMany(zone => zone.PopulatedAreas).Where(area => area.Owner == this).ToList();
+        public List<IPopulatedArea> Areas { get; set; }
+        //return GameFrame.Game.ZonePathfinder.Nodes.SelectMany(zone => zone.PopulatedAreas).Where(area => area.Owner == this).ToList();
 
-            
+
         public IZone CapitalZone { get; set; }
         public ITaxes Taxes { get; set; }
 
         public IArmy Army { get; set; }
-        public IObjectFactory ObjectFactory { get; set; }
-
-        private int _power;
-        //TODO: Remove
-        private Random _random = new Random();
-        private bool _initialized = false;
 
         public StrengthMeasurement Strength { get; set; }
         public IFactionRelations Relations { get; set; }
-
-        public Faction()
-        {
-            Areas = new List<IPopulatedArea>();
-            Army = GameFrame.Game.Factory.Get<IArmy>();
-            FactionManager = GameFrame.Game.Factory.Get<FactionManager>(new ConstructorArgument("faction", this));
-            FactionManager.BuildManager = GameFrame.Game.Factory.Get<IBuildingManager>(new ConstructorArgument("faction", this));
-            FactionManager.RecruitmentManager = GameFrame.Game.Factory.Get<IRecruitmentManager>(new ConstructorArgument("faction", this));
-            FactionManager.UnitManager = GameFrame.Game.Factory.Get<IUnitManager>(new ConstructorArgument("faction", this));
-            Relations = GameFrame.Game.Factory.Get<IFactionRelations>(new ConstructorArgument("faction", this));
-            Areas = new List<Sites.IPopulatedArea>();
-            CreateUnit += CreateStandardUnit;
-        }
 
         //public Faction(IObjectFactory factory)
         //{
@@ -117,7 +111,7 @@ namespace AspiringDemo.Factions
         public ISquad CreateSquad()
         {
             //TODO: rework defaults.. ?
-            Squad newSquad = GameFrame.Game.Factory.Get<Squad>();
+            var newSquad = GameFrame.Game.Factory.Get<Squad>();
             //newSquad.Faction = this;
             //Squads.Add(newSquad);
             Army.Squads.Add(newSquad);
@@ -140,17 +134,9 @@ namespace AspiringDemo.Factions
             return newUnit;
         }
 
-        public void UnitChangedState(UnitState state)
-        {
-            if (state == UnitState.Dead)
-            { 
-                
-            }
-        }
-
         public T GetObject<T>() where T : class, new()
         {
-            T obj = new T();
+            var obj = new T();
 
             return obj;
         }
@@ -161,29 +147,30 @@ namespace AspiringDemo.Factions
         }
 
 
-        public void AddArea(Sites.IPopulatedArea area)
+        public void AddArea(IPopulatedArea area)
         {
             if (Areas == null)
-                Areas = new List<Sites.IPopulatedArea>();
+                Areas = new List<IPopulatedArea>();
 
             Areas.Add(area);
             Wealth -= area.Cost;
             StructurePoints += area.AreaValue;
         }
 
-        public void RemoveArea(Sites.IPopulatedArea area)
+        public void RemoveArea(IPopulatedArea area)
         {
-            Areas.Remove(area); 
+            Areas.Remove(area);
             Wealth += area.Cost;
             StructurePoints -= area.AreaValue;
         }
 
         public void GameTimeTick(float time)
         {
-
             //regen hp
             //TODO: "Cache" alive units
-            foreach (var unit in Army.Units.Where(unit => unit.State == UnitState.Idle || unit.State == UnitState.ExecutingOrder ))
+            foreach (
+                IUnit unit in
+                    Army.Units.Where(unit => unit.State == UnitState.Idle || unit.State == UnitState.ExecutingOrder))
                 unit.TimeTick(time);
 
             // tax-collecting
@@ -214,7 +201,7 @@ namespace AspiringDemo.Factions
 
             //    if (path.Count < 2)
             //        continue;
-                
+
             //    //order.TargetZone = GetRandomZone();
             //    TravelOrder order = new TravelOrder(path, unit);
             //    RegisterOrder(order, unit);
@@ -236,7 +223,7 @@ namespace AspiringDemo.Factions
             //}
 
             // work orders
-            foreach (var unit in Army.Units.Where(unit => unit.Order != null))
+            foreach (IUnit unit in Army.Units.Where(unit => unit.Order != null))
             {
                 //TODO: Should the order be removed?
                 if (unit.Order.IsDone)
@@ -252,10 +239,17 @@ namespace AspiringDemo.Factions
             }
         }
 
+        public void UnitChangedState(UnitState state)
+        {
+            if (state == UnitState.Dead)
+            {
+            }
+        }
+
         //TODO: used for testing - remove when proper AI is enabled
         private IZone GetRandomZone()
         {
-            var nodes = GetGameZones();
+            List<IZone> nodes = GetGameZones();
             //int randomIndex = new Random().Next(0, nodes.Count - 1);
             int randomIndex = _random.Next(0, nodes.Count - 1);
 
@@ -265,7 +259,7 @@ namespace AspiringDemo.Factions
         //TODO: used for testing - remove when proper AI is enabled
         private IZone GetRandomZone(int seed)
         {
-            var nodes = GetGameZones();
+            List<IZone> nodes = GetGameZones();
             int randomIndex = new Random().Next(0, nodes.Count - 1);
 
             return nodes[randomIndex];

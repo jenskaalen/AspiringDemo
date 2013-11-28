@@ -85,7 +85,7 @@
 //                unit.State = UnitState.Fighting;
 //            }
 //        }
-        
+
 //        private void CleanFight()
 //        {
 //            //TODO: Move this behaviour unto the units themselves?
@@ -122,3 +122,4 @@
 //        }
 //    }
 //}
+

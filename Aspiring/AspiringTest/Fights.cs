@@ -2,7 +2,8 @@
 using AspiringDemo.Combat;
 using AspiringDemo.Factions.Diplomacy;
 using AspiringDemo.Gamecore;
-using AspiringDemo.Units;
+using AspiringDemo.GameObjects;
+using AspiringDemo.GameObjects.Units;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AspiringDemo;
 using Ninject;

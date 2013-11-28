@@ -1,8 +1,5 @@
-﻿using AspiringDemo.Pathfinding;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace AspiringDemo
 {
@@ -15,7 +12,11 @@ namespace AspiringDemo
         {
             IZone zone = null;
 
-            zone = Zones.FirstOrDefault(xZone => xZone.PositionXStart < xPos && xZone.PositionXEnd > xPos && xZone.PositionYStart < yPos && xZone.PositionYEnd > yPos);
+            zone =
+                Zones.FirstOrDefault(
+                    xZone =>
+                        xZone.PositionXStart < xPos && xZone.PositionXEnd > xPos && xZone.PositionYStart < yPos &&
+                        xZone.PositionYEnd > yPos);
 
             return zone;
         }
@@ -24,7 +25,11 @@ namespace AspiringDemo
         {
             IZone zone = null;
 
-            zone = Zones.FirstOrDefault(xZone => xZone.PositionXStart < pos.X && xZone.PositionXEnd > pos.X && xZone.PositionYStart < pos.Y && xZone.PositionYEnd > pos.Y);
+            zone =
+                Zones.FirstOrDefault(
+                    xZone =>
+                        xZone.PositionXStart < pos.X && xZone.PositionXEnd > pos.X && xZone.PositionYStart < pos.Y &&
+                        xZone.PositionYEnd > pos.Y);
 
             return zone;
         }
@@ -57,7 +62,5 @@ namespace AspiringDemo
 
         //    return computedList;
         //}
-        
-
     }
 }

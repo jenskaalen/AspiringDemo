@@ -1,14 +1,11 @@
-﻿using System;
-using AspiringDemo.GameActions.Combat;
+﻿using AspiringDemo.GameActions.Combat;
+using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Roleplaying.Stats;
-using AspiringDemo.Units;
-using AspiringDemo.Units.Actions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AspiringDemo;
 using AspiringDemo.Roleplaying;
 using AspiringDemo.Factions;
 using Ninject;
-using Ninject.Parameters;
 
 namespace AspiringDemoTest
 {

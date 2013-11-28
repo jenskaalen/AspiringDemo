@@ -1,10 +1,6 @@
-﻿using AspiringDemo.ANN.Actions;
+﻿using System.Collections.Generic;
+using AspiringDemo.ANN.Actions;
 using AspiringDemo.Factions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AspiringDemo.ANN
 {

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Sites;
-using AspiringDemo.Units;
 
 namespace AspiringDemo.Orders
 {
@@ -14,13 +12,6 @@ namespace AspiringDemo.Orders
         private readonly List<IZone> _travelPath;
         private long _nextWorkTime;
         private IZone _startZone;
-        public IPopulatedArea TargetArea { get; set; }
-        public IUnit Unit { get; set; }
-        public bool IsExecuting { get; set; }
-        public bool IsDone { get; set; }
-        public string OrderName { get { return this.ToString(); } }
-        public OrderFinished Finish { get; set; }
-        
 
         public GuardAreaOrder(IPopulatedArea targetArea, IUnit unit)
         {
@@ -44,6 +35,19 @@ namespace AspiringDemo.Orders
             // construct travelpath
             _travelPath = GameFrame.Game.ZonePathfinder.GetPath(unit.Zone, _targetZone);
         }
+
+        public IPopulatedArea TargetArea { get; set; }
+        public IUnit Unit { get; set; }
+        public bool IsExecuting { get; set; }
+        public bool IsDone { get; set; }
+
+        public string OrderName
+        {
+            get { return ToString(); }
+        }
+
+        public OrderFinished Finish { get; set; }
+
 
         public void Execute()
         {
@@ -77,9 +81,9 @@ namespace AspiringDemo.Orders
                 {
                     throw new NotImplementedException();
                 }
-                else if (_nextWorkTime < gameTime)
+                if (_nextWorkTime < gameTime)
                 {
-                    var enteredZone = _travelPath.First();
+                    IZone enteredZone = _travelPath.First();
                     Unit.EnterZone(enteredZone);
                     _travelPath.Remove(Unit.Zone);
                     _nextWorkTime += GameFrame.Game.TimeToTravelThroughZone;
@@ -92,6 +96,5 @@ namespace AspiringDemo.Orders
                 }
             }
         }
-
     }
 }

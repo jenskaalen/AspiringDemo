@@ -1,14 +1,12 @@
-﻿using AspiringDemo.Combat;
+﻿using System.Collections.Generic;
+using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Pathfinding;
-using System;
-using AspiringDemo.Units;
+using AspiringDemo.Sites;
 
 namespace AspiringDemo
 {
     public interface IZone : IPathfindingNode
     {
-        void AddArea(AspiringDemo.Sites.IPopulatedArea area);
-        void AddNeighbour(IZone zone);
         //TODO: cleanup
         //void EnterZone(ISquad squad);
         //void EnterZone(IUnit unit);
@@ -16,12 +14,14 @@ namespace AspiringDemo
         //Fight Fight { get; set; }
         int ID { get; set; }
         bool IsPlayerNearby { get; set; }
-        System.Collections.Generic.List<AspiringDemo.Sites.IPopulatedArea> PopulatedAreas { get; set; }
+        List<IPopulatedArea> PopulatedAreas { get; set; }
         int PositionXEnd { get; set; }
         int PositionXStart { get; set; }
         int PositionYEnd { get; set; }
         int PositionYStart { get; set; }
         ZoneType Type { get; set; }
-        System.Collections.Generic.List<IUnit> Units { get; set; }
+        List<IUnit> Units { get; set; }
+        void AddArea(IPopulatedArea area);
+        void AddNeighbour(IZone zone);
     }
 }

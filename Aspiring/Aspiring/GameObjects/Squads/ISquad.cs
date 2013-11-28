@@ -1,18 +1,21 @@
-﻿namespace AspiringDemo.Units
+﻿using System.Collections.Generic;
+using AspiringDemo.GameObjects.Units;
+
+namespace AspiringDemo.GameObjects.Squads
 {
     public interface ISquad
     {
-        void AddMember(IUnit member);
-        void CheckZone();
         //IFaction Faction { get; set; }
         int ID { get; set; }
         bool IsVisible { get; set; }
-        void IsZoneHostile();
         int KillCounter { get; set; }
         IUnit Leader { get; set; }
-        System.Collections.Generic.List<IUnit> Members { get; set; }
-        void RemoveMember(IUnit member);
+        List<IUnit> Members { get; set; }
         SquadState State { get; set; }
+        void AddMember(IUnit member);
+        void CheckZone();
+        void IsZoneHostile();
+        void RemoveMember(IUnit member);
         void MemberChangedState(IUnit unit, UnitState state);
         void EnterZone(IZone zone);
     }
