@@ -20,6 +20,8 @@ namespace AspiringDemoTest
         [TestInitialize]
         public void Initialize()
         {
+            GameFrame.SetGame(new Game());
+
             TestSave savegame = new TestSave(testdb);
             GameFrame.Game.Savegame = savegame;
             GameFrame.Game.ObjectFactory = (IObjectFactory)GameFrame.Game.Savegame;

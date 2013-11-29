@@ -19,7 +19,6 @@ namespace AspiringDemo.Factions
     {
         private readonly Random _random = new Random();
         private bool _initialized;
-        private int _power;
 
         public Faction()
         {
@@ -49,11 +48,6 @@ namespace AspiringDemo.Factions
         public int Power
         {
             get { return Army.Units.Count*100; }
-            set
-            {
-                // remove set implementation
-                _power = value;
-            }
         }
 
         public int StructurePoints
@@ -264,5 +258,8 @@ namespace AspiringDemo.Factions
 
             return nodes[randomIndex];
         }
+
+
+        public IFactionUnits FactionUnits { get; set; }
     }
 }

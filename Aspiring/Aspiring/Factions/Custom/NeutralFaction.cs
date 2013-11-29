@@ -163,5 +163,8 @@ namespace AspiringDemo.Factions.Custom
 
             return zed;
         }
+
+
+        public IFactionUnits FactionUnits { get; set; }
     }
 }

@@ -12,12 +12,13 @@ namespace AspiringDemo.Factions
     {
         UnitCreationDelegate CreateUnit { get; set; }
         List<IPopulatedArea> Areas { get; set; }
+        IFactionUnits FactionUnits { get; set; }
         IFactionManager FactionManager { get; set; }
         IZone CapitalZone { get; set; }
         ITaxes Taxes { get; set; }
         bool IsComputer { get; set; }
         string Name { get; set; }
-        int Power { get; set; }
+        int Power { get; }
         int Wealth { get; set; }
         int StructurePoints { get; set; }
         int ID { get; set; }

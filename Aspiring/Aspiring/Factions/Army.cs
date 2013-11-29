@@ -22,7 +22,6 @@ namespace AspiringDemo.Factions
             get { return Units.Where(unit => unit.State != UnitState.Dead).ToList(); }
         }
 
-
         public int AliveUnitsCount
         {
             get { return Units.Count(unit => unit.State != UnitState.Dead); }

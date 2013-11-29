@@ -197,8 +197,8 @@ namespace AspiringVisual
                 //            StrokeThickness = 1,
                 //            Fill = brush
                 //        };
-                //        rect.Width = zoneSize;
-                //        rect.Height = zoneSize;
+                //        rect.InteriorWidth = zoneSize;
+                //        rect.InteriorHeight = zoneSize;
 
                 //        ZoneCanvas.Children.Add(rect);
                 //        Canvas.SetTop(rect, j * zoneSize);
