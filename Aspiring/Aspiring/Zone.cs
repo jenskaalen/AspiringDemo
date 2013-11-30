@@ -98,36 +98,5 @@ namespace AspiringDemo
                     Math.Sqrt(Math.Pow((targetNode.Position.X - Position.X), 2) +
                               Math.Pow((targetNode.Position.Y - Position.Y), 2));
         }
-
-        private void AddUnit(IUnit unit)
-        {
-            if (Units == null)
-                Units = new List<IUnit>();
-
-            Units.Add(unit);
-        }
-
-        private bool IsZoneContested()
-        {
-            var differentFactions = new HashSet<IFaction>();
-
-            foreach (IUnit unit in Units.Where(unit => unit.State != UnitState.Dead))
-                differentFactions.Add(unit.Faction);
-
-            foreach (IFaction faction in differentFactions)
-            {
-                IFaction faction1 = faction;
-
-                // please forgive me
-                bool isHostile =
-                    differentFactions.Where(faction2 => faction2 != faction1).Any(
-                        relFaction => relFaction.Relations.GetRelation(faction1).Relation == RelationType.Hostile);
-
-                if (isHostile)
-                    return true;
-            }
-
-            return false;
-        }
     }
 }

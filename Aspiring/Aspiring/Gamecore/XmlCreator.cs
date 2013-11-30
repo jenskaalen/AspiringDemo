@@ -47,7 +47,7 @@ namespace AspiringDemo.Gamecore
 
                 if (faction != null)
                 {
-                    var unit = (Unit) faction.CreateUnit();
+                    var unit = faction.Create<Unit>();
                     //unit.CharacterLevel.GainXP();
                     unit.Name = unitElement.Element("Name") != null ? unitElement.Element("Name").Value : unit.Name;
                     unit.Hp = unitElement.Element("Hp") != null ? int.Parse(unitElement.Element("Hp").Value) : unit.Hp;

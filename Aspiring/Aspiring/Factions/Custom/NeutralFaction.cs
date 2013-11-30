@@ -166,5 +166,11 @@ namespace AspiringDemo.Factions.Custom
 
 
         public IFactionUnits FactionUnits { get; set; }
+
+
+        public T Create<T>() where T : IUnit
+        {
+            throw new NotImplementedException();
+        }
     }
 }

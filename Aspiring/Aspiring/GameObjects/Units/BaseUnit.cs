@@ -8,6 +8,7 @@ using AspiringDemo.GameActions;
 using AspiringDemo.Gamecore;
 using AspiringDemo.GameObjects.Squads;
 using AspiringDemo.Orders;
+using AspiringDemo.Procedural.Interiors;
 using AspiringDemo.Roleplaying;
 using AspiringDemo.Roleplaying.Stats;
 using AspiringDemo.Weapons;
@@ -67,6 +68,7 @@ namespace AspiringDemo.GameObjects.Units
         public ICombatModule CombatModule { get; set; }
         public RankChanged ChangeRank { get; set; }
         public IUnitOrder Order { get; set; }
+        public Vector2 Position { get; set; }
         public IZone Zone { get; set; }
         public IUnitStats Stats { get; set; }
 
@@ -159,6 +161,15 @@ namespace AspiringDemo.GameObjects.Units
         {
             CombatModule.Kills++;
         }
+
+        public void EnterInterior(IInterior interior)
+        {
+            Zone = null;
+            Interior = interior;
+            Position = interior.Entrance.Center;
+        }
+
+        public IInterior Interior { get; set; }
 
         protected virtual void ChangeStateSelf(IUnit unit, UnitState state)
         {

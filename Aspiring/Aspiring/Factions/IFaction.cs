@@ -8,9 +8,9 @@ using AspiringDemo.Sites;
 
 namespace AspiringDemo.Factions
 {
-    public interface IFaction : IObjectFactory
+    public interface IFaction
     {
-        UnitCreationDelegate CreateUnit { get; set; }
+        //UnitCreationDelegate CreateUnit { get; set; }
         List<IPopulatedArea> Areas { get; set; }
         IFactionUnits FactionUnits { get; set; }
         IFactionManager FactionManager { get; set; }
@@ -26,11 +26,11 @@ namespace AspiringDemo.Factions
         StrengthMeasurement Strength { get; set; }
         IFactionRelations Relations { get; set; }
         ISquad CreateSquad();
-        IUnit CreateStandardUnit();
         void Initialize();
         List<IZone> GetGameZones();
         void AddArea(IPopulatedArea area);
         void RemoveArea(IPopulatedArea area);
         void GameTimeTick(float time);
+        T Create<T>() where T : IUnit;
     }
 }

@@ -65,9 +65,9 @@ namespace AspiringDemoTest
             var f1 = GameFrame.Game.Factory.Get<IFaction>();
             var f2 = GameFrame.Game.Factory.Get<IFaction>();
 
-            var unit1 = f1.CreateUnit();
-            var unit2 = f1.CreateUnit();
-            var unit3 = f2.CreateUnit();
+            var unit1 = f1.Create<Unit>();
+            var unit2 = f1.Create<Unit>();
+            var unit3 = f2.Create<Unit>();
 
             unit1.EnterZone(fightZone);
             unit2.EnterZone(fightZone);
@@ -92,9 +92,9 @@ namespace AspiringDemoTest
             // ^ALLIES
             var faction3 = GameFrame.Game.Factory.Get<IFaction>();
 
-            var unit1 = faction1.CreateUnit();
-            var unit2 = faction2.CreateUnit();
-            var unit3 = faction3.CreateUnit();
+            var unit1 = faction1.Create<Unit>();
+            var unit2 = faction2.Create<Unit>();
+            var unit3 = faction3.Create<Unit>();
 
             faction1.Relations.SetRelation(faction2, RelationType.Friendly);
             faction2.Relations.SetRelation(faction1, RelationType.Friendly);

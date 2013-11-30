@@ -139,9 +139,9 @@ namespace AspiringDemoTest
             Assert.IsFalse(action.IsEveryoneInGatherZone());
 
             ISquad squad = faction.CreateSquad();
-            squad.AddMember(faction.CreateUnit());
-            squad.AddMember(faction.CreateUnit());
-            squad.AddMember(faction.CreateUnit());
+            squad.AddMember(faction.Create<Unit>());
+            squad.AddMember(faction.Create<Unit>());
+            squad.AddMember(faction.Create<Unit>());
 
             foreach (var member in squad.Members)
                 member.Zone = startZone;

@@ -67,7 +67,7 @@ namespace AspiringImplementation
                 zfac.Name = "Zombies";
 
                 //for (int i=0; i < 30; i++)
-                //    zfac.CreateUnit();
+                //    zfac.Create<Unit>();
 
                 GameFrame.Game.Factions.Add(zfac);
                 zfac.Initialize();

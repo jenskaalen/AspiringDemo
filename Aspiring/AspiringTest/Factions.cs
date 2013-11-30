@@ -88,14 +88,14 @@ namespace AspiringDemoTest
 
             var faction = GameFrame.Game.Factions[0];
 
-            faction.CreateUnit();
-            faction.CreateUnit();
+            faction.Create<Unit>();
+            faction.Create<Unit>();
 
             faction.FactionManager.UnitManager.ManageUnits();
             Assert.AreEqual(0, faction.Army.Squads.Count);
 
 
-            faction.CreateUnit();
+            faction.Create<Unit>();
             faction.FactionManager.UnitManager.ManageUnits();
 
             Assert.AreEqual(1, faction.Army.Squads.Count);

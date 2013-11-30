@@ -67,28 +67,11 @@ namespace AspiringDemo.Factions
         }
 
         public List<IPopulatedArea> Areas { get; set; }
-        //return GameFrame.Game.ZonePathfinder.Nodes.SelectMany(zone => zone.PopulatedAreas).Where(area => area.Owner == this).ToList();
-
-
         public IZone CapitalZone { get; set; }
         public ITaxes Taxes { get; set; }
-
         public IArmy Army { get; set; }
-
         public StrengthMeasurement Strength { get; set; }
         public IFactionRelations Relations { get; set; }
-
-        //public Faction(IObjectFactory factory)
-        //{
-        //    Areas = new List<IPopulatedArea>();
-        //    Army = ProductionFactory.Instance.Get<IArmy>();
-        //    FactionManager = ProductionFactory.Instance.Get<FactionManager>(new ConstructorArgument("faction", this));
-        //    FactionManager.BuildManager = ProductionFactory.Instance.Get<IBuildingManager>(new ConstructorArgument("faction", this));
-        //    FactionManager.RecruitmentManager = ProductionFactory.Instance.Get<IRecruitmentManager>(new ConstructorArgument("faction", this));
-        //    FactionManager.UnitManager = ProductionFactory.Instance.Get<IUnitManager>(new ConstructorArgument("faction", this));
-        //    Areas = new List<Sites.IPopulatedArea>();
-        //    CreateUnit += CreateStandardUnit;
-        //}
 
         public void Initialize()
         {
@@ -128,11 +111,19 @@ namespace AspiringDemo.Factions
             return newUnit;
         }
 
-        public T GetObject<T>() where T : class, new()
+        public T Create<T>() where T : IUnit
         {
-            var obj = new T();
+            //TODO: Rework defaults
+            T newUnit = GameFrame.Game.Factory.Get<T>(new ConstructorArgument("faction", this));
+            newUnit.Items.Weapons = new List<IWeapon>();
+            newUnit.Items.Weapons.Add(new Unarmed());
+            Army.Units.Add(newUnit);
 
-            return obj;
+            //TODO: Only spawnable in eeas is now
+            if (CapitalZone != null)
+                newUnit.EnterZone(CapitalZone);
+
+            return newUnit;
         }
 
         public List<IZone> GetGameZones()
@@ -261,5 +252,6 @@ namespace AspiringDemo.Factions
 
 
         public IFactionUnits FactionUnits { get; set; }
+
     }
 }

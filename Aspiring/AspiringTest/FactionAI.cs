@@ -44,9 +44,9 @@ namespace AspiringDemoTest
 
             // moles
             _muldvarpSquad = _muldvarpFaction.CreateSquad();
-            IUnit muldvarp1 = _muldvarpFaction.CreateUnit();
-            IUnit muldvarp2 = _muldvarpFaction.CreateUnit();
-            IUnit muldvarpen = _muldvarpFaction.CreateUnit();
+            IUnit muldvarp1 = _muldvarpFaction.Create<Unit>();
+            IUnit muldvarp2 = _muldvarpFaction.Create<Unit>();
+            IUnit muldvarpen = _muldvarpFaction.Create<Unit>();
 
             muldvarpen.Name = "Muldvarpen";
             muldvarpen.Hp = 150;
@@ -57,9 +57,9 @@ namespace AspiringDemoTest
 
             muldvarpen.Rank = SquadRank.Commander;
 
-            _lillebjorn = _bjorneFaction.CreateUnit();
+            _lillebjorn = _bjorneFaction.Create<Unit>();
             _lillebjorn.Name = "Lillebjorn";
-            _storebjorn = _bjorneFaction.CreateUnit();
+            _storebjorn = _bjorneFaction.Create<Unit>();
             _storebjorn.Name = "Storebjorn";
             _bjorneSquad = _bjorneFaction.CreateSquad();
 

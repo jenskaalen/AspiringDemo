@@ -118,8 +118,11 @@
     <Compile Include="Gamecore\IObjectFactory.cs" />
     <Compile Include="Gamecore\Types\Position.cs" />
     <Compile Include="Gamecore\Types\Rect.cs" />
+    <Compile Include="Procedural\CreatureGenerator.cs" />
+    <Compile Include="Procedural\ICreatureGenerator.cs" />
     <Compile Include="Procedural\Interiors\Corridor.cs" />
     <Compile Include="Procedural\Interiors\CorridorPath.cs" />
+    <Compile Include="Procedural\Interiors\InteriorNode.cs" />
     <Compile Include="Procedural\Interiors\Space.cs" />
     <Compile Include="Procedural\Interiors\Room.cs" />
     <Compile Include="Gamecore\Utility.cs" />
@@ -146,6 +149,8 @@
     <Compile Include="Procedural\Interiors\IInteriorNode.cs" />
     <Compile Include="Procedural\Interiors\Area.cs" />
     <Compile Include="Procedural\Interiors\InteriorType.cs" />
+    <Compile Include="Procedural\Interiors\Tomb.cs" />
+    <Compile Include="Procedural\TombCreatureGenerator.cs" />
     <Compile Include="Roleplaying\IItems.cs" />
     <Compile Include="Roleplaying\Items.cs" />
     <Compile Include="Gamecore\ActionProcesser.cs" />

@@ -35,16 +35,16 @@ namespace AspiringDemoTest
             faction2.Name = "Muldvarp-battaljonen";
 
             ISquad muldvarpSquad = faction2.CreateSquad();
-            IUnit muldvarp1 = faction2.CreateUnit();
-            IUnit muldvarp2 = faction2.CreateUnit();
-            IUnit muldvarpen = faction2.CreateUnit();
+            IUnit muldvarp1 = faction2.Create<Unit>();
+            IUnit muldvarp2 = faction2.Create<Unit>();
+            IUnit muldvarpen = faction2.Create<Unit>();
             muldvarpen.Name = "Muldvarpen";
             muldvarpSquad.AddMember(muldvarp1);
             muldvarpSquad.AddMember(muldvarp2);
             muldvarpSquad.AddMember(muldvarpen);
 
-            IUnit lillebjorn = faction1.CreateUnit();
-            IUnit storebjorn = faction1.CreateUnit();
+            IUnit lillebjorn = faction1.Create<Unit>();
+            IUnit storebjorn = faction1.Create<Unit>();
 
             ISquad bjornesquad = faction1.CreateSquad();
             bjornesquad.AddMember(lillebjorn);

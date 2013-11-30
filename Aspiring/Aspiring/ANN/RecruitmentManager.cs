@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using AspiringDemo.ANN.Actions;
 using AspiringDemo.Factions;
+using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.ANN
 {
@@ -53,7 +54,7 @@ namespace AspiringDemo.ANN
         {
             if (action is RecruitUnit)
             {
-                Faction.CreateStandardUnit();
+                Faction.Create<IUnit>();
                 //TODO: Fix magicnumber!!
                 Faction.Wealth -= UNIT_COST;
             }

@@ -5,6 +5,7 @@ using AspiringDemo.GameActions;
 using AspiringDemo.Gamecore;
 using AspiringDemo.GameObjects.Squads;
 using AspiringDemo.Orders;
+using AspiringDemo.Procedural.Interiors;
 using AspiringDemo.Roleplaying;
 using AspiringDemo.Roleplaying.Stats;
 
@@ -34,5 +35,8 @@ namespace AspiringDemo.GameObjects.Units
         void EnterZone(IZone zone);
         void LeaveZone();
         void KilledUnit(IUnit unit);
+        void EnterInterior(IInterior interior);
+        IInterior Interior { get; set; }
+        
     }
 }

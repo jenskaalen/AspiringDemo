@@ -78,11 +78,11 @@ namespace AspiringVisual
             var leFaction = _game.Factions[1];
 
             _squad = _game.Factions[1].CreateSquad();
-            _squad.AddMember(leFaction.CreateUnit());
-            _squad.AddMember(leFaction.CreateUnit());
-            _squad.AddMember(leFaction.CreateUnit());
-            _squad.AddMember(leFaction.CreateUnit());
-            _squad.AddMember(leFaction.CreateUnit());
+            _squad.AddMember(leFaction.Create<Unit>());
+            _squad.AddMember(leFaction.Create<Unit>());
+            _squad.AddMember(leFaction.Create<Unit>());
+            _squad.AddMember(leFaction.Create<Unit>());
+            _squad.AddMember(leFaction.Create<Unit>());
             _squad.Members[0].Name = "Dolan";
             _squad.Members[1].Name = "Goofy";
             _squad.Members[2].Name = "Scrooge";
@@ -91,17 +91,17 @@ namespace AspiringVisual
             _squad.Members[4].Rank = SquadRank.Commander;
             _squad.Members[4].Items.Weapons.Add(new Smackhammer());
 
-            _game.Factions[0].CreateUnit();
-            _game.Factions[0].CreateUnit();
-            _game.Factions[0].CreateUnit();
-            _game.Factions[0].CreateUnit();
-            _game.Factions[0].CreateUnit();
-            _game.Factions[0].CreateUnit();
-            _game.Factions[0].CreateUnit();
-            _game.Factions[0].CreateUnit();
-            _game.Factions[0].CreateUnit();
-            _game.Factions[0].CreateUnit();
-            _game.Factions[0].CreateUnit();
+            _game.Factions[0].Create<Unit>();
+            _game.Factions[0].Create<Unit>();
+            _game.Factions[0].Create<Unit>();
+            _game.Factions[0].Create<Unit>();
+            _game.Factions[0].Create<Unit>();
+            _game.Factions[0].Create<Unit>();
+            _game.Factions[0].Create<Unit>();
+            _game.Factions[0].Create<Unit>();
+            _game.Factions[0].Create<Unit>();
+            _game.Factions[0].Create<Unit>();
+            _game.Factions[0].Create<Unit>();
 
             squadList.ItemsSource = _squad.Members;
             squadList.UpdateLayout();
