@@ -33,10 +33,14 @@ namespace AspiringDemo.Procedural.Interiors
         }
 
 
-        public Tomb(int rooms)
+        public Tomb(int rooms, int width, int height)
         {
             _maxRooms = rooms;
+            InteriorWidth = width;
+            InteriorHeight = height;
             Paths = new List<CorridorPath>();
+            Rooms = new List<Room>();
+            InteriorNodes = new List<IInteriorNode>();
 
             CreateRooms();
             CreateNodes();

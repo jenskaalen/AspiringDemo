@@ -24,12 +24,13 @@ namespace AspiringDemoTest.Interior
             var faction = GameFrame.Game.Factory.Get<IFaction>();
             var unit = GameFrame.Game.Factory.Get<IUnit>(new ConstructorArgument("faction", faction));
 
-            Tomb tomb = new Tomb(10);
+            Tomb tomb = new Tomb(10, 512, 512);
 
             unit.EnterInterior(tomb);
 
             Assert.AreEqual(null, unit.Zone);
             Assert.AreEqual(tomb, unit.Interior);
+            Assert.AreEqual(tomb.Entrance.Center, unit.Position);
         }
     }
 }
