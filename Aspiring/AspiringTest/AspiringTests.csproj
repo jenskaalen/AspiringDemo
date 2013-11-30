@@ -68,9 +68,10 @@
     <Compile Include="Factions.cs" />
     <Compile Include="Factories.cs" />
     <Compile Include="Fights.cs" />
-    <Compile Include="Interior\Interior.cs" />
+    <Compile Include="Interior\Interiors.cs" />
     <Compile Include="NinFactory.cs" />
     <Compile Include="Procedural\CreatureGeneration.cs" />
+    <Compile Include="Procedural\InteriorGeneration.cs" />
     <Compile Include="RoleplayingTest.cs" />
     <Compile Include="Orders.cs" />
     <Compile Include="Unsorted.cs" />
