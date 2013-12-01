@@ -4,6 +4,7 @@ using System.Linq;
 using AspiringDemo.Factions;
 using AspiringDemo.GameObjects.Squads;
 using AspiringDemo.Orders;
+using AspiringDemo.Zones;
 
 namespace AspiringDemo.ANN.Actions.Unit
 {
@@ -16,7 +17,7 @@ namespace AspiringDemo.ANN.Actions.Unit
         public AttackAction(IFaction faction, IZone targetZone, IZone gatherZone, int minUnitsInAttack)
         {
             if (targetZone == null || gatherZone == null)
-                throw new Exception("Zones cant be null");
+                throw new Exception("Zonudes cant be null");
 
             AttackTargetZone = targetZone;
             Squads = new List<ISquad>();

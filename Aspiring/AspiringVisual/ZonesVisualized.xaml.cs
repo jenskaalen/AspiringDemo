@@ -18,6 +18,7 @@ using AspiringDemo;
 using AspiringDemo.Factions;
 using AspiringDemo.GameObjects;
 using AspiringDemo.GameObjects.Units;
+using AspiringDemo.Zones;
 using AspiringImplementation;
 using System.Threading;
 

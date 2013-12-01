@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Pipes;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using AspiringDemo.Factions;
 using AspiringDemo.Gamecore.Types;
 using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Pathfinding;
-using AspiringDemo.Procedural.Interiors;
+using AspiringDemo.Zones.Interiors;
 
 namespace AspiringDemo.Procedural
 {
@@ -20,38 +22,58 @@ namespace AspiringDemo.Procedural
         {
             _unitCount = unitCount;
             _faction = faction;
+            Creatures = new List<IUnit>();
+
+            for (int unitsCreated=0; unitsCreated < _unitCount; unitsCreated++)
+            {
+                CreateCreature();
+            }
         }
 
         public void Populate(IInterior interior)
         {
             var occupiedNodes = new List<IPathfindingNode>();
-            int unitsPerRoom = interior.Rooms.Count /_unitCount;
+            var placedUnits = new List<IUnit>();
+            int unitsPerRoom = _unitCount / interior.Rooms.Count;
 
             foreach (var room in interior.Rooms)
             {
                 //TODO: oh my god this is slow - optimize it
                 Room room1 = room;
-                var roomNodes = interior.InteriorNodes.Where(node => room1.Contains(node.Position));
+                var roomNodes = interior.InteriorNodes.Where(node => room1.Contains(node.Position)).ToArray();
+
+                for (int i = 0; i < unitsPerRoom; i++)
+                {
+                    var spot = roomNodes[GameFrame.Random.Next(0, roomNodes.Length - 1)];
+                    //var spot = roomNodes.First(node => !occupiedNodes.Contains(node));
+                    occupiedNodes.Add(spot);
+                    var unitToPlace = Creatures.FirstOrDefault(creature => !placedUnits.Contains(creature));
+                    PlaceCreature(unitToPlace, interior, spot.Position);
+                    placedUnits.Add(unitToPlace);
+                }
 
                 int unitsCreated = 0;
-                while (unitsCreated < unitsPerRoom)
-                {
-                    // pick a random spot which is not occupied
-                    var spot = roomNodes.FirstOrDefault(node => !occupiedNodes.Contains(node));
-
-                    occupiedNodes.Add(spot);
-                }
             }
+        }
+
+        private void PlaceCreature(IUnit unit, IInterior interior, Vector2 position)
+        {
+            unit.EnterInterior(interior);
+            unit.Position = position;
         }
 
         private void CreateCreature()
         {
-            _faction.Create<Zombie>();
+            var unit = _faction.Create<Zombie>();
+            Creatures.Add(unit);
         }
 
-        private void CreateCreature(IInterior interior, Vector2 position)
-        {
-            _faction.Create<Zombie>();
-        }
+        //private void CreateCreature(IInterior interior, Vector2 position)
+        //{
+        //    var unit = _faction.Create<Zombie>();
+        //    unit.EnterInterior(interior);
+        //    unit.Position = position;
+        //    Creatures.Add(unit);
+        //}
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using AspiringDemo.GameObjects.Units;
 
-namespace AspiringDemo.Procedural.Interiors
+namespace AspiringDemo.Zones.Interiors
 {
     public interface IInterior
     {
@@ -12,5 +12,8 @@ namespace AspiringDemo.Procedural.Interiors
         int InteriorWidth { get; set; }
         int InteriorHeight { get; set; }
         void Enter(IUnit unit);
+        List<IUnit> Units { get; }
+        void CreateDebugImage();
     }
 }
+

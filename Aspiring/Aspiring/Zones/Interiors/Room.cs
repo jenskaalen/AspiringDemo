@@ -1,6 +1,6 @@
 ﻿using AspiringDemo.Gamecore.Types;
 
-namespace AspiringDemo.Procedural.Interiors
+namespace AspiringDemo.Zones.Interiors
 {
     public class Room : Rect
     {

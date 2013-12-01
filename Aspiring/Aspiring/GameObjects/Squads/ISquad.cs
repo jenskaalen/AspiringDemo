@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AspiringDemo.GameObjects.Units;
+using AspiringDemo.Zones;
 
 namespace AspiringDemo.GameObjects.Squads
 {

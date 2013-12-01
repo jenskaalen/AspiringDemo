@@ -1,6 +1,6 @@
 ﻿using AspiringDemo.Pathfinding;
 
-namespace AspiringDemo.Procedural.Interiors
+namespace AspiringDemo.Zones.Interiors
 {
     public interface IInteriorNode : IPathfindingNode
     {

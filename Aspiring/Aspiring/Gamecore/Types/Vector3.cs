@@ -1,4 +1,4 @@
-﻿namespace AspiringDemo
+﻿namespace AspiringDemo.Gamecore.Types
 {
     public struct Vector3
     {

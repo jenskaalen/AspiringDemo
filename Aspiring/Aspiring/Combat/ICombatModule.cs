@@ -19,6 +19,7 @@ namespace AspiringDemo.Combat
         int Kills { get; set; }
         INewFight CurrentFight { get; set; }
         IUnit CurrentTarget { get; set; }
+        double DetectionDistance { get; set; }
         void AttackTarget(IUnit target, float time);
         IUnit GetTarget(List<IUnit> potentialTargets);
         List<IUnit> GetPotentialTargets(List<IUnit> units);
@@ -29,5 +30,6 @@ namespace AspiringDemo.Combat
         /// <param name="unit"></param>
         /// <param name="fight"></param>
         void ShoutForHelp();
+        bool DetectEnemies();
     }
 }

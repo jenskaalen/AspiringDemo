@@ -1,6 +1,7 @@
 ﻿using System;
 using AspiringDemo.GameObjects;
 using AspiringDemo.GameObjects.Units;
+using AspiringDemo.Zones;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AspiringDemo;
 using AspiringDemo.Saving;

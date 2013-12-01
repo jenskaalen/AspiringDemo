@@ -6,6 +6,7 @@ using AspiringDemo.GameCore;
 using AspiringDemo.Gamecore;
 using AspiringDemo.Pathfinding;
 using AspiringDemo.Saving;
+using AspiringDemo.Zones;
 using Ninject;
 using Ninject.Parameters;
 
@@ -93,9 +94,9 @@ namespace AspiringDemo
         {
             //TODO: Dont use magic numbers for zones
             Pathfinding = new Pathing();
-            Pathfinding.Zones = CreateZones(500, 500);
+            Pathfinding.Zones = (List<IZone>) CreateZones(499, 499);
             ZonePathfinder = new Pathfinder<IZone>();
-            ZonePathfinder.Nodes = CreateZones(500, 500);
+            ZonePathfinder.Nodes = CreateZones(499, 499);
         }
 
         /// <summary>
@@ -163,11 +164,19 @@ namespace AspiringDemo
             {
                 for (int j = 0; j < ZonesHeight; j++)
                 {
-                    IZone newZone = new Zone();
-                    newZone.PositionXStart = width*i + 1;
-                    newZone.PositionXEnd = width*i + width;
-                    newZone.PositionYStart = height*j + 1;
-                    newZone.PositionYEnd = height*j + height;
+                    IZone newZone = new Zone
+                        (
+                            width*i + 1,
+                            width * i + width,
+                            height,
+                            width
+                        );
+                    //IZone newZone = new Zone();
+                    //newZone.Area.X1 = width*i + 1;
+                    //newZone.X1 = width*i + width;
+                    //newZone.PositionYStart = height*j + 1;
+                    //newZone.PositionYEnd = height*j + height;
+
                     zones.Add(newZone);
                 }
             }

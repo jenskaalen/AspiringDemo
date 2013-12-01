@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using AspiringDemo.Factions;
 using AspiringDemo.GameObjects.Units;
+using AspiringDemo.Zones;
 
 namespace AspiringDemo.GameObjects.Squads
 {

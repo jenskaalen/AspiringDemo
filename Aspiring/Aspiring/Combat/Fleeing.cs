@@ -5,6 +5,7 @@ using AspiringDemo.Factions;
 using AspiringDemo.Factions.Diplomacy;
 using AspiringDemo.Gamecore.Helpers;
 using AspiringDemo.GameObjects.Units;
+using AspiringDemo.Zones;
 
 namespace AspiringDemo.Combat
 {
@@ -85,7 +86,7 @@ namespace AspiringDemo.Combat
             // try to find the area
             if (unit.Faction.Areas.Any())
             {
-                IZone retreatZone = Zones.GetClosestZone(unit.Zone.Position,
+                IZone retreatZone = Zonudes.GetClosestZone(unit.Zone.Position,
                     unit.Faction.Areas.Select(area => area.Zone).Where(zone => zone != unit.Zone).ToList());
 
                 return retreatZone;

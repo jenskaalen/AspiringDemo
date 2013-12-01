@@ -8,6 +8,7 @@ using AspiringDemo.GameObjects.Squads;
 using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Sites;
 using AspiringDemo.Weapons;
+using AspiringDemo.Zones;
 using Ninject;
 using Ninject.Parameters;
 

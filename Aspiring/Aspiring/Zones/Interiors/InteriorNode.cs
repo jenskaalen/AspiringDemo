@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AspiringDemo.Gamecore.Types;
 using AspiringDemo.Pathfinding;
 
-namespace AspiringDemo.Procedural.Interiors
+namespace AspiringDemo.Zones.Interiors
 {
     public class InteriorNode : IInteriorNode
     {

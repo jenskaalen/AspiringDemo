@@ -1,6 +1,7 @@
 ﻿using AspiringDemo;
 using AspiringDemo.Factions.Custom;
 using AspiringDemo.Saving;
+using AspiringDemo.Zones;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -155,11 +156,7 @@ namespace AspiringImplementation
             {
                 for (int j = 0; j < width; j++)
                 {
-                    IZone zone = new Zone();
-                    zone.PositionXStart = (i * 1000);
-                    zone.PositionXEnd = (i * 1000) + 999;
-                    zone.PositionYStart = (j * 1000);
-                    zone.PositionYEnd = (j * 1000) + 999;
+                    IZone zone = new Zone(i*1000, j*1000, 999, 999);
 
                     zones.Add(zone);
                 }
@@ -180,13 +177,13 @@ namespace AspiringImplementation
         {
             var neighbours = new List<IZone>();
 
-            int xPos = checkzone.PositionXStart;
-            int yPos = checkzone.PositionYStart;
+            int xPos = checkzone.Area.X1;
+            int yPos = checkzone.Area.Y1;
 
-            var zone1 = zones.FirstOrDefault(x => x.PositionXStart == (xPos - 1000) && x.PositionYStart == yPos);
-            var zone2 = zones.FirstOrDefault(x => x.PositionXStart == (xPos + 1000) && x.PositionYStart == yPos);
-            var zone3 = zones.FirstOrDefault(x => x.PositionYStart == (yPos - 1000) && x.PositionXStart == xPos);
-            var zone4 = zones.FirstOrDefault(x => x.PositionYStart == (yPos + 1000) && x.PositionXStart == xPos);
+            var zone1 = zones.FirstOrDefault(x => x.Area.X1 == (xPos - 1000) && x.Area.Y1 == yPos);
+            var zone2 = zones.FirstOrDefault(x => x.Area.X1 == (xPos + 1000) && x.Area.Y1 == yPos);
+            var zone3 = zones.FirstOrDefault(x => x.Area.Y1 == (yPos - 1000) && x.Area.X1 == xPos);
+            var zone4 = zones.FirstOrDefault(x => x.Area.Y1 == (yPos + 1000) && x.Area.X1 == xPos);
 
             if (zone1 != null)
                 neighbours.Add(zone1);

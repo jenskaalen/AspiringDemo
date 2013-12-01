@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AspiringDemo.Gamecore.Types;
 
 namespace AspiringDemo.Pathfinding
 {

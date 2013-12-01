@@ -1,11 +1,13 @@
 ﻿using AspiringDemo.ANN;
 using AspiringDemo.Combat;
+using AspiringDemo.Combat.Behaviour;
 using AspiringDemo.Factions;
 using AspiringDemo.Factions.Diplomacy;
 using AspiringDemo.GameObjects.Squads;
 using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Roleplaying;
 using AspiringDemo.Roleplaying.Stats;
+using AspiringDemo.Zones;
 using Ninject;
 using Ninject.Modules;
 
@@ -45,6 +47,7 @@ namespace AspiringDemo
             Bind<ICombatModule>().To<CombatModule>();
             Bind<IUnitStats>().To<UnitStats>();
             Bind<INewFight>().To<NewFight>();
+            Bind<IDetection>().To<Detection>();
         }
     }
 }

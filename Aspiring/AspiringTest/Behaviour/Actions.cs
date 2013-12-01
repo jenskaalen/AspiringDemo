@@ -4,6 +4,7 @@ using AspiringDemo.Factions;
 using AspiringDemo.GameActions;
 using AspiringDemo.GameObjects;
 using AspiringDemo.GameObjects.Units;
+using AspiringDemo.Zones;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 using Ninject.Parameters;

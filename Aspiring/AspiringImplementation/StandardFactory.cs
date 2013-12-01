@@ -5,6 +5,7 @@ using AspiringDemo.Factions.Diplomacy;
 using AspiringDemo.GameObjects;
 using AspiringDemo.GameObjects.Squads;
 using AspiringDemo.GameObjects.Units;
+using AspiringDemo.Zones;
 using Ninject.Modules;
 using System;
 using System.Collections.Generic;

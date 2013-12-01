@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AspiringDemo.Combat.Behaviour;
 using AspiringDemo.Gamecore.Helpers;
 using AspiringDemo.GameObjects.Units;
+using Ninject;
 
 namespace AspiringDemo.Combat
 {
@@ -11,17 +13,21 @@ namespace AspiringDemo.Combat
         private const float SpeedModifier = 0.1f;
         private readonly IUnit _unit;
         private float _nextAttack;
-
-        public CombatModule(IUnit unit)
-        {
-            _unit = unit;
-        }
+        private IDetection _detection;
 
         public bool CanFlee { get; set; }
         public int CombatReluctance { get; set; }
         public int Kills { get; set; }
         public INewFight CurrentFight { get; set; }
         public IUnit CurrentTarget { get; set; }
+        public double DetectionDistance { get; set; }
+
+        public CombatModule(IUnit unit)
+        {
+            _unit = unit;
+            DetectionDistance = 15;
+            _detection = GameFrame.Game.Factory.Get<IDetection>();
+        }
 
         public void AttackTarget(IUnit target, float time)
         {
@@ -72,6 +78,20 @@ namespace AspiringDemo.Combat
             {
                 CurrentFight.Enter(ally);
             }
+        }
+
+        public bool DetectEnemies()
+        {
+            if (_unit.Interior != null)
+            {
+                foreach (var unit in _unit.Interior.Units.Where(unit => _unit.IsEnemy(unit)))
+                {
+                    if (_detection.DetectEnemy(_unit, unit))
+                        return true;
+                }
+            }
+
+            return false;
         }
 
         public void ChangeWeapon(IWeapon weapon)

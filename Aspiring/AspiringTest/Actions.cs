@@ -10,6 +10,7 @@ using AspiringDemo.GameActions.Combat;
 using AspiringDemo.GameObjects;
 using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Weapons;
+using AspiringDemo.Zones;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 using AspiringDemo.ANN.Actions.Unit;
@@ -28,7 +29,7 @@ namespace AspiringDemoTest
             var unit1 = GameFrame.Game.Factory.Get<IUnit>(new ConstructorArgument("faction", faction1));
             unit1.Items.Weapons.Add(new Sword());
             var unit2 = GameFrame.Game.Factory.Get<IUnit>(new ConstructorArgument("faction", faction2));
-            var zone = GameFrame.Game.Factory.Get<IZone>();
+            var zone = new Zone(0, 0, 499, 499);
             unit1.EnterZone(zone);
             unit2.EnterZone(zone);
 

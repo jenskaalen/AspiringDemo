@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using AspiringDemo.Factions;
-using AspiringDemo.Factions.Diplomacy;
+using AspiringDemo.Gamecore.Types;
 using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Pathfinding;
 using AspiringDemo.Sites;
 
-namespace AspiringDemo
+namespace AspiringDemo.Zones
 {
     public enum ZoneType
     {
@@ -20,17 +19,15 @@ namespace AspiringDemo
 
     public class Zone : IZone
     {
-        public Zone()
+        public Zone(int xPosition, int yPosition, int height, int width)
         {
             PopulatedAreas = new List<IPopulatedArea>();
             Units = new List<IUnit>();
             Neighbours = new List<IPathfindingNode>();
+            Area = new Rect(xPosition, yPosition, height, width);
         }
 
-        public int PositionXStart { get; set; }
-        public int PositionXEnd { get; set; }
-        public int PositionYStart { get; set; }
-        public int PositionYEnd { get; set; }
+        public Rect Area { get; set; }
         public bool IsPlayerNearby { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -43,7 +40,7 @@ namespace AspiringDemo
 
         public Vector2 Position
         {
-            get { return new Vector2((PositionXStart + PositionXEnd)/2, (PositionYEnd + PositionYStart)/2); }
+            get { return Area.Center; }
             set { throw new NotImplementedException(); }
         }
 
@@ -52,6 +49,7 @@ namespace AspiringDemo
         public float FValue { get; set; }
         public NodeState State { get; set; }
         public List<IUnit> Units { get; set; }
+        public List<IZoneEntrance> ZoneEntrances { get; set; }
 
         public void AddArea(IPopulatedArea area)
         {
@@ -61,17 +59,6 @@ namespace AspiringDemo
             PopulatedAreas.Add(area);
             area.Zone = this;
         }
-
-        //private void TryRazeZone(IUnit unit)
-        //{
-        //    //Checks if the losing side had any buildings in the area that will be razed
-        //    foreach (IPopulatedArea area in PopulatedAreas)
-        //    {
-        //        area.IsUnderAttack = false;
-
-        //        area.Razed = area.Owner != unit.Faction;
-        //    }
-        //}
 
         public void AddNeighbour(IZone zone)
         {
@@ -83,6 +70,7 @@ namespace AspiringDemo
 
             Neighbours = newNeighbours;
         }
+
 
         public int CompareTo(IPathfindingNode other)
         {

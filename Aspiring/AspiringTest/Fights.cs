@@ -4,6 +4,7 @@ using AspiringDemo.Factions.Diplomacy;
 using AspiringDemo.Gamecore;
 using AspiringDemo.GameObjects;
 using AspiringDemo.GameObjects.Units;
+using AspiringDemo.Zones;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AspiringDemo;
 using Ninject;
@@ -61,7 +62,7 @@ namespace AspiringDemoTest
         [TestMethod]
         public void Fight_Starts_When_Enemies_Enter_Same_Zone()
         {
-            IZone fightZone = new Zone();
+            IZone fightZone = new Zone(0, 0, 500, 500);
             var f1 = GameFrame.Game.Factory.Get<IFaction>();
             var f2 = GameFrame.Game.Factory.Get<IFaction>();
 

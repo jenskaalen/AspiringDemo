@@ -1,4 +1,6 @@
 ﻿using AspiringDemo.GameObjects.Units;
+using AspiringDemo.Zones;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AspiringDemo;
 using Ninject;
@@ -8,14 +10,14 @@ using Ninject.Parameters;
 namespace AspiringDemoTest
 {
     [TestClass]
-    public class Zones
+    public class ZoneTests
     {
         [TestMethod]
         public void Unit_Enter_Zone()
         {
             //IUnit unit = Factories.Instance
             IUnit unit = Factories.Kernel.Get<IUnit>();
-            IZone zone = Factories.Kernel.Get<IZone>();
+            IZone zone = new Zone(0, 0, 499, 499);
 
             Assert.IsTrue(zone.Units.Count == 0);
 
@@ -29,7 +31,7 @@ namespace AspiringDemoTest
         {
             var faction1 = Factories.Kernel.Get<IFaction>();
             var faction2 = Factories.Kernel.Get<IFaction>();
-            var zone1 = Factories.Kernel.Get<IZone>();
+            var zone1 = new Zone(0, 0, 499, 499);
 
             var unit1 = Factories.Kernel.Get<IUnit>(new ConstructorArgument("faction", faction1));
             var unit2 = Factories.Kernel.Get<IUnit>(new ConstructorArgument("faction", faction2));
@@ -46,7 +48,7 @@ namespace AspiringDemoTest
         {
             var faction1 = Factories.Kernel.Get<IFaction>();
             var faction2 = Factories.Kernel.Get<IFaction>();
-            var zone1 = Factories.Kernel.Get<IZone>();
+            var zone1 = new Zone(0, 0, 499, 499);
 
             var unit1 = Factories.Kernel.Get<IUnit>(new ConstructorArgument("faction", faction1));
             var unit2 = Factories.Kernel.Get<IUnit>(new ConstructorArgument("faction", faction2));
@@ -62,7 +64,7 @@ namespace AspiringDemoTest
         public void Get_Closest_Node()
         {
             var zones = Factories.GetZones(10, 10);
-            var closest = AspiringDemo.Gamecore.Helpers.Zones.GetClosestZone(zones[10].Position, zones);
+            var closest = Zonudes.GetClosestZone(zones[10].Position, zones);
             Assert.AreEqual(zones[10], closest);
         }
     }

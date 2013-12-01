@@ -5,6 +5,7 @@ using AspiringDemo.GameCore;
 using AspiringDemo.Gamecore;
 using AspiringDemo.Pathfinding;
 using AspiringDemo.Saving;
+using AspiringDemo.Zones;
 using Ninject;
 
 namespace AspiringDemo

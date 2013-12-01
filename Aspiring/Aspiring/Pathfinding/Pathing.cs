@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AspiringDemo.Gamecore.Types;
+using AspiringDemo.Zones;
 
 namespace AspiringDemo
 {
@@ -15,32 +17,32 @@ namespace AspiringDemo
             zone =
                 Zones.FirstOrDefault(
                     xZone =>
-                        xZone.PositionXStart < xPos && xZone.PositionXEnd > xPos && xZone.PositionYStart < yPos &&
-                        xZone.PositionYEnd > yPos);
+                        xZone.Area.X1 < xPos && xZone.Area.X1 > xPos && xZone.Area.Y1 < yPos &&
+                        xZone.Area.Y2 > yPos);
 
             return zone;
         }
 
-        public IZone GetZone(Vector2 pos)
-        {
-            IZone zone = null;
+        //public IZone GetZone(Vector2 pos)
+        //{
+        //    IZone zone = null;
 
-            zone =
-                Zones.FirstOrDefault(
-                    xZone =>
-                        xZone.PositionXStart < pos.X && xZone.PositionXEnd > pos.X && xZone.PositionYStart < pos.Y &&
-                        xZone.PositionYEnd > pos.Y);
+        //    zone =
+        //        Zones.FirstOrDefault(
+        //            xZone =>
+        //                xZone.Area.X1 < pos.X && xZone.X1 > pos.X && xZone.PositionYStart < pos.Y &&
+        //                xZone.PositionYEnd > pos.Y);
 
-            return zone;
-        }
+        //    return zone;
+        //}
 
         //public List<IZone> GetComputedZonePath(Vector2 startPosition, Vector2 endPosition)
         //{
         //    Pathfinder<IZone> finder = new Pathfinder<IZone>();
-        //    finder.Nodes = Zones;
+        //    finder.Nodes = Zonudes;
 
         //    //List<Zone> allZones = new List<Zone>();
-        //    //Zones.ForEach(x => allZones.Add(x));
+        //    //Zonudes.ForEach(x => allZones.Add(x));
 
         //    //Zone startZone = GetZone(startPosition);
         //    //Zone endZone = GetZone(endPosition);
@@ -52,10 +54,10 @@ namespace AspiringDemo
         //    //while (currentZone != endZone)
         //    //{ 
         //    //    //currentZone.Neighbours.Min(zone => 
-        //    //        //Math.Sqrt(zone.PositionXStart * zone.PositionXStart + endZone.PositionXStart * endZone.PositionXStart))
+        //    //        //Math.Sqrt(zone.Area.X1 * zone.Area.X1 + endZone.Area.X1 * endZone.Area.X1))
         //    //    //if (currentZone.Neighbours == null
-        //    //    //currentZone = allZones.Aggregate((z1, z2) => z1.PositionXStart > z2.PositionXStart ? z2 : z1);
-        //    //    currentZone = currentZone.Neighbours.Aggregate((z1, z2) => z1.PositionXStart > z2.PositionXStart ? z1 : z2);
+        //    //    //currentZone = allZones.Aggregate((z1, z2) => z1.Area.X1 > z2.Area.X1 ? z2 : z1);
+        //    //    currentZone = currentZone.Neighbours.Aggregate((z1, z2) => z1.Area.X1 > z2.Area.X1 ? z1 : z2);
         //    //    allZones.Remove(currentZone);
         //    //    computedList.Add(currentZone);
         //    //}

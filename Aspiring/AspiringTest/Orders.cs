@@ -19,6 +19,7 @@ using AspiringDemo.Pathfinding;
 using AspiringDemo.Saving;
 using AspiringDemo.Sites;
 using AspiringDemo.Factions;
+using AspiringDemo.Zones;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Moq;
@@ -57,7 +58,7 @@ namespace AspiringDemoTest
         {
             var save = new TestSave("asd");
             var faction = _kernel.Get<IFaction>();
-            var zone = _kernel.Get<IZone>();
+            var zone = new Zone(0,0, 499, 499);
             var area = new PopulatedArea(faction, null); //_kernel.Get<IPopulatedArea>();
 
             zone.AddArea(area);
@@ -92,8 +93,8 @@ namespace AspiringDemoTest
         [TestMethod]
         public void Give_Guard_Area_Order()
         {
-            var areaZone = _kernel.Get<IZone>();
-            var startZone = _kernel.Get<IZone>();
+            var areaZone = new Zone(0, 0, 499, 499);
+            var startZone = new Zone(500, 500, 499, 499);
             GameFrame.Game.ZonePathfinder.Nodes.Add(areaZone);
             GameFrame.Game.ZonePathfinder.Nodes.Add(startZone);
             areaZone.Neighbours = new List<IZone>() { startZone };
@@ -178,8 +179,8 @@ namespace AspiringDemoTest
             IUnit unit1 = new Unit(new Faction());
             sq.AddMember(unit1);
 
-            IZone gatherZone = new Zone();
-            IZone targetZone = new Zone(); 
+            IZone gatherZone = new Zone(0,0, 499, 499);
+            IZone targetZone = new Zone(500, 500, 499, 499); 
             sq.EnterZone(gatherZone);
 
             var action = new AttackAction(new Faction(), targetZone, gatherZone, 1);

@@ -1,17 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AspiringDemo.Gamecore;
 using AspiringDemo.GameObjects.Units;
+using AspiringDemo.Procedural;
 
-namespace AspiringDemo.Procedural.Interiors
+namespace AspiringDemo.Zones.Interiors
 {
     public class Tomb : IInterior
     {
         public List<IInteriorNode> InteriorNodes { get; set; }
         public List<Room> Rooms { get; set; }
         public List<CorridorPath> Paths { get; set; }
+
+        public List<IUnit> Units { get; private set; }
+
         public Room Entrance { get; set; }
         public int InteriorWidth { get; set; }
         public int InteriorHeight { get; set; }
@@ -30,17 +34,21 @@ namespace AspiringDemo.Procedural.Interiors
             unit.Position = Entrance.Center;
             unit.Interior = this;
             unit.Zone = null;
+            Units.Add(unit);
         }
 
-
-        public Tomb(int rooms, int width, int height)
+        public Tomb(int width, int height, InteriorValues values)
         {
-            _maxRooms = rooms;
+            _maxRooms = values.RoomCount;
+            _maxRoomSize = values.MaxRoomSize;
+            _minRoomSize = values.MinRoomSize;
+            _corridorWidth = values.CorridorWidth;
             InteriorWidth = width;
             InteriorHeight = height;
             Paths = new List<CorridorPath>();
             Rooms = new List<Room>();
             InteriorNodes = new List<IInteriorNode>();
+            Units = new List<IUnit>();
 
             CreateRooms();
             CreateNodes();
@@ -50,6 +58,50 @@ namespace AspiringDemo.Procedural.Interiors
         private void SetEntrance()
         {
             Entrance = Rooms[0];
+        }
+
+        public void CreateDebugImage()
+        {
+            Bitmap img = new Bitmap(InteriorWidth, InteriorHeight);
+
+
+            for (int i = 0; i < InteriorWidth; i++)
+            {
+                for (int j = 0; j < InteriorHeight; j++)
+                {
+                    img.SetPixel(i, j, Color.Black);
+                }
+            }
+
+            foreach (var room in Rooms)
+            {
+                for (int i = room.X1; i < room.X2; i++)
+                {
+                    for (int j = room.Y1; j < room.Y2; j++)
+                    {
+                        img.SetPixel(i, j, Color.WhiteSmoke);
+                    }
+                }
+            }
+
+            foreach (var corridor in Paths.SelectMany(path => path.Corridors))
+            {
+                for (int i = corridor.X1; i < corridor.X2; i++)
+                {
+                    for (int j = corridor.Y1; j < corridor.Y2; j++)
+                    {
+                        img.SetPixel(i, j, Color.WhiteSmoke);
+                    }
+                }
+            }
+
+            foreach (var unit in Units)
+            {
+                img.SetPixel(unit.Position.X, unit.Position.Y, Color.Orange);
+            }
+
+            img.Save("tomb2.png", ImageFormat.Png);
+            img.Dispose();
         }
 
         private void CreateNodes()
@@ -85,12 +137,22 @@ namespace AspiringDemo.Procedural.Interiors
 
             foreach (var room in Rooms)
             {
-                if (!Paths.SelectMany(path => path.ConnectedRooms).Contains(room))
-                {
-                    // find closest ?
-                    CreateCorridors(room, Rooms.Where(room1 => room1 != room).ToList()[GameFrame.Random.Next(0, Rooms.Count - 1)]);
-                }
+                //if (!Paths.SelectMany(path => path.ConnectedRooms).Contains(room))
+                //{
+                //    // find closest ?
+                //    var closest = GetClosest(room, Rooms.Where(room1 => room1 != room));
+                //    CreateCorridors(room, Rooms.Where(room1 => room1 != room).ToList()[GameFrame.Random.Next(0, Rooms.Count - 1)]);
+                //}
+                var closest = GetClosest(room, Rooms.Where(room1 => room1 != room));
+                var dist = Utility.GetDistance(room.Center, closest.Center);
+
+                CreateCorridors(room, Rooms.Where(room1 => room1 != room).ToList()[GameFrame.Random.Next(0, Rooms.Count - 1)]);
             }
+        }
+
+        private Room GetClosest(Room room, IEnumerable<Room> rooms)
+        {
+            return rooms.OrderBy(room1 => Utility.GetDistance(room.Center, room1.Center)).First();
         }
 
         private Room GetRandomRoom()

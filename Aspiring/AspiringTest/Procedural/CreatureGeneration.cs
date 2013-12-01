@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using AspiringDemo;
 using AspiringDemo.Factions;
 using AspiringDemo.Procedural;
-using AspiringDemo.Procedural.Interiors;
+using AspiringDemo.Zones.Interiors;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 
@@ -29,7 +29,8 @@ namespace AspiringDemoTest.Procedural
             var faction = GameFrame.Game.Factory.Get<IFaction>();
             var generator = new TombCreatureGenerator(10, faction);
 
-            var tomb = new Tomb(10, 512, 512);
+            InteriorValues vals = new InteriorValues(100, 20, 10, 4);
+            var tomb = new Tomb(512, 512, vals);
             tomb.Populate(generator);
 
             foreach (var room in tomb.Rooms)

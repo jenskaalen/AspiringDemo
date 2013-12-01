@@ -11,7 +11,7 @@ namespace AspiringDemo.Procedural
     {
         public List<GameObjects.Units.IUnit> Creatures
         {
-            get; private set;
+            get; protected set;
         }
 
         public virtual void Populate()

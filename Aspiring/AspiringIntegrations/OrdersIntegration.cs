@@ -3,6 +3,7 @@ using AspiringDemo.Gamecore;
 using AspiringDemo.GameObjects;
 using AspiringDemo.GameObjects.Squads;
 using AspiringDemo.GameObjects.Units;
+using AspiringDemo.Zones;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AspiringDemo;
 using System.IO;
@@ -111,29 +112,28 @@ namespace AspiringDemoTest
 
         public List<IZone> GetTestZones()
         {
-            IZone zone1 = new Zone();
-            zone1.PositionXStart = 0;
-            zone1.PositionXEnd = 500;
-            zone1.PositionYStart = 0;
-            zone1.PositionYEnd = 500;
+            IZone zone1 = new Zone(0, 0, 500, 500);
+            IZone zone2 = new Zone(501, 0, 500, 500);
+            IZone zone3 = new Zone(1001, 0, 500, 500);
+            IZone fuckzone = new Zone(501, 501, 500, 500);
 
-            IZone zone2 = new Zone();
-            zone2.PositionXStart = 501;
-            zone2.PositionXEnd = 1000;
-            zone2.PositionYStart = 0;
-            zone2.PositionYEnd = 500;
+            //IZone zone2 = new Zone();
+            //zone2.Area.X1 = 501;
+            //zone2.X1 = 1000;
+            //zone2.Area.Y1 = 0;
+            //zone2.PositionYEnd = 500;
 
-            IZone zone3 = new Zone();
-            zone3.PositionXStart = 1001;
-            zone3.PositionXEnd = 1501;
-            zone3.PositionYStart = 0;
-            zone3.PositionYEnd = 500;
+            //IZone zone3 = new Zone();
+            //zone3.Area.X1 = 1001;
+            //zone3.X1 = 1501;
+            //zone3.Area.Y1 = 0;
+            //zone3.PositionYEnd = 500;
 
-            IZone fuckzone = new Zone();
-            fuckzone.PositionXStart = 501;
-            fuckzone.PositionXEnd = 1000;
-            fuckzone.PositionYStart = 501;
-            fuckzone.PositionYEnd = 1000;
+            //IZone fuckzone = new Zone();
+            //fuckzone.Area.X1 = 501;
+            //fuckzone.X1 = 1000;
+            //fuckzone.Area.Y1 = 501;
+            //fuckzone.PositionYEnd = 1000;
 
 
             zone1.AddNeighbour(zone2);

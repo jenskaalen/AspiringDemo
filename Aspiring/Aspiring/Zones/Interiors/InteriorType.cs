@@ -1,4 +1,4 @@
-﻿namespace AspiringDemo.Procedural.Interiors
+﻿namespace AspiringDemo.Zones.Interiors
 {
     public enum InteriorType
     {

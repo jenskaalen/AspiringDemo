@@ -16,8 +16,10 @@
             Y1 = y1Pos;
             Height = height;
             Width = width;
-            X2 = CappedValue(500, X1 + Width);
-            Y2 = CappedValue(500, Y1 + Height);
+            //X2 = CappedValue(500, X1 + Width);
+            //Y2 = CappedValue(500, Y1 + Height);
+            X2 = X1 + Width;
+            Y2 = Y1 + height;
             var xCenter = (X1 + X2) / 2;
             var yCenter = (Y1 + Y2) / 2;
             Center = new Vector2(xCenter, yCenter);

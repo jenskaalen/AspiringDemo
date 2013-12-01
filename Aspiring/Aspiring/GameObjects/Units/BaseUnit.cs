@@ -6,12 +6,14 @@ using AspiringDemo.Factions;
 using AspiringDemo.Factions.Diplomacy;
 using AspiringDemo.GameActions;
 using AspiringDemo.Gamecore;
+using AspiringDemo.Gamecore.Types;
 using AspiringDemo.GameObjects.Squads;
 using AspiringDemo.Orders;
-using AspiringDemo.Procedural.Interiors;
 using AspiringDemo.Roleplaying;
 using AspiringDemo.Roleplaying.Stats;
 using AspiringDemo.Weapons;
+using AspiringDemo.Zones;
+using AspiringDemo.Zones.Interiors;
 using Ninject;
 using Ninject.Parameters;
 
@@ -71,6 +73,7 @@ namespace AspiringDemo.GameObjects.Units
         public Vector2 Position { get; set; }
         public IZone Zone { get; set; }
         public IUnitStats Stats { get; set; }
+        public IInterior Interior { get; set; }
 
         //TODO: Possibly rework this..
         public int ID { get; set; }
@@ -167,9 +170,15 @@ namespace AspiringDemo.GameObjects.Units
             Zone = null;
             Interior = interior;
             Position = interior.Entrance.Center;
+            interior.Units.Add(this);
         }
 
-        public IInterior Interior { get; set; }
+
+        public void LeaveInterior()
+        {
+            Interior.Units.Remove(this);
+            Interior = null;
+        }
 
         protected virtual void ChangeStateSelf(IUnit unit, UnitState state)
         {

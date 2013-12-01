@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using AspiringDemo.Gamecore.Types;
+using AspiringDemo.Zones;
 
-namespace AspiringDemo.Gamecore.Helpers
+namespace AspiringDemo
 {
-    public static class Zones
+    public static class Zonudes
     {
         public static IZone GetClosestZone(Vector2 targetPosition, List<IZone> zones)
         {

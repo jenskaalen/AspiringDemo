@@ -6,6 +6,7 @@ using AspiringDemo.GameObjects;
 using AspiringDemo.GameObjects.Squads;
 using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Sites;
+using AspiringDemo.Zones;
 using Ninject;
 using Ninject.Modules;
 using System;

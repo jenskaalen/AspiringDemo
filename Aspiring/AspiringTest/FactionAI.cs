@@ -2,6 +2,7 @@
 using AspiringDemo.GameObjects;
 using AspiringDemo.GameObjects.Squads;
 using AspiringDemo.GameObjects.Units;
+using AspiringDemo.Zones;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AspiringDemo;
 using System.Linq;
@@ -129,11 +130,7 @@ namespace AspiringDemoTest
             _placementDecider.PreferredCapitalDistance = 3000;
             _placementDecider.PreferredFactionZoneDistance = 3000;
 
-            IZone farawayZone = new Zone();
-            farawayZone.PositionXStart = 50000;
-            farawayZone.PositionXEnd = 51000;
-            farawayZone.PositionYStart = 50000;
-            farawayZone.PositionYEnd = 51000;
+            IZone farawayZone = new Zone(50000, 50000, 1000, 1000);
 
             GameFrame.Game.ZonePathfinder.Nodes.Add(farawayZone);
 

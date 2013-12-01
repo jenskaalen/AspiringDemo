@@ -1,4 +1,7 @@
-﻿namespace AspiringDemo.GameObjects
+﻿using AspiringDemo.Gamecore.Types;
+using AspiringDemo.Zones;
+
+namespace AspiringDemo.GameObjects
 {
     public interface IGameObject
     {

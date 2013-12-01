@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using AspiringDemo.Factions;
+using AspiringDemo.Zones;
 
 namespace AspiringDemo.Sites
 {
