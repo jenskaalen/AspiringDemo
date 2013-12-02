@@ -105,6 +105,9 @@
     <Compile Include="Factions\Taxes.cs" />
     <Compile Include="Combat\Fight.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameActions\Movement\EnterInterior.cs" />
+    <Compile Include="GameActions\Movement\MoveFromExteriorToInterior.cs" />
+    <Compile Include="GameActions\Movement\MoveToPosition.cs" />
     <Compile Include="GameActions\Parallel.cs" />
     <Compile Include="GameActions\Patrol.cs" />
     <Compile Include="GameActions\Sequence.cs" />
@@ -125,6 +128,7 @@
     <Compile Include="Zones\Interiors\Room.cs" />
     <Compile Include="Zones\Interiors\Space.cs" />
     <Compile Include="Zones\Interiors\Tomb.cs" />
+    <Compile Include="Zones\ZoneEntrance.cs" />
     <Compile Include="Zonudes.cs" />
     <Compile Include="Gamecore\IGameTime.cs" />
     <Compile Include="Factions\IFaction.cs" />
@@ -200,7 +204,6 @@
     <Compile Include="Weapons\Unarmed.cs" />
     <Compile Include="Zones\IZoneEntrance.cs" />
     <Compile Include="Zones\Zone.cs" />
-    <Compile Include="Pathfinding\Pathing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Weapons\Weapon.cs" />
   </ItemGroup>

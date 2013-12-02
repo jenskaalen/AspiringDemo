@@ -35,7 +35,7 @@ namespace AspiringDemoTest.Procedural
 
             generator.Populate(tomb);
 
-            Assert.IsTrue(generator.Creatures.All(unit => unit.Interior == tomb));
+            Assert.IsTrue(generator.Creatures.All(unit => unit.Zone == tomb));
             Assert.AreEqual(20, tomb.Units.Count);
         }
 

@@ -16,9 +16,23 @@ namespace AspiringDemo
     // or?
     public class Game : IGame
     {
+        public List<IFaction> Factions { get; set; }
+        public List<IWeapon> Weapons { get; set; }
+        public int FactionCount { get; set; }
+        public bool IncludeMonsters { get; set; }
+        public int ZonesWidth { get; set; }
+        public int ZonesHeight { get; set; }
+        public ISavegame Savegame { get; set; }
+        public IObjectFactory ObjectFactory { get; set; }
+        public IGameTime GameTime { get; set; }
+        public Pathfinder<IZone> ZonePathfinder { get; set; }
+        public int TimeToTravelThroughZone { get; set; }
+        public IActionProcesser ActionProcesser { get; set; }
+
         private StandardKernel _kernel = new StandardKernel(new ProductionFactory());
         private StrengthMap _strengthMap;
         private bool _timerStarted = false;
+        private int MilisecondsPerTimeTick { get; set; }
 
         public Game()
         {
@@ -33,28 +47,6 @@ namespace AspiringDemo
             ObjectFactory = factory;
             ActionProcesser = new ActionProcesser();
         }
-
-        private int MilisecondsPerTimeTick { get; set; }
-
-        public List<IFaction> Factions { get; set; }
-        public List<IWeapon> Weapons { get; set; }
-        public int FactionCount { get; set; }
-        public bool IncludeMonsters { get; set; }
-        public int ZonesWidth { get; set; }
-        public int ZonesHeight { get; set; }
-        public Pathing Pathfinding { get; set; }
-        public ISavegame Savegame { get; set; }
-        public IObjectFactory ObjectFactory { get; set; }
-        public IGameTime GameTime { get; set; }
-        public Pathfinder<IZone> ZonePathfinder { get; set; }
-        //public const int TimeToTravelThroughZone = 1;
-        public int TimeToTravelThroughZone { get; set; }
-        public IActionProcesser ActionProcesser { get; set; }
-
-        //const int ZoneWidth = 500;
-        //const int ZoneHeight = 500;
-
-        //private int _milisecondsPerTimeTick = 1000;
 
         public StandardKernel Factory
         {
@@ -74,27 +66,9 @@ namespace AspiringDemo
             }
         }
 
-
-        [Obsolete]
-        public void Initialize(bool populateZones)
-        {
-            GameTime.SecondsPerTick = MilisecondsPerTimeTick;
-            Factions = new List<IFaction>();
-
-            if (GameTime.SecondsPerTick == 0)
-            {
-                GameTime.SecondsPerTick = 1f;
-            }
-
-            if (populateZones)
-                PopulateZonesAndNodes();
-        }
-
         public void PopulateZonesAndNodes()
         {
             //TODO: Dont use magic numbers for zones
-            Pathfinding = new Pathing();
-            Pathfinding.Zones = (List<IZone>) CreateZones(499, 499);
             ZonePathfinder = new Pathfinder<IZone>();
             ZonePathfinder.Nodes = CreateZones(499, 499);
         }
@@ -124,18 +98,6 @@ namespace AspiringDemo
                 _strengthMap = new StrengthMap(GameTime.Time);
 
             return newFaction;
-        }
-
-        /// <summary>
-        ///     Processes a zone and creates the necessary events - fights
-        /// </summary>
-        public void ProcessZones()
-        {
-            foreach (Zone zone in Pathfinding.Zones)
-            {
-                //TODO: remove this - zones no longer control the fights
-                // zone.Fight.PerformFightRound();
-            }
         }
 
         /// <summary>

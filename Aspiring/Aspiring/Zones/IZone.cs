@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using AspiringDemo.Gamecore.Types;
 using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Pathfinding;
@@ -9,7 +10,7 @@ namespace AspiringDemo.Zones
 {
     public interface IZone : IPathfindingNode
     {
-        int ID { get; set; }
+        List<IPathfindingNode> Nodes { get; set; }
         bool IsPlayerNearby { get; set; }
         List<IPopulatedArea> PopulatedAreas { get; set; }
         Rect Area { get; set; }
@@ -18,5 +19,7 @@ namespace AspiringDemo.Zones
         void AddArea(IPopulatedArea area);
         void AddNeighbour(IZone zone);
         List<IZoneEntrance> ZoneEntrances { get; set; }
-    }
+        void AddEntrance(IZone entrance, Vector2 positionVector2);
+        Pathfinder<IPathfindingNode> Pathfinder { get; set; }
+}
 }

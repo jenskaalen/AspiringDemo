@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Zones;
+using Ninject.Planning.Targets;
 
 namespace AspiringDemo.GameActions
 {
@@ -20,6 +21,12 @@ namespace AspiringDemo.GameActions
 
         public ZoneMove(IUnit unit, IZone targetZone)
         {
+            if (targetZone == unit.Zone)
+            {
+                Finished = true;
+                return;
+            }
+
             _targetZone = targetZone;
             _startZone = unit.Zone;
             _unit = unit;
@@ -29,43 +36,43 @@ namespace AspiringDemo.GameActions
 
         public ZoneMove(IUnit unit, IZone startZone, IZone targetZone)
         {
+            if (targetZone == startZone)
+            {
+                Finished = true;
+                return;
+            }
+
             _targetZone = targetZone;
             _startZone = startZone;
             _unit = unit;
             _travelPath = GameFrame.Game.ZonePathfinder.GetPath(_startZone, _targetZone);
         }
 
-        private bool ShouldWork()
-        {
-            return true;
-        }
-
         public override void Update(float elapsed)
         {
-            if (!ShouldWork())
-                return;
 
             if (!_started)
             {
                 if (_unit.Zone != _startZone)
                     throw new Exception("Cant start moving from a zone which the unit is not in");
 
-                _travelPath.RemoveAt(0);
-
                 _nextZoneChange = elapsed + ZoneTravelTime;
                 _started = true;
             }
 
-            if (_unit.Zone != _targetZone)
+            if (_unit.Zone == _targetZone)
             {
                 Finished = true;
+                // in case of unit being in target zone when action is made (see constructor)
+                // continuing with a travelpath containing 0 nodes would throw an exception
+                return;
             }
 
-            if (elapsed > _nextZoneChange)
+            if (elapsed >= _nextZoneChange)
             {
                 _nextZoneChange = elapsed + ZoneTravelTime;
-                _travelPath.RemoveAt(0);
                 _unit.EnterZone(_travelPath.First());
+                _travelPath.RemoveAt(0);
             }
         }
     }

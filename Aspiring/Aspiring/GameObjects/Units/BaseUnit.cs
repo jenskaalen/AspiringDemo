@@ -43,6 +43,7 @@ namespace AspiringDemo.GameObjects.Units
             //Weapons.Add(new Unarmed());
             Items.Weapons.Add(new Unarmed());
             Name = "Soldier";
+            Actions = new List<GameAction>();
         }
 
         public StateChanged ChangeState { get; set; }
@@ -114,8 +115,14 @@ namespace AspiringDemo.GameObjects.Units
                 LeaveZone();
 
             Zone = zone;
-            Zone.Units.Add(this);
 
+            if (zone is IInterior)
+                Position = ((IInterior) (zone)).Entrance.Center;
+            else
+                Position = zone.Position;
+
+
+            Zone.Units.Add(this);
 
             if (State == UnitState.Dead)
                 return;
@@ -156,6 +163,9 @@ namespace AspiringDemo.GameObjects.Units
                     Remove();
                 return;
             }
+
+            Actions.ForEach(a => a.Update(time));
+            Actions.RemoveAll(a => a.Finished);
 
             Stats.Regen(time);
         }

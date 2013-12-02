@@ -18,7 +18,6 @@ namespace AspiringDemo
         bool IncludeMonsters { get; set; }
         int ZonesWidth { get; set; }
         int ZonesHeight { get; set; }
-        Pathing Pathfinding { get; set; }
         ISavegame Savegame { get; set; }
         IObjectFactory ObjectFactory { get; set; }
         IGameTime GameTime { get; set; }
@@ -27,10 +26,6 @@ namespace AspiringDemo
         StandardKernel Factory { get; set; }
         IActionProcesser ActionProcesser { get; set; }
         void Initialize();
-
-        [Obsolete]
-        void Initialize(bool populateZones);
-
         void PopulateZonesAndNodes();
 
         /// <summary>
@@ -39,11 +34,6 @@ namespace AspiringDemo
         void StartTimer();
 
         Faction CreateFaction();
-
-        /// <summary>
-        ///     Processes a zone and creates the necessary events - fights
-        /// </summary>
-        void ProcessZones();
 
         /// <summary>
         ///     One tick of gametime

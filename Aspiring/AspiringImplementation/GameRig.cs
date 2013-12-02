@@ -32,7 +32,7 @@ namespace AspiringImplementation
                 GameFrame.Game.ZonesHeight = Worldsize;
                 GameFrame.Game.ZonesWidth = Worldsize;
                 GameFrame.Game.Initialize();
-                GameFrame.Game.ZonePathfinder.Nodes = GetZones(Worldsize, Worldsize);
+                GameFrame.Game.ZonePathfinder.Nodes = GetZones(Worldsize, Worldsize, 999, 999);
 
                 for (int i = 0; i < FactionCount; i++)
                 {
@@ -48,14 +48,12 @@ namespace AspiringImplementation
                     //TODO: Random here might not be quite right
                     faction.CapitalZone = GameFrame.Game.ZonePathfinder.Nodes[GameFrame.Random.Next(0, GameFrame.Game.ZonePathfinder.Nodes.Count - 1)];
                     // rig factions with some gold income
-                    PopulatedArea area = new PopulatedArea(faction, faction.CapitalZone);
+                    var area = new PopulatedArea(faction, faction.CapitalZone);
                     area.Population = 100;
                     ITaxes taxes = new Taxes();
                     taxes.CollectionRate = 10;
                     taxes.TaxPerPayer = 1;
-
                     faction.Taxes = taxes;
-
                     faction.Initialize();
 
                     //TODO: LOOK AT THIS LOGIC!?! Fix it!
@@ -63,12 +61,8 @@ namespace AspiringImplementation
                     faction.CapitalZone.AddArea(area);
                 }
 
-                // rig zombiefaction
                 IFaction zfac = new NeutralFaction();
                 zfac.Name = "Zombies";
-
-                //for (int i=0; i < 30; i++)
-                //    zfac.Create<Unit>();
 
                 GameFrame.Game.Factions.Add(zfac);
                 zfac.Initialize();
@@ -135,28 +129,15 @@ namespace AspiringImplementation
             return actions;
         }
 
-        /// <summary>
-        /// General placement decider...
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete]
-        private IPlacementDecider GetPlacementDecider()
+        public static List<IZone> GetZones(int height, int width, int zoneWidth, int zoneHeight)
         {
-            IPlacementDecider decider = Factory.Kernel.Get<IPlacementDecider>();
-
-            return decider;
-        }
-
-
-        public static List<IZone> GetZones(int height, int width)
-        {
-            List<IZone> zones = new List<IZone>();
+            var zones = new List<IZone>();
 
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
                 {
-                    IZone zone = new Zone(i*1000, j*1000, 999, 999);
+                    IZone zone = new Zone(i * zoneWidth, j * zoneWidth, zoneWidth - 1, zoneHeight - 1);
 
                     zones.Add(zone);
                 }
@@ -164,7 +145,7 @@ namespace AspiringImplementation
 
             foreach (var zone in zones)
             {
-                var nbors = Neighbours(zones, zone, 1000);
+                var nbors = Neighbours(zones, zone, 999, 999);
 
                 zone.Neighbours = new List<IZone>();
                 zone.Neighbours = nbors;
@@ -173,17 +154,17 @@ namespace AspiringImplementation
             return zones;
         }
 
-        public static List<IZone> Neighbours(List<IZone> zones, IZone checkzone, int size)
+        public static List<IZone> Neighbours(List<IZone> zones, IZone checkzone, int height, int width)
         {
             var neighbours = new List<IZone>();
 
             int xPos = checkzone.Area.X1;
             int yPos = checkzone.Area.Y1;
 
-            var zone1 = zones.FirstOrDefault(x => x.Area.X1 == (xPos - 1000) && x.Area.Y1 == yPos);
-            var zone2 = zones.FirstOrDefault(x => x.Area.X1 == (xPos + 1000) && x.Area.Y1 == yPos);
-            var zone3 = zones.FirstOrDefault(x => x.Area.Y1 == (yPos - 1000) && x.Area.X1 == xPos);
-            var zone4 = zones.FirstOrDefault(x => x.Area.Y1 == (yPos + 1000) && x.Area.X1 == xPos);
+            var zone1 = zones.FirstOrDefault(x => x.Area.X1 == (xPos - width) && x.Area.Y1 == yPos);
+            var zone2 = zones.FirstOrDefault(x => x.Area.X1 == (xPos + width) && x.Area.Y1 == yPos);
+            var zone3 = zones.FirstOrDefault(x => x.Area.Y1 == (yPos - height) && x.Area.X1 == xPos);
+            var zone4 = zones.FirstOrDefault(x => x.Area.Y1 == (yPos + height) && x.Area.X1 == xPos);
 
             if (zone1 != null)
                 neighbours.Add(zone1);
@@ -199,5 +180,32 @@ namespace AspiringImplementation
 
             return neighbours;
         }
+
+        //public static List<IZone> Neighbours(List<IZone> zones, IZone checkzone, int size)
+        //{
+        //    var neighbours = new List<IZone>();
+
+        //    int xPos = checkzone.Area.X1;
+        //    int yPos = checkzone.Area.Y1;
+
+        //    var zone1 = zones.FirstOrDefault(x => x.Area.X1 == (xPos - 1000) && x.Area.Y1 == yPos);
+        //    var zone2 = zones.FirstOrDefault(x => x.Area.X1 == (xPos + 1000) && x.Area.Y1 == yPos);
+        //    var zone3 = zones.FirstOrDefault(x => x.Area.Y1 == (yPos - 1000) && x.Area.X1 == xPos);
+        //    var zone4 = zones.FirstOrDefault(x => x.Area.Y1 == (yPos + 1000) && x.Area.X1 == xPos);
+
+        //    if (zone1 != null)
+        //        neighbours.Add(zone1);
+
+        //    if (zone2 != null)
+        //        neighbours.Add(zone2);
+
+        //    if (zone3 != null)
+        //        neighbours.Add(zone3);
+
+        //    if (zone4 != null)
+        //        neighbours.Add(zone4);
+
+        //    return neighbours;
+        //}
     }
 }

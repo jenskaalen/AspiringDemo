@@ -8,6 +8,9 @@ namespace AspiringDemo.GameActions
 
         public void Add(GameAction action)
         {
+            if (Actions == null)
+                Actions = new List<GameAction>();
+
             Actions.Add(action);
         }
     }

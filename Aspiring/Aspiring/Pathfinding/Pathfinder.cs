@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AspiringDemo.Gamecore.Types;
+using AspiringDemo.Zones;
 
 namespace AspiringDemo.Pathfinding
 {
@@ -115,8 +116,59 @@ namespace AspiringDemo.Pathfinding
             }
             // does not add last node to path
             tracedNodes.Reverse();
-
             return tracedNodes;
+        }
+
+        public IPathfindingNode GetClosestNode(Vector2 position)
+        {
+            //NOTE: inefficient, slow etc
+            var node = Nodes.OrderBy(x => GetDistance(position, x.Position)).First();
+            return node;
+        }
+
+
+        private static double GetDistance(Vector2 position1, Vector2 position2)
+        {
+            //double dist = Math.Sqrt(Math.Pow(position1.X - position2.X, 2) + Math.Pow(position1.Y - position2.Y, 2));
+            double dist = Math.Sqrt((position1.X - position2.X) * (position1.X - position2.X) +
+                                    (position1.Y - position2.Y) * (position1.Y - position2.Y));
+            return dist;
+        }
+
+        public void SetNeighbours(int width, int height)
+        {
+            foreach (var node in Nodes)
+            {
+                node.Neighbours = Neighbours(node, width, height);
+            }
+        }
+
+
+        private List<T> Neighbours(T checkzone, int width, int height)
+        {
+            var neighbours = new List<T>();
+
+            int xPos = checkzone.Position.X;
+            int yPos = checkzone.Position.Y;
+
+            var zone1 = Nodes.FirstOrDefault(x => x.Position.X == (xPos - width) && x.Position.Y == yPos);
+            var zone2 = Nodes.FirstOrDefault(x => x.Position.X == (xPos + width) && x.Position.Y == yPos);
+            var zone3 = Nodes.FirstOrDefault(x => x.Position.Y == (yPos - height) && x.Position.X == xPos);
+            var zone4 = Nodes.FirstOrDefault(x => x.Position.Y == (yPos + height) && x.Position.X == xPos);
+
+            if (zone1 != null)
+                neighbours.Add(zone1);
+
+            if (zone2 != null)
+                neighbours.Add(zone2);
+
+            if (zone3 != null)
+                neighbours.Add(zone3);
+
+            if (zone4 != null)
+                neighbours.Add(zone4);
+
+            return neighbours;
         }
     }
 }

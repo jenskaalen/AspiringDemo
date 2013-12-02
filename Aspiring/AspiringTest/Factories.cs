@@ -42,17 +42,6 @@ namespace AspiringDemoTest
             return new Sword();
         }
 
-        //TODO: Remove
-        //public static UnitStats GetStandardStats()
-        //{
-        //    UnitStats stats = new UnitStats();
-        //    stats.Speed = 10;
-        //    stats.Strength = 10;
-        //    stats.Constitution = 10;
-
-        //    return stats;
-        //}
-
         /// <summary>
         /// Gets a standardized faction to be used for testing.
         /// </summary>

@@ -16,7 +16,7 @@ namespace AspiringDemo.Combat.Behaviour
         public bool DetectEnemy(IUnit searchingUnit, IUnit undetectedUnit)
         {
             //NOTE: possibly just change this to return false
-            if (searchingUnit.Zone != undetectedUnit.Zone && searchingUnit.Interior != undetectedUnit.Interior)
+            if (searchingUnit.Zone != undetectedUnit.Zone)
                 throw new Exception("Cant attempt to detect a unit that is in a different zone");
 
             double distance = Utility.GetDistance(searchingUnit.Position, undetectedUnit.Position);

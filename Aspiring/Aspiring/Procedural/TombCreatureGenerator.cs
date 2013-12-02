@@ -40,7 +40,7 @@ namespace AspiringDemo.Procedural
             {
                 //TODO: oh my god this is slow - optimize it
                 Room room1 = room;
-                var roomNodes = interior.InteriorNodes.Where(node => room1.Contains(node.Position)).ToArray();
+                var roomNodes = interior.Nodes.Where(node => room1.Contains(node.Position)).ToArray();
 
                 for (int i = 0; i < unitsPerRoom; i++)
                 {
@@ -58,7 +58,7 @@ namespace AspiringDemo.Procedural
 
         private void PlaceCreature(IUnit unit, IInterior interior, Vector2 position)
         {
-            unit.EnterInterior(interior);
+            unit.EnterZone(interior);
             unit.Position = position;
         }
 

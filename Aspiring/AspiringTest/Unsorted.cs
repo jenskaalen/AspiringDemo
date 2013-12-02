@@ -73,10 +73,10 @@ namespace AspiringDemoTest
             ISquad squad1 = GameFrame.Game.Factions[0].Army.Squads.FirstOrDefault();
             ISquad squad2 = GameFrame.Game.Factions[1].Army.Squads.FirstOrDefault();
 
-            squad1.EnterZone(GameFrame.Game.Pathfinding.Zones[2]);
-            squad2.EnterZone(GameFrame.Game.Pathfinding.Zones[2]);
+            squad1.EnterZone(GameFrame.Game.ZonePathfinder.Nodes[2]);
+            squad2.EnterZone(GameFrame.Game.ZonePathfinder.Nodes[2]);
 
-            IZone testzone = GameFrame.Game.Pathfinding.Zones[2];
+            IZone testzone = GameFrame.Game.ZonePathfinder.Nodes[2];
 
             var fight = squad1.Members[0].CombatModule.CurrentFight;
 

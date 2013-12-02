@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AspiringDemo.Gamecore;
 using AspiringDemo.GameObjects.Squads;
 using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Zones;
+using Ninject.Planning.Targets;
 
 namespace AspiringDemo.Orders
 {
@@ -88,25 +90,43 @@ namespace AspiringDemo.Orders
 
         public static void GiveTravelOrder(IUnit unit, IZone targetZone, bool waitOnComplete)
         {
-            var lastTravelPath = new List<IZone>();
-
-            TravelOrder unitOrder;
-
-            if (unit.Zone == targetZone)
+            if (targetZone.Type == ZoneType.Exterior)
             {
-                unitOrder = new TravelOrder(new List<IZone> {targetZone}, unit, waitOnComplete);
-                unit.AssignOrder(unitOrder);
-            }
-            else if (lastTravelPath.Any() && unit.Zone == lastTravelPath.First())
-            {
-                // create new order
+                var lastTravelPath = new List<IZone>();
+
+                TravelOrder unitOrder;
+
+                if (unit.Zone == targetZone)
+                {
+                    unitOrder = new TravelOrder(new List<IZone> {targetZone}, unit, waitOnComplete);
+                    unit.AssignOrder(unitOrder);
+                }
+                else if (lastTravelPath.Any() && unit.Zone == lastTravelPath.First())
+                {
+                    // create new order
+                    unitOrder = new TravelOrder(lastTravelPath, unit, waitOnComplete);
+                    unit.AssignOrder(unitOrder);
+                }
+
+                lastTravelPath = GameFrame.Game.ZonePathfinder.GetPath(unit.Zone, targetZone);
                 unitOrder = new TravelOrder(lastTravelPath, unit, waitOnComplete);
                 unit.AssignOrder(unitOrder);
             }
+            else if (targetZone.Type == ZoneType.Interior)
+            {
+                throw new NotImplementedException();
+                // find the closest exterior zone for the interior zone
+                //var exteriorZones = targetZone.ZoneEntrances.Select(entrance => entrance.Zone);
 
-            lastTravelPath = GameFrame.Game.ZonePathfinder.GetPath(unit.Zone, targetZone);
-            unitOrder = new TravelOrder(lastTravelPath, unit, waitOnComplete);
-            unit.AssignOrder(unitOrder);
+                //IZone closestZone = exteriorZones.OrderBy(zone => Utility.GetDistance(unit.Zone.Position, zone.Position)).FirstOrDefault();
+            }
+            else
+                throw new NotImplementedException();
+        }
+
+        private static void TravelOrderToInterior(IUnit unit, IZone targetZone)
+        {
+
         }
 
         public override void Execute()

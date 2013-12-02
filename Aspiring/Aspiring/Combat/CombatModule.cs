@@ -82,9 +82,9 @@ namespace AspiringDemo.Combat
 
         public bool DetectEnemies()
         {
-            if (_unit.Interior != null)
+            if (_unit.Zone != null)
             {
-                foreach (var unit in _unit.Interior.Units.Where(unit => _unit.IsEnemy(unit)))
+                foreach (var unit in _unit.Zone.Units.Where(unit => _unit.IsEnemy(unit)))
                 {
                     if (_detection.DetectEnemy(_unit, unit))
                         return true;

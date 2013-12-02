@@ -1,29 +1,72 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using AspiringDemo.Gamecore;
+using AspiringDemo.Gamecore.Types;
 using AspiringDemo.GameObjects.Units;
+using AspiringDemo.Pathfinding;
 using AspiringDemo.Procedural;
+using AspiringDemo.Sites;
 
 namespace AspiringDemo.Zones.Interiors
 {
     public class Tomb : IInterior
     {
-        public List<IInteriorNode> InteriorNodes { get; set; }
+        public List<IPathfindingNode> Nodes { get; set; }
         public List<Room> Rooms { get; set; }
         public List<CorridorPath> Paths { get; set; }
+        public IEnumerable<IPathfindingNode> Neighbours { get; set; }
+        public IPathfindingNode Parent { get; set; }
+        public float GValue { get; set; }
+        public float HValue { get; set; }
+        public float FValue { get; set; }
+        public NodeState State { get; set; }
+        public List<IZoneEntrance> ZoneEntrances { get; set; }
 
         public List<IUnit> Units { get; private set; }
-
         public Room Entrance { get; set; }
         public int InteriorWidth { get; set; }
         public int InteriorHeight { get; set; }
+        public bool IsPlayerNearby { get; set; }
+        public List<IPopulatedArea> PopulatedAreas { get; set; }
+        public Rect Area { get; set; }
+        public ZoneType Type { get; set; }
+        public Pathfinder<IPathfindingNode> Pathfinder { get; set; }
         private int _maxRoomSize = 15;
         private int _minRoomSize = 15;
         private int _corridorWidth = 5;
         private int _maxRooms = 5;
+        private const int HeightBetweenNodes = 1;
+        private const int WidthBetweenNodes = 1;
 
+        public void AddEntrance(IZone entrance, Vector2 positionVector2)
+        {
+            ZoneEntrances.Add(new ZoneEntrance(positionVector2, entrance));
+        }
+
+        public Vector2 Position
+        {
+            get { return Area.Center; }
+            set { throw new NotImplementedException(); }
+        }
+
+        List<IUnit> IZone.Units
+        {
+            get { return Units; }
+            set { Units = value; }
+        }
+
+        public void AddArea(IPopulatedArea area)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void AddNeighbour(IZone zone)
+        {
+            throw new System.NotImplementedException();
+        }
         public void Populate(ICreatureGenerator generator)
         {
 
@@ -32,11 +75,32 @@ namespace AspiringDemo.Zones.Interiors
         public void Enter(IUnit unit)
         {
             unit.Position = Entrance.Center;
-            unit.Interior = this;
-            unit.Zone = null;
+            unit.Zone = this;
             Units.Add(unit);
         }
 
+        public Tomb(int xPosition, int yPosition, int width, int height, InteriorValues values)
+        {
+            ZoneEntrances = new List<IZoneEntrance>();
+            _maxRooms = values.RoomCount;
+            _maxRoomSize = values.MaxRoomSize;
+            _minRoomSize = values.MinRoomSize;
+            _corridorWidth = values.CorridorWidth;
+            InteriorWidth = width;
+            InteriorHeight = height;
+            Paths = new List<CorridorPath>();
+            Rooms = new List<Room>();
+            Nodes = new List<IPathfindingNode>();
+            Units = new List<IUnit>();
+            Area = new Rect(xPosition, yPosition, height, width);
+
+            CreateRooms();
+            CreateNodes();
+            SetEntrance();
+            Pathfinder = new Pathfinder<IPathfindingNode>();
+            Pathfinder.Nodes = Nodes;
+            SetNeighbours(width, height);
+        }
         public Tomb(int width, int height, InteriorValues values)
         {
             _maxRooms = values.RoomCount;
@@ -47,12 +111,22 @@ namespace AspiringDemo.Zones.Interiors
             InteriorHeight = height;
             Paths = new List<CorridorPath>();
             Rooms = new List<Room>();
-            InteriorNodes = new List<IInteriorNode>();
+            Nodes = new List<IPathfindingNode>();
             Units = new List<IUnit>();
+            Area = new Rect(0, 0, height, width);
+            ZoneEntrances = new List<IZoneEntrance>();
+            Pathfinder = new Pathfinder<IPathfindingNode>();
 
             CreateRooms();
             CreateNodes();
             SetEntrance();
+            Pathfinder.Nodes = Nodes;
+            SetNeighbours(WidthBetweenNodes, HeightBetweenNodes);
+        }
+
+        private void SetNeighbours(int width, int height)
+        {
+            Pathfinder.SetNeighbours(width, height);
         }
 
         private void SetEntrance()
@@ -63,7 +137,6 @@ namespace AspiringDemo.Zones.Interiors
         public void CreateDebugImage()
         {
             Bitmap img = new Bitmap(InteriorWidth, InteriorHeight);
-
 
             for (int i = 0; i < InteriorWidth; i++)
             {
@@ -106,7 +179,7 @@ namespace AspiringDemo.Zones.Interiors
 
         private void CreateNodes()
         {
-            InteriorNodes = new List<IInteriorNode>();
+            Nodes = new List<IPathfindingNode>();
 
             foreach (var room in Rooms)
             {
@@ -115,16 +188,30 @@ namespace AspiringDemo.Zones.Interiors
                     for (int j = room.Y1; j < room.Y2; j++)
                     {
                         var node = new InteriorNode(i, j);
-                        InteriorNodes.Add(node);
+                        Nodes.Add(node);
                     }
                 }
             }
 
+            foreach (var corridor in Paths.SelectMany(path => path.Corridors))
+            {
+                for (int i = corridor.X1; i < corridor.X2; i++)
+                {
+                    for (int j = corridor.Y1; j < corridor.Y2; j++)
+                    {
+                        var node = new InteriorNode(i, j);
+                        Nodes.Add(node);
+                    }
+                }
+            }
         }
 
         private void CreateRooms()
         {
-            while (Rooms.Count < _maxRooms)
+            int maxFails = 500;
+            int failCount = 0;
+
+            while (Rooms.Count < _maxRooms && failCount < maxFails)
             {
                 var randomRoom = GetRandomRoom();
                 bool isValid = Rooms.All(room => !room.Contains(randomRoom));
@@ -133,16 +220,16 @@ namespace AspiringDemo.Zones.Interiors
                 {
                     Rooms.Add(randomRoom);
                 }
+                else
+                    failCount++;
             }
 
+            if (Rooms.Count < 2)
+                return;
+
+            // creating corridors between rooms
             foreach (var room in Rooms)
             {
-                //if (!Paths.SelectMany(path => path.ConnectedRooms).Contains(room))
-                //{
-                //    // find closest ?
-                //    var closest = GetClosest(room, Rooms.Where(room1 => room1 != room));
-                //    CreateCorridors(room, Rooms.Where(room1 => room1 != room).ToList()[GameFrame.Random.Next(0, Rooms.Count - 1)]);
-                //}
                 var closest = GetClosest(room, Rooms.Where(room1 => room1 != room));
                 var dist = Utility.GetDistance(room.Center, closest.Center);
 
@@ -194,7 +281,6 @@ namespace AspiringDemo.Zones.Interiors
 
             int horX, horY, horHeight, horWidth;
 
-            // then the horizontal one
             bool startfromCorridor = verticalCorridor.Center.X < toRoom.Center.X;
             horX = startfromCorridor ? verticalCorridor.X1 : toRoom.X2;
             horY = startUpwards ? verticalCorridor.Y1 : verticalCorridor.Y2;
@@ -206,8 +292,17 @@ namespace AspiringDemo.Zones.Interiors
 
             path.ConnectedRooms.Add(fromRoom);
             path.ConnectedRooms.Add(toRoom);
-            //path.PathType = String.Format("StartUpwards: {0}, StartFromCorridor: {1}", startUpwards, startfromCorridor);
             Paths.Add(path);
+        }
+
+        public int CompareTo(IPathfindingNode other)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public float DistanceToNode(IPathfindingNode targetNode)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -36,8 +36,5 @@ namespace AspiringDemo.GameObjects.Units
         void EnterZone(IZone zone);
         void LeaveZone();
         void KilledUnit(IUnit unit);
-        void EnterInterior(IInterior interior);
-        IInterior Interior { get; set; }
-        void LeaveInterior();
     }
 }

@@ -1,22 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Threading;
 using AspiringDemo;
 using AspiringDemo.Factions;
-using AspiringDemo.GameObjects;
 using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Zones;
 using AspiringImplementation;
@@ -38,7 +28,6 @@ namespace AspiringVisual
         {
             InitializeComponent();
 
-
             var rig = new GameRig();
             rig.Worldsize = _worldSize;
             rig.FactionCount = 3;
@@ -50,7 +39,6 @@ namespace AspiringVisual
             GameFrame.Game.Factions[2].Name = "Faction 3";
 
             thread.Start();
-
 
             _colorTable = new Dictionary<IFaction, Color>();
             _colorTable.Add(GameFrame.Game.Factions[0], Color.FromArgb(255, 100, 255, 0));
@@ -187,25 +175,6 @@ namespace AspiringVisual
                     Canvas.SetTop(rect, row * zoneSize);
                     Canvas.SetLeft(rect, col * zoneSize);
                 }
-
-                //for (int i = 0; i < _worldSize; i++)
-                //{
-                //    for (int j = 0; j < _worldSize; j++)
-                //    {
-                //        var rect = new Rectangle()
-                //        {
-                //            Stroke = Brushes.LightBlue,
-                //            StrokeThickness = 1,
-                //            Fill = brush
-                //        };
-                //        rect.InteriorWidth = zoneSize;
-                //        rect.InteriorHeight = zoneSize;
-
-                //        ZoneCanvas.Children.Add(rect);
-                //        Canvas.SetTop(rect, j * zoneSize);
-                //        Canvas.SetLeft(rect, i * zoneSize);
-                //    }
-                //}
         }
     }
 }

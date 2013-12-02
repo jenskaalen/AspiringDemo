@@ -11,8 +11,8 @@ namespace AspiringDemo.Zones
 {
     public enum ZoneType
     {
-        Plains,
-        Mountains
+        Exterior,
+        Interior
     }
 
     //testcomment for git's sake
@@ -25,9 +25,11 @@ namespace AspiringDemo.Zones
             Units = new List<IUnit>();
             Neighbours = new List<IPathfindingNode>();
             Area = new Rect(xPosition, yPosition, height, width);
+            ZoneEntrances = new List<IZoneEntrance>();
         }
 
         public Rect Area { get; set; }
+        public List<IPathfindingNode> Nodes { get; set; }
         public bool IsPlayerNearby { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -50,6 +52,13 @@ namespace AspiringDemo.Zones
         public NodeState State { get; set; }
         public List<IUnit> Units { get; set; }
         public List<IZoneEntrance> ZoneEntrances { get; set; }
+        public Pathfinder<IPathfindingNode> Pathfinder { get; set; }
+
+        public void AddEntrance(IZone entrance, Vector2 positionVector2)
+        {
+            ZoneEntrances.Add(new ZoneEntrance(positionVector2, entrance));
+        }
+
 
         public void AddArea(IPopulatedArea area)
         {

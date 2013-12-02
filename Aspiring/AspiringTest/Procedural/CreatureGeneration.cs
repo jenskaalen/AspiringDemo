@@ -30,7 +30,7 @@ namespace AspiringDemoTest.Procedural
             var generator = new TombCreatureGenerator(10, faction);
 
             InteriorValues vals = new InteriorValues(100, 20, 10, 4);
-            var tomb = new Tomb(512, 512, vals);
+            var tomb = new Tomb(0, 0,512, 512, vals);
             tomb.Populate(generator);
 
             foreach (var room in tomb.Rooms)
