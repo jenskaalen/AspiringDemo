@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AspiringDemo.ANN;
 using AspiringDemo.Factions.Diplomacy;
 using AspiringDemo.GameCore;

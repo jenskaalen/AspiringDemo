@@ -121,7 +121,8 @@ namespace AspiringDemo.Zones.Interiors
             CreateNodes();
             SetEntrance();
             Pathfinder.Nodes = Nodes;
-            SetNeighbours(WidthBetweenNodes, HeightBetweenNodes);
+            //TODO: Fox, this takes way too long
+            //SetNeighbours(WidthBetweenNodes, HeightBetweenNodes);
         }
 
         private void SetNeighbours(int width, int height)

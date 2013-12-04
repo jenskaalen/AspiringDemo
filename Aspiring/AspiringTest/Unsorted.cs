@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using AspiringDemo.Saving;
 using AspiringDemo.Factions;
 using AspiringDemo.GameCore;
+using Ninject;
 
 namespace AspiringDemoTest
 {
@@ -172,6 +173,16 @@ namespace AspiringDemoTest
             var reverseDist = Utility.GetDistance(p2, p1);
 
             Assert.AreEqual(dist, reverseDist);
+        }
+
+        [TestMethod]
+        public void TestSerialization()
+        {
+            SerializedGame gem = new SerializedGame();
+
+            IFaction faction = GameFrame.Game.Factory.Get<IFaction>();
+
+            gem.SerializeFaction("loa.bin", faction);
         }
     }
 }

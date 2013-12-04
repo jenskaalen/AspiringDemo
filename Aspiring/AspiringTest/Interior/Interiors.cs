@@ -35,7 +35,7 @@ namespace AspiringDemoTest.Interior
             GameFrame.Game.Initialize();
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void Unit_Enter_Interior()
         {
             var faction = GameFrame.Game.Factory.Get<IFaction>();
@@ -50,7 +50,7 @@ namespace AspiringDemoTest.Interior
             Assert.AreEqual(tomb.Entrance.Center, unit.Position);
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void Unit_Move_From_Exterior_To_Interior()
         {
             var vals = new InteriorValues(1, 10, 5, 4);
@@ -73,7 +73,7 @@ namespace AspiringDemoTest.Interior
             Assert.AreEqual(interiorZone, _unit.Zone);
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void Unit_Searches_For_Enemies_In_Interior()
         {
             var enemyFaction = GameFrame.Game.Factory.Get<IFaction>();
@@ -101,7 +101,7 @@ namespace AspiringDemoTest.Interior
             Assert.IsTrue(detected);
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void Unit_Moves_From_Room_To_Room_In_Interior()
         {
             InteriorValues vals = new InteriorValues(10, 20, 10, 4);

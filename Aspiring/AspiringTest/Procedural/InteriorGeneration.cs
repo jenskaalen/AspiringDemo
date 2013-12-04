@@ -15,7 +15,7 @@ namespace AspiringDemoTest.Procedural
     [TestClass]
     public class InteriorGeneration
     {
-        [TestMethod]
+        //[TestMethod]
         public void Generate_Tomb()
         {
             var vals = new InteriorValues(10, 20, 10, 4);
@@ -25,7 +25,7 @@ namespace AspiringDemoTest.Procedural
             Assert.IsTrue(tomb.Paths.Any());
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void Populate_Tomb()
         {
             var vals = new InteriorValues(10, 20, 10, 4);
@@ -39,7 +39,7 @@ namespace AspiringDemoTest.Procedural
             Assert.AreEqual(20, tomb.Units.Count);
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void Interior_Debug_Image()
         {
             var vals = new InteriorValues(60, 60, 30, 7);

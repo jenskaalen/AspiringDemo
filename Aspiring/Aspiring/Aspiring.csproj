@@ -118,8 +118,7 @@
     <Compile Include="Gamecore\Helpers\Relations.cs" />
     <Compile Include="Gamecore\Types\Vector2.cs" />
     <Compile Include="Gamecore\Types\Vector3.cs" />
-    <Compile Include="Saving\RuntimeType.cs" />
-    <Compile Include="Saving\RuntimeTypeHandler.cs" />
+    <Compile Include="Saving\SerializedGame.cs" />
     <Compile Include="Zones\Interiors\Corridor.cs" />
     <Compile Include="Zones\Interiors\CorridorPath.cs" />
     <Compile Include="Zones\Interiors\IInterior.cs" />

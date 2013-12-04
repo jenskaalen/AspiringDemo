@@ -16,6 +16,7 @@ namespace AspiringDemo.Factions
 {
     public delegate IUnit UnitCreationDelegate();
 
+    [Serializable]
     public class Faction : IFaction
     {
         private readonly Random _random = new Random();
