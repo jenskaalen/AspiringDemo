@@ -38,6 +38,9 @@
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.0.2-unstable-9037\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -79,7 +82,6 @@
     <Compile Include="ANN\IPlacementDecider.cs" />
     <Compile Include="ANN\IRecruitmentManager.cs" />
     <Compile Include="ANN\RecruitmentManager.cs" />
-    <Compile Include="ANN\UnitAI\IArmyManagement.cs" />
     <Compile Include="ANN\UnitManager.cs" />
     <Compile Include="ANN\War\IWarmodule.cs" />
     <Compile Include="ANN\War\Warmodule.cs" />
@@ -118,6 +120,8 @@
     <Compile Include="Gamecore\Helpers\Relations.cs" />
     <Compile Include="Gamecore\Types\Vector2.cs" />
     <Compile Include="Gamecore\Types\Vector3.cs" />
+    <Compile Include="Saving\RuntimeType.cs" />
+    <Compile Include="Saving\RuntimeTypeHandler.cs" />
     <Compile Include="Saving\SerializedGame.cs" />
     <Compile Include="Zones\Interiors\Corridor.cs" />
     <Compile Include="Zones\Interiors\CorridorPath.cs" />
@@ -212,7 +216,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ANN\UnitAI\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -1,4 +1,5 @@
-﻿using AspiringDemo.GameActions.Combat;
+﻿using System.IO;
+using AspiringDemo.GameActions.Combat;
 using AspiringDemo.Gamecore;
 using AspiringDemo.Gamecore.Types;
 using AspiringDemo.GameObjects.Squads;
@@ -7,11 +8,33 @@ using AspiringDemo.Zones;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AspiringDemo;
 using System.Linq;
-using System.Collections.Generic;
 using AspiringDemo.Saving;
 using AspiringDemo.Factions;
 using AspiringDemo.GameCore;
-using Ninject;
+using ProtoBuf;
+using ProtoBuf.Meta;
+using AspiringDemo.ANN;
+using AspiringDemo.ANN.Actions;
+using AspiringDemo.ANN.Actions.Unit;
+using AspiringDemo.ANN.War;
+using AspiringDemo.Combat;
+using AspiringDemo.Combat.Attacks;
+using AspiringDemo.Combat.Behaviour;
+using AspiringDemo.Factions.Custom;
+using AspiringDemo.Factions.Diplomacy;
+using AspiringDemo.GameActions;
+using AspiringDemo.GameActions.Movement;
+using AspiringDemo.Gamecore.Helpers;
+using AspiringDemo.Gamecore.Log;
+using AspiringDemo.GameObjects;
+using AspiringDemo.Orders;
+using AspiringDemo.Pathfinding;
+using AspiringDemo.Procedural;
+using AspiringDemo.Roleplaying;
+using AspiringDemo.Roleplaying.Stats;
+using AspiringDemo.Sites;
+using AspiringDemo.Weapons;
+using AspiringDemo.Zones.Interiors;
 
 namespace AspiringDemoTest
 {
@@ -178,11 +201,26 @@ namespace AspiringDemoTest
         [TestMethod]
         public void TestSerialization()
         {
-            SerializedGame gem = new SerializedGame();
+            //RuntimeTypeHandler handler = new RuntimeTypeHandler(typeof(Game).Assembly);
+            //handler.GetRuntimeInfo(typeof(Game));
 
-            IFaction faction = GameFrame.Game.Factory.Get<IFaction>();
+            //var types = Assembly.GetAssembly(typeof (Game)).GetTypes();
 
-            gem.SerializeFaction("loa.bin", faction);
+            //string tostringo = "";
+
+            ////foreach (var val in handler.Runtimes.Values)
+            ////    tostringo += val.ToString() + "\n";
+
+            //var runtimes = new List<RuntimeType>();
+
+            //foreach (var type in types)
+            //    runtimes.Add(new RuntimeType(type, type.Name));
+
+
+            //foreach (var val in runtimes)
+            //    tostringo += val.ToString() + "\n";
+
+            GameFrame.SaveMe();
         }
     }
 }
