@@ -37,13 +37,6 @@ namespace AspiringVisual
             Initialize();
         }
 
-        //var unitNode = unit.Zone.Pathfinder.GetClosestNode(unit.Position);
-        //var targetNode = unit.Zone.Pathfinder.GetClosestNode(position);
-
-        //_targetNode = targetNode;
-        //_startNode = unitNode;
-        //_travelPath = unit.Zone.Pathfinder.GetPath(unitNode, targetNode);
-
         private void Initialize()
         { 
             var testunit = new Unit(new Faction());
