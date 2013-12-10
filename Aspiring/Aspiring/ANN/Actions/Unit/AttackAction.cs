@@ -8,6 +8,7 @@ using AspiringDemo.Zones;
 
 namespace AspiringDemo.ANN.Actions.Unit
 {
+    [Serializable]
     public class AttackAction
     {
         // change this to a settable value..

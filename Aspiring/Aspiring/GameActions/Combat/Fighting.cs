@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AspiringDemo.Combat;
 using AspiringDemo.GameObjects.Units;
@@ -8,6 +9,7 @@ namespace AspiringDemo.GameActions.Combat
     /// <summary>
     ///     A unit will have this action as long as it is fighting with anyone
     /// </summary>
+    [Serializable]
     public class Fighting : CompositeAction
     {
         private readonly INewFight _fight;

@@ -1,5 +1,8 @@
-﻿namespace AspiringDemo.Factions
+﻿using System;
+
+namespace AspiringDemo.Factions
 {
+    [Serializable]
     public enum StrengthMeasurement
     {
         Abysmal,

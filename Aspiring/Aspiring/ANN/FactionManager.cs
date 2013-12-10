@@ -9,6 +9,7 @@ using Ninject.Parameters;
 
 namespace AspiringDemo.ANN
 {
+    [Serializable]
     public class FactionManager : IFactionManager
     {
         public FactionManager(IFaction faction)

@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AspiringDemo.GameActions;
 
 namespace AspiringDemo.Gamecore
 {
+    [Serializable]
     public class ActionProcesser : IActionProcesser
     {
         public ActionProcesser()

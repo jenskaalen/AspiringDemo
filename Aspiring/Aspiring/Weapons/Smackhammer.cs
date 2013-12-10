@@ -1,5 +1,8 @@
-﻿namespace AspiringDemo.Weapons
+﻿using System;
+
+namespace AspiringDemo.Weapons
 {
+    [Serializable]
     public class Smackhammer : IWeapon
     {
         public Smackhammer()

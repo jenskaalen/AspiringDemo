@@ -2,6 +2,7 @@
 
 namespace AspiringDemo.Roleplaying
 {
+    [Serializable]
     public class LevelProgressModifier
     {
         public LevelProgressModifier()

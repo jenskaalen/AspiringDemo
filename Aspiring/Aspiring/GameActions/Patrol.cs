@@ -4,6 +4,7 @@ using AspiringDemo.Zones;
 
 namespace AspiringDemo.GameActions
 {
+    [Serializable]
     public class Patrol : Sequence
     {
         public Patrol(IUnit unit, IZone zoneA, IZone zoneB, int patrols)

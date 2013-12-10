@@ -9,6 +9,7 @@ using AspiringDemo.Zones;
 
 namespace AspiringDemo.ANN
 {
+    [Serializable]
     public class BuildingManager : IBuildingManager
     {
         public BuildingManager()

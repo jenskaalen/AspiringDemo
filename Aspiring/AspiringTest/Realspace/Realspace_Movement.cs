@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace AspiringDemoTest.Realspace
 {
     [TestClass]
-    public class Realspace_Movement
+    public class RealspaceMovement
     {
         [TestMethod]
         public void Move_In_Interior()

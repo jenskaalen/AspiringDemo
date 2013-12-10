@@ -14,6 +14,7 @@ using Ninject.Parameters;
 
 namespace AspiringDemo.Factions
 {
+    [Serializable]
     public delegate IUnit UnitCreationDelegate();
 
     [Serializable]

@@ -1,9 +1,11 @@
-﻿using AspiringDemo.Factions;
+﻿using System;
+using AspiringDemo.Factions;
 using AspiringDemo.Roleplaying;
 
 namespace AspiringDemo.GameObjects.Units
 {
     //TODO: Extract interface
+    [Serializable]
     public sealed class Unit : BaseUnit, IUnitLeveling
     {
         public Unit(IFaction faction) : base(faction)

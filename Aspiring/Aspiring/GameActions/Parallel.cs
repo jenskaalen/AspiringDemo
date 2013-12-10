@@ -1,5 +1,8 @@
-﻿namespace AspiringDemo.GameActions
+﻿using System;
+
+namespace AspiringDemo.GameActions
 {
+    [Serializable]
     public class Parallel : CompositeAction
     {
         public override void Update(float elapsed)

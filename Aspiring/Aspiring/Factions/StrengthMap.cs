@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace AspiringDemo.Factions
 {
+    [Serializable]
     public class StrengthMap
     {
         public StrengthMap()

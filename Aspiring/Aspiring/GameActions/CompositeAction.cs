@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace AspiringDemo.GameActions
 {
+    [Serializable]
     public abstract class CompositeAction : GameAction
     {
         public List<GameAction> Actions { get; protected set; }

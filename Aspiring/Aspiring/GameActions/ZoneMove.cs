@@ -7,6 +7,7 @@ using Ninject.Planning.Targets;
 
 namespace AspiringDemo.GameActions
 {
+    [Serializable]
     public class ZoneMove : GameAction
     {
         private const float ZoneTravelTime = 1.0f;

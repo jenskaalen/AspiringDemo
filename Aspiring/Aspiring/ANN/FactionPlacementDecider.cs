@@ -6,6 +6,7 @@ using AspiringDemo.Zones;
 
 namespace AspiringDemo.ANN
 {
+    [Serializable]
     public class FactionPlacementDecider : IPlacementDecider
     {
         private List<IZone> _factionZones;

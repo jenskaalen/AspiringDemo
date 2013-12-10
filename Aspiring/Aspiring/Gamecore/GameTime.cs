@@ -1,5 +1,8 @@
-﻿namespace AspiringDemo.Gamecore
+﻿using System;
+
+namespace AspiringDemo.Gamecore
 {
+    [Serializable]
     public class GameTime : IGameTime
     {
         public float Time { get; set; }

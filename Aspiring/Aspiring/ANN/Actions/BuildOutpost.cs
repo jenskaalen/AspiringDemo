@@ -1,8 +1,10 @@
-﻿using AspiringDemo.Factions;
+﻿using System;
+using AspiringDemo.Factions;
 using AspiringDemo.Sites;
 
 namespace AspiringDemo.ANN.Actions
 {
+    [Serializable]
     public class BuildOutpost : IBuildAction
     {
         private const double FIXEDMULTIPLIER = 0.001;

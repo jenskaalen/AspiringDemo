@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using AspiringDemo.GameActions.Combat;
 using AspiringDemo.Gamecore;
 using AspiringDemo.Gamecore.Types;
@@ -201,26 +202,17 @@ namespace AspiringDemoTest
         [TestMethod]
         public void TestSerialization()
         {
-            //RuntimeTypeHandler handler = new RuntimeTypeHandler(typeof(Game).Assembly);
-            //handler.GetRuntimeInfo(typeof(Game));
+            using (var writer = File.OpenWrite("data.bin"))
+            {
+                var serializer = new BinaryFormatter();
+                serializer.Serialize(writer, GameFrame.Game);
+            }
 
-            //var types = Assembly.GetAssembly(typeof (Game)).GetTypes();
-
-            //string tostringo = "";
-
-            ////foreach (var val in handler.Runtimes.Values)
-            ////    tostringo += val.ToString() + "\n";
-
-            //var runtimes = new List<RuntimeType>();
-
-            //foreach (var type in types)
-            //    runtimes.Add(new RuntimeType(type, type.Name));
-
-
-            //foreach (var val in runtimes)
-            //    tostringo += val.ToString() + "\n";
-
-            GameFrame.SaveMe();
+            using (var writer = File.OpenRead("data.bin"))
+            {
+                var serializer = new BinaryFormatter();
+                var game = (IGame) serializer.Deserialize(writer);
+            }
         }
     }
 }

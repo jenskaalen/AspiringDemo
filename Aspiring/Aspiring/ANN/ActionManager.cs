@@ -4,6 +4,7 @@ using AspiringDemo.Factions;
 
 namespace AspiringDemo.ANN
 {
+    [Serializable]
     public class ActionManager
     {
         public IFaction Faction { get; set; }

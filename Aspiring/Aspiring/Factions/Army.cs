@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AspiringDemo.GameObjects.Squads;
 using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.Factions
 {
+    [Serializable]
     public class Army : IArmy
     {
         public Army()

@@ -1,5 +1,8 @@
-﻿namespace AspiringDemo.GameActions
+﻿using System;
+
+namespace AspiringDemo.GameActions
 {
+    [Serializable]
     public abstract class GameAction
     {
         public bool Finished { get; set; }

@@ -1,5 +1,8 @@
-﻿namespace AspiringDemo.Factions.Diplomacy
+﻿using System;
+
+namespace AspiringDemo.Factions.Diplomacy
 {
+    [Serializable]
     public class FactionRelation : IFactionRelation
     {
         public FactionRelation(IFaction faction)

@@ -57,7 +57,6 @@
     <Compile Include="Combat\CombatModule.cs" />
     <Compile Include="Combat\INewFight.cs" />
     <Compile Include="Combat\NewFight.cs" />
-    <Compile Include="Factions\FactionUnits.cs" />
     <Compile Include="Factions\IFactionUnits.cs" />
     <Compile Include="GameActions\Combat\Fighting.cs" />
     <Compile Include="GameActions\CompositeAction.cs" />
@@ -85,7 +84,6 @@
     <Compile Include="ANN\UnitManager.cs" />
     <Compile Include="ANN\War\IWarmodule.cs" />
     <Compile Include="ANN\War\Warmodule.cs" />
-    <Compile Include="AttackResult.cs" />
     <Compile Include="Combat\IActionHandler.cs" />
     <Compile Include="Combat\Fleeing.cs" />
     <Compile Include="Combat\ICombatModule.cs" />
@@ -105,7 +103,6 @@
     <Compile Include="Factions\ITaxes.cs" />
     <Compile Include="Factions\StrengthMap.cs" />
     <Compile Include="Factions\Taxes.cs" />
-    <Compile Include="Combat\Fight.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameActions\Movement\EnterInterior.cs" />
     <Compile Include="GameActions\Movement\MoveFromExteriorToInterior.cs" />
@@ -153,7 +150,6 @@
     <Compile Include="GameObjects\Squads\Squad.cs" />
     <Compile Include="GameObjects\Squads\SquadRank.cs" />
     <Compile Include="GameObjects\Squads\SquadState.cs" />
-    <Compile Include="GameObjects\Units\ActionApplied.cs" />
     <Compile Include="GameObjects\Units\BaseUnit.cs" />
     <Compile Include="GameObjects\Units\IUnit.cs" />
     <Compile Include="GameObjects\Units\IUnitLeveling.cs" />
@@ -171,15 +167,12 @@
     <Compile Include="GameActions\Combat\UnitAttack.cs" />
     <Compile Include="Zones\IZone.cs" />
     <Compile Include="Orders\BuildOrder.cs" />
-    <Compile Include="Orders\FollowOrder.cs" />
     <Compile Include="Orders\GuardAreaOrder.cs" />
     <Compile Include="Orders\UnitOrderBase.cs" />
     <Compile Include="ProductionFactory.cs" />
-    <Compile Include="Saving\FactionPreference.cs" />
     <Compile Include="Saving\ICustomSerializable.cs" />
     <Compile Include="Saving\ISerialized.cs" />
     <Compile Include="Saving\ISavegame.cs" />
-    <Compile Include="Orders\AttackArea.cs" />
     <Compile Include="Saving\TestSave.cs" />
     <Compile Include="Sites\ICapital.cs" />
     <Compile Include="Sites\IPopulatedArea.cs" />

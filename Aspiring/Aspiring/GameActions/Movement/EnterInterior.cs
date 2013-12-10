@@ -8,6 +8,7 @@ using AspiringDemo.Zones;
 
 namespace AspiringDemo.GameActions.Movement
 {
+    [Serializable]
     public class EnterInterior : GameAction
     {
         private IUnit _unit;

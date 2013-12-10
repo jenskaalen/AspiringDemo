@@ -1,8 +1,12 @@
-﻿namespace AspiringDemo.Roleplaying
+﻿using System;
+
+namespace AspiringDemo.Roleplaying
 {
     //TODO: Move to a different location?
+    [Serializable]
     public delegate void LevelGain();
 
+    [Serializable]
     public class CharacterLevel : ICharacterLevel
     {
         private int _xpBase = 50;

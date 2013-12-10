@@ -11,11 +11,12 @@ using AspiringDemo.Zones;
 
 namespace AspiringDemo.GameActions.Movement
 {
+    [Serializable]
     public class MoveToPosition : GameAction
     {
+        public List<IPathfindingNode> TravelPath { get; set; }
         private IUnit _unit;
         private Vector2 _position;
-        private List<IPathfindingNode> _travelPath;
         private bool _started;
         private IPathfindingNode _targetNode;
         private IPathfindingNode _startNode;
@@ -36,7 +37,7 @@ namespace AspiringDemo.GameActions.Movement
 
             _targetNode = targetNode;
             _startNode = unitNode;
-            _travelPath = unit.Zone.Pathfinder.GetPath(unitNode, targetNode);
+            TravelPath = unit.Zone.Pathfinder.GetPath(unitNode, targetNode);
         }
 
         public override void Update(float elapsed)
@@ -59,8 +60,8 @@ namespace AspiringDemo.GameActions.Movement
             if (elapsed >= _nextZoneChange)
             {
                 _nextZoneChange = elapsed + moveSpeed;
-                _unit.Position = _travelPath.First().Position;
-                _travelPath.RemoveAt(0);
+                _unit.Position = TravelPath.First().Position;
+                TravelPath.RemoveAt(0);
             }
         }
     }

@@ -17,6 +17,7 @@ namespace AspiringDemo.Zones
 
     //testcomment for git's sake
 
+    [Serializable]
     public class Zone : IZone
     {
         public Zone(int xPosition, int yPosition, int height, int width)

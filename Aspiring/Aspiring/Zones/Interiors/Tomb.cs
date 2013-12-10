@@ -12,6 +12,7 @@ using AspiringDemo.Sites;
 
 namespace AspiringDemo.Zones.Interiors
 {
+    [Serializable]
     public class Tomb : IInterior
     {
         public List<IPathfindingNode> Nodes { get; set; }
@@ -122,7 +123,7 @@ namespace AspiringDemo.Zones.Interiors
             SetEntrance();
             Pathfinder.Nodes = Nodes;
             //TODO: Fox, this takes way too long
-            //SetNeighbours(WidthBetweenNodes, HeightBetweenNodes);
+            SetNeighbours(WidthBetweenNodes, HeightBetweenNodes);
         }
 
         private void SetNeighbours(int width, int height)
@@ -172,6 +173,68 @@ namespace AspiringDemo.Zones.Interiors
             foreach (var unit in Units)
             {
                 img.SetPixel(unit.Position.X, unit.Position.Y, Color.Orange);
+            }
+
+            img.Save("tomb2.png", ImageFormat.Png);
+            img.Dispose();
+        }
+
+        public void CreateDebugImage(IEnumerable<IPathfindingNode> unitPath)
+        {
+            Bitmap img = new Bitmap(InteriorWidth, InteriorHeight);
+
+            for (int i = 0; i < InteriorWidth; i++)
+            {
+                for (int j = 0; j < InteriorHeight; j++)
+                {
+                    img.SetPixel(i, j, Color.Black);
+                }
+            }
+
+            foreach (var room in Rooms)
+            {
+                for (int i = room.X1; i < room.X2; i++)
+                {
+                    for (int j = room.Y1; j < room.Y2; j++)
+                    {
+                        img.SetPixel(i, j, Color.WhiteSmoke);
+                    }
+                }
+            }
+
+            foreach (var corridor in Paths.SelectMany(path => path.Corridors))
+            {
+                for (int i = corridor.X1; i < corridor.X2; i++)
+                {
+                    for (int j = corridor.Y1; j < corridor.Y2; j++)
+                    {
+                        img.SetPixel(i, j, Color.WhiteSmoke);
+                    }
+                }
+            }
+
+            foreach (var unit in Units)
+            {
+                img.SetPixel(unit.Position.X, unit.Position.Y, Color.Orange);
+            }
+
+            var pathfinder = new Pathfinder<IPathfindingNode>();
+            var foundPath = pathfinder.GetPath(unitPath.First(), unitPath.Last());
+
+            foreach (var pathnode in pathfinder.ClosedList)
+            {
+                img.SetPixel(pathnode.Position.X, pathnode.Position.Y, Color.Red);
+            }
+
+            foreach (var pathnode in pathfinder.OpenList.data)
+            {
+                img.SetPixel(pathnode.Position.X, pathnode.Position.Y, Color.Blue);
+            }
+
+
+            foreach (var pathnode in foundPath)
+            {
+                img.SetPixel(pathnode.Position.X, pathnode.Position.Y, Color.Aquamarine);
             }
 
             img.Save("tomb2.png", ImageFormat.Png);
@@ -232,7 +295,7 @@ namespace AspiringDemo.Zones.Interiors
             foreach (var room in Rooms)
             {
                 var closest = GetClosest(room, Rooms.Where(room1 => room1 != room));
-                var dist = Utility.GetDistance(room.Center, closest.Center);
+                //var dist = Utility.GetDistance(room.Center, closest.Center);
 
                 CreateCorridors(room, Rooms.Where(room1 => room1 != room).ToList()[GameFrame.Random.Next(0, Rooms.Count - 1)]);
             }

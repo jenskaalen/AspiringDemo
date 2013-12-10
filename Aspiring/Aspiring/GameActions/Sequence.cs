@@ -1,5 +1,8 @@
-﻿namespace AspiringDemo.GameActions
+﻿using System;
+
+namespace AspiringDemo.GameActions
 {
+    [Serializable]
     public class Sequence : CompositeAction
     {
         public override void Update(float elapsed)

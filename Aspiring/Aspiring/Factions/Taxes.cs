@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AspiringDemo.Sites;
 
 namespace AspiringDemo.Factions
 {
+    [Serializable]
     public class Taxes : ITaxes
     {
         public float LastTaxCollection { get; set; }

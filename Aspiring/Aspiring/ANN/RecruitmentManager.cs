@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AspiringDemo.ANN.Actions;
 using AspiringDemo.Factions;
 using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.ANN
 {
+    [Serializable]
     public class RecruitmentManager : IRecruitmentManager
     {
         private const int UNIT_COST = 100;

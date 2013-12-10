@@ -1,5 +1,8 @@
-﻿namespace AspiringDemo.Roleplaying.Stats
+﻿using System;
+
+namespace AspiringDemo.Roleplaying.Stats
 {
+    [Serializable]
     public class UnitStats : IUnitStats
     {
         private int _baseHp = 25;

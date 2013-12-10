@@ -1,7 +1,9 @@
-﻿using AspiringDemo.Factions;
+﻿using System;
+using AspiringDemo.Factions;
 
 namespace AspiringDemo.ANN.Actions
 {
+    [Serializable]
     public class RecruitUnit : IManagementAction
     {
         private const double FIXEDMULTIPLIER = 1;

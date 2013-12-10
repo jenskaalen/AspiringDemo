@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace AspiringDemo.Zones.Interiors
 {
+    [Serializable]
     public class CorridorPath
     {
         public List<Corridor> Corridors { get; set; }

@@ -20,6 +20,7 @@ using Ninject.Parameters;
 namespace AspiringDemo.GameObjects.Units
 {
     //TODO: Extract interface
+    [Serializable]
     public class BaseUnit : IUnit
     {
         protected float ObjectDestructionTime;

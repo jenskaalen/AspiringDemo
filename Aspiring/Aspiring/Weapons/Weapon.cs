@@ -1,5 +1,8 @@
-﻿namespace AspiringDemo
+﻿using System;
+
+namespace AspiringDemo
 {
+    [Serializable]
     public enum WeaponType
     {
         Sword,

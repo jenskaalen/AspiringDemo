@@ -10,6 +10,7 @@ using AspiringDemo.Weapons;
 
 namespace AspiringDemo.GameObjects.Units
 {
+    [Serializable]
     public class Zombie : BaseUnit
     {
         public Zombie(IFaction faction)

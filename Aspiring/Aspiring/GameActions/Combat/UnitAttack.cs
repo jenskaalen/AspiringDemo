@@ -1,7 +1,9 @@
-﻿using AspiringDemo.GameObjects.Units;
+﻿using System;
+using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.GameActions.Combat
 {
+    [Serializable]
     public class UnitAttack : GameAction
     {
         private readonly IUnit _attacker;

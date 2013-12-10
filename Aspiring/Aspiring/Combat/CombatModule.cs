@@ -8,6 +8,7 @@ using Ninject;
 
 namespace AspiringDemo.Combat
 {
+    [Serializable]
     public class CombatModule : ICombatModule
     {
         private const float SpeedModifier = 0.1f;

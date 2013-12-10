@@ -1,5 +1,8 @@
-﻿namespace AspiringDemo.Zones.Interiors
+﻿using System;
+
+namespace AspiringDemo.Zones.Interiors
 {
+    [Serializable]
     public enum InteriorType
     {
         Cave,

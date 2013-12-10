@@ -8,6 +8,7 @@ using AspiringDemo.Zones;
 
 namespace AspiringDemo.Sites
 {
+    [Serializable]
     public class PopulatedArea : IPopulatedArea
     {
         public PopulatedArea(IFaction owner, IZone zone)

@@ -8,6 +8,7 @@ using AspiringDemo.Zones;
 
 namespace AspiringDemo.GameObjects.Squads
 {
+    [Serializable]
     public class Squad : ISquad
     {
         public Squad()

@@ -1,5 +1,8 @@
-﻿namespace AspiringDemo.Gamecore.Types
+﻿using System;
+
+namespace AspiringDemo.Gamecore.Types
 {
+    [Serializable]
     public class Rect
     {
         public int X1 { get; private set; }

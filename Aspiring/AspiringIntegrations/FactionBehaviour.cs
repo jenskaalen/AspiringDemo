@@ -117,7 +117,7 @@ namespace AspiringDemoIntegrations
             //Assert.AreEqual(3, _faction.Units.Where(x => x.State == UnitState.Idle).Count());
         }
 
-        //TODO: Remove/rework this?
+        ////TODO: Remove/rework this?
         private IFaction LoadFaction()
         {
             IFaction faction = NinFactory.Instance.Get<IFaction>();
@@ -130,14 +130,14 @@ namespace AspiringDemoIntegrations
 
             Outpost outpost = new Outpost(faction, null) { AreaValue = 700, BuildTime = 20, Cost = 700 };
 
-            var fp = new FactionPreference();
-            fp.ObjectType = typeof(Outpost);
-            fp.SerializedData = outpost.GetSerializedData();
+            //var fp = new FactionPreference();
+            //fp.ObjectType = typeof(Outpost);
+            //fp.SerializedData = outpost.GetSerializedData();
 
-            var settings = new System.Collections.Generic.List<ISerializedTypeData>();
-            settings.Add(fp);
+            //var settings = new System.Collections.Generic.List<ISerializedTypeData>();
+            //settings.Add(fp);
 
-            faction.FactionManager.BuildManager.BuildingSettings = settings;
+            //faction.FactionManager.BuildManager.BuildingSettings = settings;
 
             return faction;
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace AspiringDemo.Pathfinding
 {
+    [Serializable]
     public class PriorityQueue<T> where T : IComparable<T>
     {
         public List<T> data;
@@ -61,9 +62,7 @@ namespace AspiringDemo.Pathfinding
         // TODO: Rewrite this
         public bool ContainsNode(T node)
         {
-            if (data.Contains(node))
-                return true;
-            return false;
+            return data.Contains(node);
         }
 
         public override string ToString()

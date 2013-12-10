@@ -9,6 +9,7 @@ using AspiringDemo.Zones;
 
 namespace AspiringDemo.Saving
 {
+    [Serializable]
     public class TestSave : ISavegame, IObjectFactory
     {
         private string _connstring = "";

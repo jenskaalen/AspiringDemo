@@ -5,6 +5,7 @@ using AspiringDemo.Sites;
 
 namespace AspiringDemo.ANN.War
 {
+    [Serializable]
     public class Warmodule : IWarmodule
     {
         public IFaction BestFactionToAttack(IFaction selfFaction)

@@ -15,6 +15,7 @@ using Ninject.Parameters;
 
 namespace AspiringDemo.Factions.Custom
 {
+    [Serializable]
     public class NeutralFaction : INeutralFaction
     {
         public NeutralFaction()

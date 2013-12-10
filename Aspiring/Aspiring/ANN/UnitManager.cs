@@ -11,6 +11,7 @@ using AspiringDemo.Sites;
 
 namespace AspiringDemo.ANN
 {
+    [Serializable]
     public class UnitManager : IUnitManager
     {
         private const double AreaGuardModifier = 1.0;

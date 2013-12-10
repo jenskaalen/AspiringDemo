@@ -1,7 +1,9 @@
 ﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using AspiringDemo;
@@ -35,22 +37,20 @@ namespace AspiringDemoTest.Interior
             GameFrame.Game.Initialize();
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void Unit_Enter_Interior()
         {
             var faction = GameFrame.Game.Factory.Get<IFaction>();
             var unit = GameFrame.Game.Factory.Get<IUnit>(new ConstructorArgument("faction", faction));
-            
-            InteriorValues vals = new InteriorValues(100, 20, 10, 4);
-            Tomb tomb = new Tomb(512, 512, vals);
 
+            Tomb tomb = GetTestTomb();
             unit.EnterZone(tomb);
 
             Assert.AreEqual(tomb, unit.Zone);
             Assert.AreEqual(tomb.Entrance.Center, unit.Position);
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void Unit_Move_From_Exterior_To_Interior()
         {
             var vals = new InteriorValues(1, 10, 5, 4);
@@ -73,14 +73,13 @@ namespace AspiringDemoTest.Interior
             Assert.AreEqual(interiorZone, _unit.Zone);
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void Unit_Searches_For_Enemies_In_Interior()
         {
             var enemyFaction = GameFrame.Game.Factory.Get<IFaction>();
             var enemyUnit = GameFrame.Game.Factory.Get<IUnit>(new ConstructorArgument("faction", enemyFaction));
 
-            InteriorValues vals = new InteriorValues(100, 20, 10, 4);
-            Tomb tomb = new Tomb(512, 512, vals);
+            Tomb tomb = GetTestTomb();
             _unit.EnterZone(tomb);
             enemyUnit.EnterZone(tomb);
             enemyUnit.Position = tomb.Nodes[0].Position;
@@ -101,23 +100,56 @@ namespace AspiringDemoTest.Interior
             Assert.IsTrue(detected);
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void Unit_Moves_From_Room_To_Room_In_Interior()
         {
-            InteriorValues vals = new InteriorValues(10, 20, 10, 4);
-            Tomb tomb = new Tomb(256, 256, vals);
+            Tomb tomb = GetTestTomb();
             _unit.EnterZone(tomb);
 
             var targetRoom = tomb.Rooms[2];
 
-            _unit.Actions.Add(new MoveToPosition(_unit, targetRoom.Center));
+            var movePos = new MoveToPosition(_unit, targetRoom.Center);
+            _unit.Actions.Add(movePos);
 
-            for (int i=0; i < 30; i++)
+            tomb.CreateDebugImage(movePos.TravelPath);
+
+            //TODO: Kan få en mycket høy travelpath... sjekk om dette er en bug eller ikke
+            for (int i=0; i < 150; i++)
                 _unit.TimeTick(i);
 
             Assert.AreEqual(0, _unit.Actions.Count);
+        }
 
+        private Tomb GetTestTomb()
+        {
+            Tomb tomb;
 
+            if (!File.Exists("tombdata.bin"))
+            {
+                return CreateTestTomb();
+            }
+
+            using (var stream = File.OpenRead("tombdata.bin"))
+            {
+                var serializer = new BinaryFormatter();
+                tomb = (Tomb)serializer.Deserialize(stream);
+            }
+
+            return tomb;
+        }
+
+        private Tomb CreateTestTomb()
+        {
+            var vals = new InteriorValues(10, 20, 10, 4);
+            var tomb = new Tomb(256, 256, vals);
+
+            using (var writer = File.OpenWrite("tombdata.bin"))
+            {
+                var serializer = new BinaryFormatter();
+                serializer.Serialize(writer, tomb);
+            }
+
+            return tomb;
         }
     }
 }

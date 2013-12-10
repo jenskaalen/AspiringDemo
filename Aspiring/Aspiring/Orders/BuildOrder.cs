@@ -1,8 +1,10 @@
-﻿using AspiringDemo.Sites;
+﻿using System;
+using AspiringDemo.Sites;
 using AspiringDemo.Zones;
 
 namespace AspiringDemo.Orders
 {
+    [Serializable]
     public class BuildOrder
     {
         public BuildOrder(Zone buildLocation, IPopulatedArea area)

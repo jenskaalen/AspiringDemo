@@ -1,5 +1,8 @@
-﻿namespace AspiringDemo.Gamecore.Types
+﻿using System;
+
+namespace AspiringDemo.Gamecore.Types
 {
+    [Serializable]
     public struct Vector2
     {
         public Vector2(int x, int y) : this()

@@ -5,6 +5,7 @@ using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.Factions.Diplomacy
 {
+    [Serializable]
     public class FactionRelations : IFactionRelations
     {
         private readonly IFaction _faction;

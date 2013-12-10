@@ -10,6 +10,7 @@ using AspiringDemo.Zones;
 
 namespace AspiringDemo.GameActions.Movement
 {
+    [Serializable]
     public class MoveFromExteriorToInterior : Sequence
     {
         private IUnit _unit;

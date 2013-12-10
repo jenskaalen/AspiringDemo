@@ -5,6 +5,7 @@ using AspiringDemo.Pathfinding;
 
 namespace AspiringDemo.Zones.Interiors
 {
+    [Serializable]
     public class InteriorNode : IInteriorNode
     {
         public Vector2 Position { get; set; }

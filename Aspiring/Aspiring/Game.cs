@@ -12,8 +12,7 @@ using Ninject.Parameters;
 
 namespace AspiringDemo
 {
-    //TODO: Extract interface and replace concretions
-    // or?
+    [Serializable]
     public class Game : IGame
     {
         public List<IFaction> Factions { get; set; }
@@ -29,6 +28,7 @@ namespace AspiringDemo
         public int TimeToTravelThroughZone { get; set; }
         public IActionProcesser ActionProcesser { get; set; }
 
+        [NonSerialized]
         private StandardKernel _kernel = new StandardKernel(new ProductionFactory());
         private StrengthMap _strengthMap;
         private bool _timerStarted = false;

@@ -10,6 +10,7 @@ using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.Combat.Behaviour
 {
+    [Serializable]
     public class Detection : IDetection
     {
         //TODO: Add line-of-sight checking

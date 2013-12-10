@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AspiringDemo.Gamecore;
 using AspiringDemo.Gamecore.Types;
 using AspiringDemo.Zones;
 
 namespace AspiringDemo.Pathfinding
 {
+    [Serializable]
     public class Pathfinder<T> : IPathfinder<T> where T : class, IPathfindingNode, IComparable<T>
     {
         public PriorityQueue<T> OpenList { get; set; }
@@ -72,13 +74,16 @@ namespace AspiringDemo.Pathfinding
                     continue;
                 }
 
-                float gCost = currentNode.DistanceToNode(nNode);
+                // seemingly makes no difference
+                //float gCost = (float) Utility.GetDistance(currentNode.Position, nNode.Position) + currentNode.GValue;
+                float gCost = 10 + currentNode.GValue;
+                //float gCost = currentNode.DistanceToNode(nNode);
 
                 if (!OpenList.ContainsNode(nNode))
                 {
                     nNode.GValue = gCost;
-                    nNode.HValue = Math.Abs(endNode.Position.X - nNode.Position.X) +
-                                   Math.Abs(endNode.Position.Y - nNode.Position.Y);
+                    nNode.HValue = 10 * (Math.Abs(endNode.Position.X - nNode.Position.X) +
+                                   Math.Abs(endNode.Position.Y - nNode.Position.Y));
                         //+ Math.Abs(endNode.Position.z - nNode.Position.z);
                     nNode.FValue = nNode.GValue + nNode.HValue;
                     nNode.Parent = currentNode;
@@ -87,11 +92,19 @@ namespace AspiringDemo.Pathfinding
 
                 else
                 {
+                    //nNode.GValue = gCost;
+                    //nNode.FValue = gCost + nNode.HValue;
+                    //nNode.Parent = currentNode;
+
                     if (nNode.GValue > gCost)
                     {
                         nNode.GValue = gCost;
                         nNode.FValue = gCost + nNode.HValue;
                         nNode.Parent = currentNode;
+
+                        //"refresh" prioriotyqueue. This might need a rework
+                        OpenList.Put(nNode);
+                        OpenList.Pop();
                     }
                 }
 

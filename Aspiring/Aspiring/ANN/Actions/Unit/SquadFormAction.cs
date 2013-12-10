@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AspiringDemo.Factions;
 using AspiringDemo.GameObjects.Squads;
@@ -6,6 +7,7 @@ using AspiringDemo.GameObjects.Units;
 
 namespace AspiringDemo.ANN.Actions.Unit
 {
+    [Serializable]
     internal class SquadFormAction
     {
         private const int PreferredSquadSize = 3;

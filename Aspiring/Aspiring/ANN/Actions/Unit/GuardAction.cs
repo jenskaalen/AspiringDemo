@@ -7,6 +7,7 @@ using AspiringDemo.Sites;
 
 namespace AspiringDemo.ANN.Actions.Unit
 {
+    [Serializable]
     public class GuardAction : IUnitAction
     {
         private readonly IPopulatedArea _areaToGuard;

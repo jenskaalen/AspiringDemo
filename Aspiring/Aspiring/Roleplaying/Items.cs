@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AspiringDemo.Roleplaying
 {
+    [Serializable]
     public class Items : IItems
     {
         public Items()
