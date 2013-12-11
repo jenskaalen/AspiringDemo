@@ -114,6 +114,7 @@ namespace AspiringDemoTest.Interior
             tomb.CreateDebugImage(movePos.TravelPath);
 
             //TODO: Kan få en mycket høy travelpath... sjekk om dette er en bug eller ikke
+            // nei, travelpath er noenlunde ok, men veldig lite effektiv.
             for (int i=0; i < 150; i++)
                 _unit.TimeTick(i);
 

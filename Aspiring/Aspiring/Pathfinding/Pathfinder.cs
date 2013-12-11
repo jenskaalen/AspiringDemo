@@ -10,7 +10,8 @@ namespace AspiringDemo.Pathfinding
     [Serializable]
     public class Pathfinder<T> : IPathfinder<T> where T : class, IPathfindingNode, IComparable<T>
     {
-        public PriorityQueue<T> OpenList { get; set; }
+        //public PriorityQueue<T> OpenList { get; set; }
+        public List<T> OpenList { get; set; }
         public List<T> ClosedList { get; set; }
         public List<T> Nodes { get; set; }
 
@@ -24,21 +25,24 @@ namespace AspiringDemo.Pathfinding
             if (startNode == null || endNode == null)
                 throw new Exception("Startnode or endnode cant be null");
 
-            var path = new List<T>();
-            OpenList = new PriorityQueue<T>();
+            //OpenList = new PriorityQueue<T>();
+            OpenList = new List<T>();
             ClosedList = new List<T>();
 
-            T currentNode = startNode;
-            OpenList.Put(startNode);
+            OpenList.Add(startNode);
 
             while (true)
             {
-                currentNode = OpenList.Pop();
+                //just for testing - this is very slow
+                OpenList = OpenList.OrderBy(node => node.FValue).ToList();
+
+                T currentNode = OpenList.First();
+                OpenList.Remove(currentNode);
+                ClosedList.Add(currentNode);
 
                 if (currentNode == endNode)
                 {
                     // end
-                    ClosedList.Add(currentNode);
 
                     return BacktraceParents(currentNode, startNode);
                 }
@@ -55,7 +59,6 @@ namespace AspiringDemo.Pathfinding
         /// <param name="endNode"></param>
         private void AssessNode(T currentNode, T endNode)
         {
-            T bestNode = null;
             double lowestF = double.MaxValue;
 
             if (!currentNode.Neighbours.Any())
@@ -79,17 +82,17 @@ namespace AspiringDemo.Pathfinding
                 float gCost = 10 + currentNode.GValue;
                 //float gCost = currentNode.DistanceToNode(nNode);
 
-                if (!OpenList.ContainsNode(nNode))
+                //if (!OpenList.ContainsNode(nNode))
+                if (!OpenList.Contains(nNode))
                 {
                     nNode.GValue = gCost;
-                    nNode.HValue = 10 * (Math.Abs(endNode.Position.X - nNode.Position.X) +
+                    nNode.HValue = (Math.Abs(endNode.Position.X - nNode.Position.X) +
                                    Math.Abs(endNode.Position.Y - nNode.Position.Y));
                         //+ Math.Abs(endNode.Position.z - nNode.Position.z);
                     nNode.FValue = nNode.GValue + nNode.HValue;
                     nNode.Parent = currentNode;
-                    OpenList.Put(nNode);
+                    OpenList.Add(nNode);
                 }
-
                 else
                 {
                     //nNode.GValue = gCost;
@@ -103,19 +106,18 @@ namespace AspiringDemo.Pathfinding
                         nNode.Parent = currentNode;
 
                         //"refresh" prioriotyqueue. This might need a rework
-                        OpenList.Put(nNode);
-                        OpenList.Pop();
+                        //OpenList.Put(nNode);
+                        //OpenList.Pop();
                     }
                 }
 
                 if (nNode.FValue < lowestF)
                 {
                     lowestF = nNode.FValue;
-                    bestNode = nNode;
                 }
             }
 
-            ClosedList.Add(currentNode);
+            //ClosedList.Add(currentNode);
         }
 
         private List<T> BacktraceParents(T node, T startNode)

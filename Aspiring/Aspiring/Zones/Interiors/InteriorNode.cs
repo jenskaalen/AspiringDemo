@@ -29,9 +29,13 @@ namespace AspiringDemo.Zones.Interiors
 
         public int CompareTo(IPathfindingNode other)
         {
-            if (HValue < other.HValue) return -1;
-            if (HValue > other.HValue) return 1;
-            return 0;
+            //if (FValue < other.FValue) return -1;
+            //if (FValue > other.FValue) return 1;
+            //return 0;
+            //TODO: This is not optimal, only for test
+            if (FValue < other.FValue) return -1;
+            else if (FValue == other.FValue) return 0;
+            else return 0;
         }
 
         public float DistanceToNode(IPathfindingNode targetNode)

@@ -226,10 +226,16 @@ namespace AspiringDemo.Zones.Interiors
                 img.SetPixel(pathnode.Position.X, pathnode.Position.Y, Color.Red);
             }
 
-            foreach (var pathnode in pathfinder.OpenList.data)
+            //foreach (var pathnode in pathfinder.OpenList.data)
+            //{
+            //    img.SetPixel(pathnode.Position.X, pathnode.Position.Y, Color.Blue);
+            //}
+
+            foreach (var pathnode in pathfinder.OpenList)
             {
                 img.SetPixel(pathnode.Position.X, pathnode.Position.Y, Color.Blue);
             }
+
 
 
             foreach (var pathnode in foundPath)
