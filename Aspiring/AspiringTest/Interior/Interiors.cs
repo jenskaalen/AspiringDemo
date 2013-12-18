@@ -106,16 +106,15 @@ namespace AspiringDemoTest.Interior
             Tomb tomb = GetTestTomb();
             _unit.EnterZone(tomb);
 
-            var targetRoom = tomb.Rooms[2];
+            var targetRoom = tomb.Nodes[544];
 
-            var movePos = new MoveToPosition(_unit, targetRoom.Center);
+            var movePos = new MoveToPosition(_unit, targetRoom.Position);
             _unit.Actions.Add(movePos);
 
+            //tomb.CreateDebugImage(targetRoom.Position.X * 3, targetRoom.Position.Y * 3);
             tomb.CreateDebugImage(movePos.TravelPath);
-
-            //TODO: Kan få en mycket høy travelpath... sjekk om dette er en bug eller ikke
-            // nei, travelpath er noenlunde ok, men veldig lite effektiv.
-            for (int i=0; i < 150; i++)
+            
+            for (int i=0; i < 450; i++)
                 _unit.TimeTick(i);
 
             Assert.AreEqual(0, _unit.Actions.Count);

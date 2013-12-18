@@ -138,13 +138,17 @@ namespace AspiringDemo.Zones.Interiors
 
         public void CreateDebugImage()
         {
-            Bitmap img = new Bitmap(InteriorWidth, InteriorHeight);
+            int sizeMultiplier = 3;
+            Bitmap img = new Bitmap(InteriorWidth * 3, InteriorHeight * 3);
+
+            AspiringDemo.Gamecore.Images.DrawRect(img, 0, 0, InteriorWidth * 3, InteriorHeight * 3);
+
 
             for (int i = 0; i < InteriorWidth; i++)
             {
                 for (int j = 0; j < InteriorHeight; j++)
                 {
-                    img.SetPixel(i, j, Color.Black);
+                    img.SetPixel(i * sizeMultiplier, j * sizeMultiplier, Color.Black);
                 }
             }
 
@@ -154,7 +158,7 @@ namespace AspiringDemo.Zones.Interiors
                 {
                     for (int j = room.Y1; j < room.Y2; j++)
                     {
-                        img.SetPixel(i, j, Color.WhiteSmoke);
+                        img.SetPixel(i * sizeMultiplier, j * sizeMultiplier, Color.WhiteSmoke);
                     }
                 }
             }
@@ -165,15 +169,96 @@ namespace AspiringDemo.Zones.Interiors
                 {
                     for (int j = corridor.Y1; j < corridor.Y2; j++)
                     {
-                        img.SetPixel(i, j, Color.WhiteSmoke);
+                        img.SetPixel(i * sizeMultiplier, j * sizeMultiplier, Color.WhiteSmoke);
                     }
                 }
             }
 
             foreach (var unit in Units)
             {
-                img.SetPixel(unit.Position.X, unit.Position.Y, Color.Orange);
+                img.SetPixel(unit.Position.X * sizeMultiplier, unit.Position.Y * sizeMultiplier, Color.Orange);
             }
+
+            foreach (var node in Nodes)
+            {
+                foreach (var nbor in node.Neighbours)
+                {
+                    AspiringDemo.Gamecore.Images.DrawLine(img, sizeMultiplier,node.Position, nbor.Position);
+                }
+            }
+
+            img.Save("tomb2.png", ImageFormat.Png);
+            img.Dispose();
+        }
+
+
+        public void CreateDebugImage(int x, int y)
+        {
+            int sizeMultiplier = 3;
+            Bitmap img = new Bitmap(InteriorWidth * 3, InteriorHeight * 3);
+
+            AspiringDemo.Gamecore.Images.DrawRect(img, 0, 0, InteriorWidth * 3, InteriorHeight * 3);
+
+
+            for (int i = 0; i < InteriorWidth; i++)
+            {
+                for (int j = 0; j < InteriorHeight; j++)
+                {
+                    img.SetPixel(i * sizeMultiplier, j * sizeMultiplier, Color.Black);
+                }
+            }
+
+            foreach (var room in Rooms)
+            {
+                for (int i = room.X1; i < room.X2; i++)
+                {
+                    for (int j = room.Y1; j < room.Y2; j++)
+                    {
+                        img.SetPixel(i * sizeMultiplier, j * sizeMultiplier, Color.WhiteSmoke);
+                    }
+                }
+            }
+
+            foreach (var corridor in Paths.SelectMany(path => path.Corridors))
+            {
+                for (int i = corridor.X1; i < corridor.X2; i++)
+                {
+                    for (int j = corridor.Y1; j < corridor.Y2; j++)
+                    {
+                        img.SetPixel(i * sizeMultiplier, j * sizeMultiplier, Color.WhiteSmoke);
+                    }
+                }
+            }
+
+            foreach (var unit in Units)
+            {
+                img.SetPixel(unit.Position.X * sizeMultiplier, unit.Position.Y * sizeMultiplier, Color.Orange);
+            }
+
+            foreach (var node in Nodes)
+            {
+                foreach (var nbor in node.Neighbours)
+                {
+                    AspiringDemo.Gamecore.Images.DrawLine(img, sizeMultiplier, node.Position, nbor.Position);
+                }
+            }
+
+            //show closed nodes
+            foreach (var pnt in Pathfinder.ClosedList)
+            {
+                img.SetPixel(pnt.Position.X * sizeMultiplier, pnt.Position.Y * sizeMultiplier, Color.Red);
+            }
+
+            img.SetPixel(x, y, Color.CornflowerBlue);
+
+
+            //var pathfinder = new Pathfinder<IPathfindingNode>();
+            //var foundPath = pathfinder.GetPath(unitPath.First(), unitPath.Last());
+
+            //foreach (var pathnode in foundPath)
+            //{
+            //    img.SetPixel(pathnode.Position.X, pathnode.Position.Y, Color.Aquamarine);
+            //}
 
             img.Save("tomb2.png", ImageFormat.Png);
             img.Dispose();
@@ -181,13 +266,17 @@ namespace AspiringDemo.Zones.Interiors
 
         public void CreateDebugImage(IEnumerable<IPathfindingNode> unitPath)
         {
-            Bitmap img = new Bitmap(InteriorWidth, InteriorHeight);
+            int sizeMultiplier = 3;
+            Bitmap img = new Bitmap(InteriorWidth * 3, InteriorHeight * 3);
+
+            AspiringDemo.Gamecore.Images.DrawRect(img, 0, 0, InteriorWidth * 3, InteriorHeight * 3);
+
 
             for (int i = 0; i < InteriorWidth; i++)
             {
                 for (int j = 0; j < InteriorHeight; j++)
                 {
-                    img.SetPixel(i, j, Color.Black);
+                    img.SetPixel(i * sizeMultiplier, j * sizeMultiplier, Color.Black);
                 }
             }
 
@@ -197,7 +286,7 @@ namespace AspiringDemo.Zones.Interiors
                 {
                     for (int j = room.Y1; j < room.Y2; j++)
                     {
-                        img.SetPixel(i, j, Color.WhiteSmoke);
+                        img.SetPixel(i * sizeMultiplier, j * sizeMultiplier, Color.WhiteSmoke);
                     }
                 }
             }
@@ -208,39 +297,37 @@ namespace AspiringDemo.Zones.Interiors
                 {
                     for (int j = corridor.Y1; j < corridor.Y2; j++)
                     {
-                        img.SetPixel(i, j, Color.WhiteSmoke);
+                        img.SetPixel(i * sizeMultiplier, j * sizeMultiplier, Color.WhiteSmoke);
                     }
                 }
             }
 
             foreach (var unit in Units)
             {
-                img.SetPixel(unit.Position.X, unit.Position.Y, Color.Orange);
+                img.SetPixel(unit.Position.X * sizeMultiplier, unit.Position.Y * sizeMultiplier, Color.Orange);
             }
+
+            foreach (var node in Nodes)
+            {
+                foreach (var nbor in node.Neighbours)
+                {
+                    AspiringDemo.Gamecore.Images.DrawLine(img, sizeMultiplier, node.Position, nbor.Position);
+                }
+            }
+
+            //show closed nodes
+            foreach (var pnt in Pathfinder.ClosedList)
+            {
+                img.SetPixel(pnt.Position.X * sizeMultiplier, pnt.Position.Y * sizeMultiplier, Color.Red);
+            }
+
 
             var pathfinder = new Pathfinder<IPathfindingNode>();
             var foundPath = pathfinder.GetPath(unitPath.First(), unitPath.Last());
 
-            foreach (var pathnode in pathfinder.ClosedList)
-            {
-                img.SetPixel(pathnode.Position.X, pathnode.Position.Y, Color.Red);
-            }
-
-            //foreach (var pathnode in pathfinder.OpenList.data)
-            //{
-            //    img.SetPixel(pathnode.Position.X, pathnode.Position.Y, Color.Blue);
-            //}
-
-            foreach (var pathnode in pathfinder.OpenList)
-            {
-                img.SetPixel(pathnode.Position.X, pathnode.Position.Y, Color.Blue);
-            }
-
-
-
             foreach (var pathnode in foundPath)
             {
-                img.SetPixel(pathnode.Position.X, pathnode.Position.Y, Color.Aquamarine);
+                img.SetPixel(pathnode.Position.X * sizeMultiplier, pathnode.Position.Y * sizeMultiplier, Color.Aquamarine);
             }
 
             img.Save("tomb2.png", ImageFormat.Png);
@@ -257,8 +344,11 @@ namespace AspiringDemo.Zones.Interiors
                 {
                     for (int j = room.Y1; j < room.Y2; j++)
                     {
-                        var node = new InteriorNode(i, j);
-                        Nodes.Add(node);
+                        if (!NodeExists(i, j))
+                        {
+                            var node = new InteriorNode(i, j);
+                            Nodes.Add(node);
+                        }
                     }
                 }
             }
@@ -269,11 +359,22 @@ namespace AspiringDemo.Zones.Interiors
                 {
                     for (int j = corridor.Y1; j < corridor.Y2; j++)
                     {
-                        var node = new InteriorNode(i, j);
-                        Nodes.Add(node);
+                        if (!NodeExists(i, j))
+                        {
+                            var node = new InteriorNode(i, j);
+                            Nodes.Add(node);
+                        }
+                        else
+                        { 
+                        }
                     }
                 }
             }
+        }
+
+        private bool NodeExists(int x, int y)
+        {
+            return Nodes.Any(node => node.Position.X == x && node.Position.Y == y);
         }
 
         private void CreateRooms()

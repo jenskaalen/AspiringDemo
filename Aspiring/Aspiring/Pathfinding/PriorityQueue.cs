@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AspiringDemo.Pathfinding
 {
@@ -15,41 +16,30 @@ namespace AspiringDemo.Pathfinding
 
         public void Put(T item)
         {
-            data.Add(item);
-            int ci = data.Count - 1;
-            while (ci > 0)
+            //do check against last item
+            if (data.Count == 0 || item.CompareTo(data.LastOrDefault()) >= 0)
             {
-                int pi = (ci - 1)/2;
-                if (data[ci].CompareTo(data[pi]) >= 0) break;
-                T tmp = data[ci];
-                data[ci] = data[pi];
-                data[pi] = tmp;
-                ci = pi;
+                // normal add is always appended as the last entry
+                data.Add(item);
+            }
+
+            int index = 0;
+
+            // improve this by guessing position
+            for (int i = index; i < data.Count; i++)
+            {
+                if (item.CompareTo(data[i]) <= 0)
+                {
+                    data.Insert(i, item);
+                    break;
+                }
             }
         }
 
         public T Pop()
         {
-            int li = data.Count - 1;
             T frontItem = data[0];
-            data[0] = data[li];
-            data.RemoveAt(li);
-
-            --li;
-            int pi = 0;
-            while (true)
-            {
-                int ci = pi*2 + 1;
-                if (ci > li) break;
-                int rc = ci + 1;
-                if (rc <= li && data[rc].CompareTo(data[ci]) < 0)
-                    ci = rc;
-                if (data[pi].CompareTo(data[ci]) <= 0) break;
-                T tmp = data[pi];
-                data[pi] = data[ci];
-                data[ci] = tmp;
-                pi = ci;
-            }
+            data.RemoveAt(0);
             return frontItem;
         }
 
@@ -60,7 +50,7 @@ namespace AspiringDemo.Pathfinding
         }
 
         // TODO: Rewrite this
-        public bool ContainsNode(T node)
+        public bool Contains(T node)
         {
             return data.Contains(node);
         }
@@ -81,8 +71,8 @@ namespace AspiringDemo.Pathfinding
             int li = data.Count - 1; // last index
             for (int pi = 0; pi < data.Count; ++pi) // each parent index
             {
-                int lci = 2*pi + 1; // left child index
-                int rci = 2*pi + 2; // right child index
+                int lci = 2 * pi + 1; // left child index
+                int rci = 2 * pi + 2; // right child index
 
                 if (lci <= li && data[pi].CompareTo(data[lci]) > 0)
                     return false; // if lc exists and it's greater than parent then bad.

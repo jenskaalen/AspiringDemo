@@ -1,43 +1,45 @@
-﻿using System;
+﻿using AspiringDemo.Gamecore.Types;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using AspiringDemo.Gamecore;
-using AspiringDemo.Gamecore.Types;
-using AspiringDemo.Zones;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AspiringDemo.Pathfinding
 {
     [Serializable]
     public class Pathfinder<T> : IPathfinder<T> where T : class, IPathfindingNode, IComparable<T>
     {
-        //public PriorityQueue<T> OpenList { get; set; }
-        public List<T> OpenList { get; set; }
+        public PriorityQueue<T> OpenList { get; set; }
+        //public SortedPath<T> OpenList { get; set; }
+        //public SortedSet<T> OpenList { get; set; }
+        //public List<T> OpenList { get; set; }
         public List<T> ClosedList { get; set; }
         public List<T> Nodes { get; set; }
 
-        public List<T> GetPath(Vector2 startPosition, Vector2 endPosition)
-        {
-            throw new NotImplementedException();
-        }
 
         public List<T> GetPath(T startNode, T endNode)
         {
             if (startNode == null || endNode == null)
                 throw new Exception("Startnode or endnode cant be null");
 
-            //OpenList = new PriorityQueue<T>();
-            OpenList = new List<T>();
+            OpenList = new PriorityQueue<T>();
+            //OpenList = new SortedPath<T>();
+            //OpenList = new List<T>();
+            //OpenList = new SortedSet<T>();
             ClosedList = new List<T>();
 
-            OpenList.Add(startNode);
+            OpenList.Put(startNode);
 
             while (true)
             {
+                if (OpenList.data.Count == 0)
+                    return null;
                 //just for testing - this is very slow
-                OpenList = OpenList.OrderBy(node => node.FValue).ToList();
+                T currentNode = OpenList.Pop();
+                //T currentNode = OpenList.First();
+                //OpenList.Remove(OpenList.First());
 
-                T currentNode = OpenList.First();
-                OpenList.Remove(currentNode);
                 ClosedList.Add(currentNode);
 
                 if (currentNode == endNode)
@@ -59,18 +61,21 @@ namespace AspiringDemo.Pathfinding
         /// <param name="endNode"></param>
         private void AssessNode(T currentNode, T endNode)
         {
-            double lowestF = double.MaxValue;
-
             if (!currentNode.Neighbours.Any())
                 throw new Exception("No neighbour nodes!");
+
+            int anons = 0;
 
             foreach (T nNode in currentNode.Neighbours)
             {
                 if (nNode.State == NodeState.Closed)
                     continue;
 
+
                 if (ClosedList.Contains(nNode))
+                {
                     continue;
+                }
 
                 if (!nNode.Neighbours.Any() && nNode != endNode)
                 {
@@ -79,7 +84,7 @@ namespace AspiringDemo.Pathfinding
 
                 // seemingly makes no difference
                 //float gCost = (float) Utility.GetDistance(currentNode.Position, nNode.Position) + currentNode.GValue;
-                float gCost = 10 + currentNode.GValue;
+                float gCost = 0.5f + currentNode.GValue;
                 //float gCost = currentNode.DistanceToNode(nNode);
 
                 //if (!OpenList.ContainsNode(nNode))
@@ -88,10 +93,10 @@ namespace AspiringDemo.Pathfinding
                     nNode.GValue = gCost;
                     nNode.HValue = (Math.Abs(endNode.Position.X - nNode.Position.X) +
                                    Math.Abs(endNode.Position.Y - nNode.Position.Y));
-                        //+ Math.Abs(endNode.Position.z - nNode.Position.z);
+                    //+ Math.Abs(endNode.Position.z - nNode.Position.z);
                     nNode.FValue = nNode.GValue + nNode.HValue;
                     nNode.Parent = currentNode;
-                    OpenList.Add(nNode);
+                    OpenList.Put(nNode);
                 }
                 else
                 {
@@ -106,18 +111,16 @@ namespace AspiringDemo.Pathfinding
                         nNode.Parent = currentNode;
 
                         //"refresh" prioriotyqueue. This might need a rework
-                        //OpenList.Put(nNode);
-                        //OpenList.Pop();
+                        //OpenList.Pop(nNode);
+                        OpenList.data.Remove(nNode);
+                        OpenList.Put(nNode);
+
                     }
                 }
 
-                if (nNode.FValue < lowestF)
-                {
-                    lowestF = nNode.FValue;
-                }
+                if (!ClosedList.Contains(nNode) && !OpenList.Contains(nNode))
+                    anons++;
             }
-
-            //ClosedList.Add(currentNode);
         }
 
         private List<T> BacktraceParents(T node, T startNode)
@@ -127,12 +130,13 @@ namespace AspiringDemo.Pathfinding
             while (node != startNode)
             {
                 tracedNodes.Add(node);
-                node = (T) node.Parent;
+                node = (T)node.Parent;
             }
             // does not add last node to path
             tracedNodes.Reverse();
             return tracedNodes;
         }
+
 
         public IPathfindingNode GetClosestNode(Vector2 position)
         {
@@ -184,6 +188,22 @@ namespace AspiringDemo.Pathfinding
                 neighbours.Add(zone4);
 
             return neighbours;
+        }
+
+        //private void AddChange(IPathfindingNode node, NodeType type)
+        //{
+        //    MainWindow.Changes.Add(new NodeChange()
+        //    {
+        //        Rect = ((Node)node).Rect,
+        //        Type = type,
+        //        Node = (Node)node
+        //    });
+        //}
+
+
+        public List<T> GetPath(Gamecore.Types.Vector2 startPosition, Gamecore.Types.Vector2 endPosition)
+        {
+            throw new NotImplementedException();
         }
     }
 }

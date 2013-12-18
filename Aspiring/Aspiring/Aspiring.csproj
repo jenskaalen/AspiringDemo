@@ -115,8 +115,11 @@
     <Compile Include="Gamecore\GameTime.cs" />
     <Compile Include="Gamecore\Helpers\Actions.cs" />
     <Compile Include="Gamecore\Helpers\Relations.cs" />
+    <Compile Include="Gamecore\Images.cs" />
     <Compile Include="Gamecore\Types\Vector2.cs" />
     <Compile Include="Gamecore\Types\Vector3.cs" />
+    <Compile Include="Pathfinding\PriorityQueue.cs" />
+    <Compile Include="Pathfinding\SortedPath.cs" />
     <Compile Include="Saving\RuntimeType.cs" />
     <Compile Include="Saving\RuntimeTypeHandler.cs" />
     <Compile Include="Saving\SerializedGame.cs" />
@@ -184,7 +187,7 @@
     <Compile Include="Pathfinding\IPathfinder.cs" />
     <Compile Include="Pathfinding\IPathfindingNode.cs" />
     <Compile Include="Pathfinding\Pathfinder.cs" />
-    <Compile Include="Pathfinding\PriorityQueue.cs" />
+    <Compile Include="Pathfinding\_old_PriorityQueue.cs" />
     <Compile Include="Roleplaying\CharacterLevel.cs" />
     <Compile Include="Roleplaying\ICharacterLevel.cs" />
     <Compile Include="Roleplaying\ICharacterModifier.cs" />
@@ -211,6 +214,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ANN\UnitAI\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
