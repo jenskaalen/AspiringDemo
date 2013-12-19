@@ -51,8 +51,6 @@ namespace AspiringDemo.Procedural
                     PlaceCreature(unitToPlace, interior, spot.Position);
                     placedUnits.Add(unitToPlace);
                 }
-
-                int unitsCreated = 0;
             }
         }
 

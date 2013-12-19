@@ -40,7 +40,7 @@ namespace AspiringDemo.Pathfinding
             // safe remove
             bool contains = data.Contains(node);
 
-            if (contains != null)
+            if (contains)
             {
                 data.Remove(node);
             }

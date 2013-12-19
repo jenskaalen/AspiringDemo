@@ -7,12 +7,15 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using AspiringDemo;
+using AspiringDemo.ANN.Actions.Unit;
 using AspiringDemo.Factions;
+using AspiringDemo.GameActions.Combat;
 using AspiringDemo.GameActions.Movement;
 using AspiringDemo.Gamecore;
 using AspiringDemo.Gamecore.Types;
 using AspiringDemo.GameObjects.Units;
 using AspiringDemo.Orders;
+using AspiringDemo.Pathfinding;
 using AspiringDemo.Procedural;
 using AspiringDemo.Zones;
 using AspiringDemo.Zones.Interiors;
@@ -94,7 +97,6 @@ namespace AspiringDemoTest.Interior
             farawayNode =
                 tomb.Nodes.First(node => Utility.GetDistance(node.Position, enemyUnit.Position) < 15);
             _unit.Position = farawayNode.Position;
-            _unit.Position = farawayNode.Position;
 
             detected = _unit.CombatModule.DetectEnemies();
             Assert.IsTrue(detected);
@@ -111,7 +113,6 @@ namespace AspiringDemoTest.Interior
             var movePos = new MoveToPosition(_unit, targetRoom.Position);
             _unit.Actions.Add(movePos);
 
-            //tomb.CreateDebugImage(targetRoom.Position.X * 3, targetRoom.Position.Y * 3);
             tomb.CreateDebugImage(movePos.TravelPath);
             
             for (int i=0; i < 450; i++)
@@ -120,6 +121,55 @@ namespace AspiringDemoTest.Interior
             Assert.AreEqual(0, _unit.Actions.Count);
         }
 
+        [TestMethod]
+        public void Unit_Detects()
+        {
+            // unit enters interior, enemies are idling
+            var unit1 = _unit;
+            var fac2 = new Faction();
+            var unit2 = new Unit(fac2);
+
+            var tomb = GetTestTomb();
+
+            //find a close spot
+            unit1.EnterZone(tomb);
+            unit2.EnterZone(tomb);
+
+            var nodes = tomb.Nodes;
+            int index = nodes.IndexOf(unit1.Zone);
+
+            //TODO: This can cause the node to be placed in a different room..
+            IPathfindingNode closeNode = null;
+            int i = 0;
+            while (closeNode == null)
+            {
+                if (index + i >= nodes.Count)
+                {
+                    index = 0;
+                    i = 0;
+                }
+
+                if (Utility.GetDistance(unit1.Position, nodes[index + i].Position) >
+                    unit1.CombatModule.DetectionDistance)
+                    closeNode = nodes[index + i];
+
+                i++;
+            }
+
+            unit1.Position = closeNode.Position;
+            Assert.IsTrue(Utility.GetDistance(unit1.Position, unit2.Position) < unit1.CombatModule.DetectionDistance);
+            Assert.IsTrue(unit2.CombatModule.DetectEnemy(unit1));
+
+            //create a fight
+            var attack = new UnitAttack(unit2, unit1);
+
+            // fight
+        }
+
+        /// <summary>
+        /// Reads a serialized tomb-object from datafile. If it does not exist it is created and then attempted read.
+        /// </summary>
+        /// <returns></returns>
         private Tomb GetTestTomb()
         {
             Tomb tomb;

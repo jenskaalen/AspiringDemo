@@ -5,6 +5,7 @@ using AspiringDemo.Combat.Behaviour;
 using AspiringDemo.Gamecore.Helpers;
 using AspiringDemo.GameObjects.Units;
 using Ninject;
+using Ninject.Planning.Targets;
 
 namespace AspiringDemo.Combat
 {
@@ -92,6 +93,17 @@ namespace AspiringDemo.Combat
                 }
             }
 
+            return false;
+        }
+
+        //
+        public bool DetectEnemy(IUnit targetUnit)
+        {
+            if (_unit.Zone != null && targetUnit != _unit)
+            {
+                return _detection.DetectEnemy(_unit, targetUnit);
+            }
+            
             return false;
         }
 

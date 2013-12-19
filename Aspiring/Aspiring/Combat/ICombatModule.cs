@@ -31,5 +31,11 @@ namespace AspiringDemo.Combat
         /// <param name="fight"></param>
         void ShoutForHelp();
         bool DetectEnemies();
+        /// <summary>
+        /// Checks if the enemy is within detection range
+        /// </summary>
+        /// <param name="targetUnit"></param>
+        /// <returns></returns>
+        bool DetectEnemy(IUnit targetUnit);
     }
 }

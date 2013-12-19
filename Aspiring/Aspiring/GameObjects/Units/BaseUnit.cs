@@ -176,6 +176,7 @@ namespace AspiringDemo.GameObjects.Units
             CombatModule.Kills++;
         }
 
+        [Obsolete]
         public void EnterInterior(IInterior interior)
         {
             Zone = null;

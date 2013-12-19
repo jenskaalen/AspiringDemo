@@ -22,6 +22,10 @@ namespace AspiringDemo.Zones.Interiors
 
         public Pathfinding.NodeState State { get; set; }
 
+        public InteriorNode()
+        {
+        }
+
         public InteriorNode(int xPosition, int yPosition)
         {
             Position = new Vector2(xPosition, yPosition);

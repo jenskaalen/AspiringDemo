@@ -26,7 +26,6 @@ namespace AspiringDemo.GameObjects.Units
         IUnitOrder Order { get; set; }
         SquadRank Rank { get; set; }
         UnitState State { get; set; }
-        IZone Zone { get; set; }
         RankChanged ChangeRank { get; set; }
         ISquad Squad { get; set; }
         int XPWorth { get; set; }

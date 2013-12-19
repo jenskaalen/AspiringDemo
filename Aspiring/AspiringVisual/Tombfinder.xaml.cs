@@ -27,8 +27,6 @@ namespace AspiringVisual
     /// </summary>
     public partial class Tombfinder : Page
     {
-        private Pathfinder<IPathfindingNode> pathfinder;
-        private Tomb tomb;
         private int _worldSize = 256;
 
         public Tombfinder()
@@ -57,7 +55,7 @@ namespace AspiringVisual
             {
              //   testunit.Actions.Add(new MoveToPosition(testunit, targetRoom.Center));
             }
-            catch (Exception e)
+            catch 
             {
             }
 
