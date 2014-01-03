@@ -135,28 +135,8 @@ namespace AspiringDemoTest.Interior
             unit1.EnterZone(tomb);
             unit2.EnterZone(tomb);
 
-            var nodes = tomb.Nodes;
-            int index = nodes.IndexOf(unit1.Zone);
+            //var nodes = tomb.Nodes;
 
-            //TODO: This can cause the node to be placed in a different room..
-            IPathfindingNode closeNode = null;
-            int i = 0;
-            while (closeNode == null)
-            {
-                if (index + i >= nodes.Count)
-                {
-                    index = 0;
-                    i = 0;
-                }
-
-                if (Utility.GetDistance(unit1.Position, nodes[index + i].Position) >
-                    unit1.CombatModule.DetectionDistance)
-                    closeNode = nodes[index + i];
-
-                i++;
-            }
-
-            unit1.Position = closeNode.Position;
             Assert.IsTrue(Utility.GetDistance(unit1.Position, unit2.Position) < unit1.CombatModule.DetectionDistance);
             Assert.IsTrue(unit2.CombatModule.DetectEnemy(unit1));
 

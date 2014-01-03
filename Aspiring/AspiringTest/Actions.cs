@@ -63,23 +63,28 @@ namespace AspiringDemoTest
             Assert.AreEqual(UnitState.Dead, unit2.State);
         }
 
-        //[TestMethod]
-        //public void GameAction_DetectEnemies()
-        //{
-        //    unit1.EnterZone(somezone);
-        //    unit2.EnterZone(somezone);
+        [TestMethod]
+        public void GameAction_DetectEnemies()
+        {
+            unit1.Zone = somezone;
+            unit2.Zone = somezone;
+            unit1.Position = somezone.Position;
+            unit2.Position = somezone.Position;
 
-        //    bool isDetected = unit1.CombatModule.DetectEnemy(unit2);
-        //    Assert.IsTrue(isDetected);
+            somezone.Units.Add(unit1);
+            somezone.Units.Add(unit2);
 
-        //    var detect = new DetectEnemies(unit1);
-        //    unit1.Actions.Add(detect);
+            bool isDetected = unit1.CombatModule.DetectEnemy(unit2);
+            Assert.IsTrue(isDetected);
+            var detect = new DetectEnemies(unit1);
+            unit1.Actions.Add(detect);
 
-        //    Assert.IsTrue(unit1.State == UnitState.Idle);
-        //    Assert.AreEqual(1, unit1.Actions.Count);
-            
-        //    detect.Update(1f);
-        //    Assert.AreEqual(2, unit1.Actions.Count);
-        //}
+            Assert.IsTrue(unit1.State == UnitState.Idle);
+            Assert.AreEqual(1, unit1.Actions.Count);
+
+            detect.Update(1f);
+            Assert.AreEqual(2, unit1.Actions.Count);
+        }
     }
 }
+

@@ -27,10 +27,11 @@ namespace AspiringDemoTest
 
             for (int i = 0; i < size; i++)
             {
-                for (int j = 0; i < size; j++)
+                for (int j = 0; j < size; j++)
                 {
                     var node = (T) Activator.CreateInstance(typeof(T));
                     node.Position = new Vector2(i * nodeDistance, j * nodeDistance);
+                    list.Add(node);
                 }
             }
 
