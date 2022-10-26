@@ -75,7 +75,7 @@ namespace AspiringDemo.Pathfinding
                 int rci = 2 * pi + 2; // right child index
 
                 if (lci <= li && data[pi].CompareTo(data[lci]) > 0)
-                    return false; // if lc exists and it's greater than parent then bad.
+                    return false; // if lc exists and it's greater than pasrent then bad.
                 if (rci <= li && data[pi].CompareTo(data[rci]) > 0) return false; // check the right child too.
             }
             return true; // passed all checks

@@ -15,14 +15,11 @@ namespace AspiringDemoTest
         [TestMethod]
         public void Unit_Enter_Zone()
         {
-            //IUnit unit = Factories.Instance
             IUnit unit = Factories.Kernel.Get<IUnit>();
             IZone zone = new Zone(0, 0, 499, 499);
-
             Assert.IsTrue(zone.Units.Count == 0);
 
             unit.EnterZone(zone);
-
             Assert.AreEqual(1, zone.Units.Count);
         }
 
@@ -40,7 +37,7 @@ namespace AspiringDemoTest
             unit2.EnterZone(zone1);
 
             Assert.IsTrue(unit1.CombatModule.CurrentFight != null);
-            Assert.IsTrue(unit1.CombatModule.CurrentFight != null);
+            Assert.IsTrue(unit2.CombatModule.CurrentFight != null);
         }
 
         [TestMethod]

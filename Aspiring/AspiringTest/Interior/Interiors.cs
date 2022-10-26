@@ -103,6 +103,12 @@ namespace AspiringDemoTest.Interior
         }
 
         [TestMethod]
+        public void Unit_Moves_Towards_Enemy_In_Interior()
+        {
+
+        }
+
+        [TestMethod]
         public void Unit_Moves_From_Room_To_Room_In_Interior()
         {
             Tomb tomb = GetTestTomb();
@@ -135,15 +141,14 @@ namespace AspiringDemoTest.Interior
             unit1.EnterZone(tomb);
             unit2.EnterZone(tomb);
 
-            //var nodes = tomb.Nodes;
-
             Assert.IsTrue(Utility.GetDistance(unit1.Position, unit2.Position) < unit1.CombatModule.DetectionDistance);
             Assert.IsTrue(unit2.CombatModule.DetectEnemy(unit1));
 
-            //create a fight
-            var attack = new UnitAttack(unit2, unit1);
+            //TODO: remove?
+            ////create a fight
+            //var attack = new UnitAttack(unit2, unit1);
 
-            // fight
+            //// fight
         }
 
         /// <summary>

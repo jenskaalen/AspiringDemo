@@ -165,7 +165,7 @@ namespace AspiringDemoTest
         }
 
         [TestMethod]
-        public void FactionHasHasNoWealthAndWontMakeAnyManagementActions()
+        public void FactionHasNoWealthAndWontMakeAnyManagementActions()
         {
             _factionMock.Setup(x => x.StructurePoints).Returns(1000);
             _factionMock.Setup(x => x.Power).Returns(1000);
